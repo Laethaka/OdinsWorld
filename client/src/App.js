@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NoMatch from "./pages/NoMatch";
 import './App.css';
+import Game from './pages/Game';
 
 const App = () => (
   <Router>
@@ -11,6 +12,7 @@ const App = () => (
       <Switch>
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
+        <Route exact path="/game" component={Game} />
         <Route component={NoMatch} />
       </Switch>
     </div>
