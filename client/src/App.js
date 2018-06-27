@@ -5,6 +5,7 @@ import Landing from "./pages/Landing";
 import NoMatch from "./pages/NoMatch";
 import Nav from "./components/Nav";
 import './App.css';
+import GameWindow from "./pages/GameWindow";
 
 const App = () => (
   <Router>
@@ -12,8 +13,8 @@ const App = () => (
     <div> 
     <Nav />
       <Switch>
-        <Route exact path="/" component={Landing} />
-        {/* <Route exact path="/register" component={Register} /> */}
+        <Route exact path="/Landing" component={Landing} />
+        <Route exact path="/GameWindow" component={GameWindow} />
         <Route component={NoMatch} />
       </Switch>
     </div>
