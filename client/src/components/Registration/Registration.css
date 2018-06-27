@@ -1,0 +1,21 @@
+.form-group {
+    text-align: left;
+    font-weight: bolder;
+    font-size: 30px;
+}
+
+small {
+    font-size: 12px;
+}
+
+.lokiImage {
+    padding-top: 5em;
+    width: 600px;
+    display: block;
+}
+
+.registrationStyling {
+    margin-top: 10em;
+    padding-bottom: 4em;
+    padding-top: 1em;
+}
