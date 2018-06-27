@@ -31,7 +31,7 @@ const Registration = () => (
                     <div className="col">
                         <label for="userRegPassword">Password</label>
                         <input id="userRegPassword" type="password" className="form-control" placeholder="Password"/>
-                        <small id="userHelp" className="form-text text-light">This will be displayed to other players</small>
+                        <small id="userHelp" className="form-text text-light">At least 6 characters long</small>
                     </div>
                     <div className="col">
                         {/* password validation match */}
