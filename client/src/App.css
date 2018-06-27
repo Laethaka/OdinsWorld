@@ -22,3 +22,16 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+body, html {
+  /* The image used */
+  background-image: url("../src/components/Images/repeatbg.png");
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  /* background-position: center; */
+  background-repeat: repeat;
+  /* background-size: cover; */
+}

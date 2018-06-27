@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Landing from "./pages/Landing";
+// import Register from "./pages/Register";
 import NoMatch from "./pages/NoMatch";
+import Nav from "./components/Nav";
 import './App.css';
 import Game from './pages/Game';
 
 const App = () => (
   <Router>
-    <div>
+
+    <div> 
+    <Nav />
       <Switch>
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/register" component={Register} />
-        <Route exact path="/game" component={Game} />
+        <Route exact path="/Landing" component={Landing} />
+        {/* <Route exact path="/register" component={Register} /> */}
         <Route component={NoMatch} />
       </Switch>
     </div>
