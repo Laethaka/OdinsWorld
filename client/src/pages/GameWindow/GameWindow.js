@@ -2,26 +2,26 @@ import React, { Component } from "react";
 import { Col, Row, Container } from "../../components/Grid";
 import Jumbotron from "../../components/Jumbotron";
 import "./GameWindow.css";
-import FlightPathCard from "../../components/FlightPathCard";
-import flightcards from "../../components/FlightPathCard/flightcards.json";
+import LandCard from "../../components/LandCard";
+import landcard from "../../components/LandCard/landcard.json";
 
 class GameWindow extends Component {
 
     state = {
-        flightcards
+        landcard
     };
 
-    gameStart = id => {
-    const randoflightcards = [];
+    // gameStart = id => {
+    // const randolandcard = [];
 
-        for (let i = 0; i < 8; i ++) {
-            randoflightcards.push(this.state.flightcards.splice
+    //     for (let i = 0; i < 8; i ++) {
+    //         randolandcard.push(this.state.landcard.splice
                 
-                (Math.floor(Math.random()*this.state.flightcards.length), 1 )[0]
-            );
+    //             (Math.floor(Math.random()*this.state.landcard.length), 1 )[0]
+    //         );
 
-        };
-    };
+    //     };
+    // };
 
     render() {
         return (
@@ -30,11 +30,11 @@ class GameWindow extends Component {
                 <Col size="md-12">
                     <Jumbotron>
                         <div className="text-light border border-warning">
-                        {this.state.flightcards.map(fpcards => (
-                            <FlightPathCard
-                            id={fpcards.id}
-                            key={fpcards.id}
-                            image={fpcards.image}
+                        {this.state.landcard.map(land => (
+                            <LandCard
+                            id={land.id}
+                            key={land.id}
+                            image={land.image}
                             />
                         ))}
                         </div>
