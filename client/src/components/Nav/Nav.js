@@ -6,19 +6,11 @@ const Nav = (props) => (
 
     <div className="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
 
-      <header>
-        <div className="wrapper">
-          {this.state.user ?
-            <button onClick={this.logout}>Logout</button>
-            :
-            <button onClick={this.login}>Log In</button>
-          }
-        </div>
-      </header>
-      {this.state.user ?
+      {props.children}
+      {props.user ?
         <div>
           <div className='user-profile'>
-            <img src={this.state.user.photoURL} />
+            <img src={props.user.photoURL} />
           </div>
         </div>
         :

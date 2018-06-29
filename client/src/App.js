@@ -49,9 +49,18 @@ class App extends Component {
   render() {
     return (
       <Router>
-
         <div>
-          <Nav />
+          <Nav user={this.state.user}>
+            <wrapper>
+              <div className="wrapper">
+                {this.state.user ?
+                  <button onClick={this.logout}>Logout</button>
+                  :
+                  <button onClick={this.login}>Log In</button>
+                }
+              </div>
+            </wrapper>
+          </Nav>
           <Switch>
             <Route exact path="/Landing" component={Landing} />
             <Route exact path="/GameWindow" component={GameWindow} />
@@ -64,4 +73,4 @@ class App extends Component {
   }
 };
 
-  export default App;
+export default App;
