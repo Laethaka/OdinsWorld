@@ -4,6 +4,7 @@ import Jumbotron from "../../components/Jumbotron";
 import firebase from '../../firebase'
 import LandCard from "../../components/LandCard";
 import landcard from "../../components/LandCard/landcard.json";
+import "./Game.css";
 
 const database = firebase.database();
 
@@ -22,12 +23,14 @@ class Game extends Component {
   state = {
       landcard
   };
+
   render() {
     return (
     <Container fluid>
         <Row>
             <Col size="md-12">
                 <Jumbotron>
+                  <div className="text-center">
                     <div className="text-light border border-warning">
                     {this.state.landcard.map(land => (
                         <LandCard
@@ -37,9 +40,27 @@ class Game extends Component {
                         />
                     ))}
                     </div>
+
+                    <div className="text-light border border-warning img-vert">
+                    {this.state.landcard.map(land => (
+                        <LandCard
+                        id={land.id}
+                        key={land.id}
+                        image={land.image}
+                        />
+                    ))}
+                    </div>
+                  </div>
                 </Jumbotron>
             </Col>
         </Row>
+
+        <Row>
+            <Col size="md-12">
+
+            </Col>
+        </Row>
+
     </Container>
     );
   };

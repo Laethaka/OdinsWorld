@@ -5,6 +5,7 @@ import NoMatch from "./pages/NoMatch";
 import Nav from "./components/Nav";
 import './App.css';
 import Game from "./pages/Game";
+import Lobby from "./pages/Lobby";
 import firebase, { auth, provider } from './firebase.js'
 
 class App extends Component {
@@ -61,6 +62,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/Landing" component={Landing} />
             <Route exact path='/Game' component={Game} />
+            <Route exact path="/Lobby" component={Lobby} />
             <Route component={NoMatch} />
           </Switch>
         </div>
