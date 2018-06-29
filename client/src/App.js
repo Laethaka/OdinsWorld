@@ -8,7 +8,6 @@ import GameWindow from "./pages/GameWindow";
 import Game from "./pages/Game";
 import firebase, { auth, provider } from './firebase.js'
 
-
 class App extends Component {
 
   constructor() {
