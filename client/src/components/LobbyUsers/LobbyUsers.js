@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import './LobbyUsers.css';
 
-const LobbyUsers = () => { 
-     
-    return(
+const LobbyUsers = (props) => {
+    return (
         <div>
-        {/* Temporary image placeholder for users box */}
-            <img width="300px" height="700px" src="https://cdn.discordapp.com/attachments/446103300069392385/462024484501716992/unknown.png"/>
+            {/* Temporary image placeholder for users box */}
+            <ul>
+                {props.users.map(function (user, index) {
+                    return <li key={index}>{user}</li>;
+                })}
+            </ul>
         </div>
-        // <h1>Double poop</h1>
     )
 };
 

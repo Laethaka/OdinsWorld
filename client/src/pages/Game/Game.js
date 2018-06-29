@@ -5,17 +5,17 @@ import firebase from '../../firebase'
 import LandCard from "../../components/LandCard";
 import landcard from "../../components/LandCard/landcard.json";
 
-const database = firebase.database();
+// const database = firebase.database();
 
-//VIEWER TRACKING
-var connectionsRef = database.ref("/connections");
-var connectedRef = database.ref(".info/connected");
-connectedRef.on("value", function(snap) {
-  if (snap.val()) {
-    var con = connectionsRef.push(true);
-    con.onDisconnect().remove();
-  }
-});
+// //VIEWER TRACKING
+// var connectionsRef = database.ref("/connections");
+// var connectedRef = database.ref(".info/connected");
+// connectedRef.on("value", function(snap) {
+//   if (snap.val()) {
+//     var con = connectionsRef.push(true);
+//     con.onDisconnect().remove();
+//   }
+// });
 
 class Game extends Component {
 

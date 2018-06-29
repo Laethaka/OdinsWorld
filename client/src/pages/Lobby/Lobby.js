@@ -1,36 +1,67 @@
-import React from "react";
+import React, { Component } from "react";
 import { Col, Row, Container } from "../../components/Grid";
 import "./Lobby.css";
 import LobbyChat from "../../components/LobbyChat";
 import LobbyGames from "../../components/LobbyGames";
 import LobbyUsers from "../../components/LobbyUsers";
+import firebase from '../../firebase.js'
 
-const Lobby = () => (
+class Lobby extends Component {
+    state = {
+        usersInLobby: []
+    }
 
-    <Container fluid>
-        <Row>
-            <Col size="md-5">
-                {/* Game Join Component */}
-                <div className="wholeSheBang">
-                    <LobbyGames />
-                </div>
-            </Col>
+    componentWillReceiveProps() {
+        const database = firebase.database();
+        const username = firebase.auth().currentUser.displayName;
 
-            <Col size="md-4">
-                {/* Lobby Chat Component */}
-                <div className="wholeSheBang">
-                    <LobbyChat />
-                </div>
-            </Col>
-            
-            <Col size="md-3">
-                {/* Users Online Component */}
-                <div className="wholeSheBang">
-                    <LobbyUsers />
-                </div>
-            </Col>
-        </Row>
-    </Container>
-);
+        //CONNECTION LISTENER
+        var connectionsRef = database.ref("/LobbyConnections");
+        var connectedRef = database.ref(".info/connected");
+        connectedRef.on("value", snap => {
+            if (snap.val()) {
+                var con = connectionsRef.push(username);
+                con.onDisconnect().remove();
+            }
+        });
+
+        connectionsRef.on("value", snap => {
+            let usersArr = Object.values(snap.val())
+
+            this.setState({usersInLobby: usersArr})
+        })
+    }
+
+    render() {
+        return (
+            <Container fluid>
+                <Row>
+                    <Col size="md-5">
+                        {/* Game Join Component */}
+                        <div className="wholeSheBang">
+                            <LobbyGames />
+                        </div>
+                    </Col>
+
+                    <Col size="md-4">
+                        {/* Lobby Chat Component */}
+                        <div className="wholeSheBang">
+                            <LobbyChat />
+                        </div>
+                    </Col>
+
+                    <Col size="md-3">
+                        {/* Users Online Component */}
+                        <div className="wholeSheBang">
+                            <LobbyUsers
+                            users={this.state.usersInLobby}
+                            />
+                        </div>
+                    </Col>
+                </Row>
+            </Container>
+        )
+    }
+}
 
 export default Lobby;
