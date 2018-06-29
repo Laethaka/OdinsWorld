@@ -67,21 +67,21 @@ class Nav extends Component {
         <header>
           <div className="wrapper">
             {this.state.user ?
-              <button onClick={this.logout}>Logout</button>
+              <button className="btn btn-dark text-light mr-2" onClick={this.logout}>Logout</button>
               :
-              <button onClick={this.login}>Log In</button>
+              <button className="btn btn-dark text-light mr-2" onClick={this.login}>Log In</button>
             }
           </div>
         </header>
         {this.state.user ?
           <div>
             <div className='user-profile'>
-              <img src={this.state.user.photoURL} />
+              <img className="rounded-circle" width="40px" src={this.state.user.photoURL} />
             </div>
           </div>
           :
           <div className='wrapper'>
-            <p>Please log in to play Odin's Ravens!</p>
+          <img className="rounded-circle" width="40px" src="http://mikecavaliere.com/wp-content/uploads/2015/05/Question-300x300.png"/>
           </div>
         }
 
