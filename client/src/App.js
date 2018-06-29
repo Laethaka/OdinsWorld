@@ -1,25 +1,76 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Landing from "./pages/Landing";
-// import Register from "./pages/Register";
 import NoMatch from "./pages/NoMatch";
 import Nav from "./components/Nav";
 import './App.css';
 import GameWindow from "./pages/GameWindow";
-import Lobby from "./pages/Lobby";
+import Game from "./pages/Game";
+import firebase, { auth, provider } from './firebase.js'
 
-const App = () => (
-  <Router>
-    <div> 
-    <Nav />
-      <Switch>
-        <Route exact path="/Landing" component={Landing} />
-        <Route exact path="/GameWindow" component={GameWindow} />
-        <Route exact path="/Lobby" component={Lobby} />
-        <Route component={NoMatch} />
-      </Switch>
-    </div>
-  </Router>
-);
+class App extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      username: '',
+      user: null
+    }
+    this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
+  }
+
+  logout() {
+    auth.signOut()
+      .then(() => {
+        this.setState({
+          user: null
+        });
+      });
+  }
+  login() {
+    auth.signInWithPopup(provider)
+      .then((result) => {
+        const user = result.user;
+        this.setState({
+          user
+        });
+      });
+  }
+
+  componentDidMount() {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({ user });
+      }
+    });
+  }
+
+  render() {
+    return (
+      <Router>
+        <div>
+          <Nav user={this.state.user}>
+            <wrapper>
+              <div className="wrapper">
+                {this.state.user ?
+                  <button onClick={this.logout}>Logout</button>
+                  :
+                  <button onClick={this.login}>Log In</button>
+                }
+              </div>
+            </wrapper>
+          </Nav>
+          <Switch>
+            <Route exact path="/Landing" component={Landing} />
+            <Route exact path="/GameWindow" component={GameWindow} />
+            <Route exact path='/Game' component={Game} />
+            <Route component={NoMatch} />
+          </Switch>
+        </div>
+      </Router>
+    )
+  }
+};
 
 export default App;
