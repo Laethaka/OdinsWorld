@@ -5,32 +5,35 @@ import LobbyChat from "../../components/LobbyChat";
 import LobbyGames from "../../components/LobbyGames";
 import LobbyUsers from "../../components/LobbyUsers";
 
-const Lobby = () => (
+const Lobby = props => {
+    console.log(props)
 
-    <Container fluid>
-        <Row>
-            <Col size="md-5">
-                {/* Game Join Component */}
-                <div className="wholeSheBang">
-                    <LobbyGames />
-                </div>
-            </Col>
+    return (
+        <Container fluid>
+            <Row>
+                <Col size="md-5">
+                    {/* Game Join Component */}
+                    <div className="wholeSheBang">
+                        <LobbyGames />
+                    </div>
+                </Col>
 
-            <Col size="md-4">
-                {/* Lobby Chat Component */}
-                <div className="wholeSheBang">
-                    <LobbyChat />
-                </div>
-            </Col>
-            
-            <Col size="md-3">
-                {/* Users Online Component */}
-                <div className="wholeSheBang">
-                    <LobbyUsers />
-                </div>
-            </Col>
-        </Row>
-    </Container>
-);
+                <Col size="md-4">
+                    {/* Lobby Chat Component */}
+                    <div className="wholeSheBang">
+                        <LobbyChat />
+                    </div>
+                </Col>
+
+                <Col size="md-3">
+                    {/* Users Online Component */}
+                    <div className="wholeSheBang">
+                        <LobbyUsers />
+                    </div>
+                </Col>
+            </Row>
+        </Container>
+    )
+}
 
 export default Lobby;

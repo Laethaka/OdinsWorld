@@ -6,6 +6,7 @@ import Nav from "./components/Nav";
 import './App.css';
 import GameWindow from "./pages/GameWindow";
 import Game from "./pages/Game";
+import Lobby from "./pages/Lobby";
 import firebase, { auth, provider } from './firebase.js'
 
 class App extends Component {
@@ -51,7 +52,6 @@ class App extends Component {
       <Router>
         <div>
           <Nav user={this.state.user}>
-            <wrapper>
               <div className="wrapper">
                 {this.state.user ?
                   <button onClick={this.logout}>Logout</button>
@@ -59,9 +59,9 @@ class App extends Component {
                   <button onClick={this.login}>Log In</button>
                 }
               </div>
-            </wrapper>
           </Nav>
           <Switch>
+            <Route exact path="/Lobby" render={()=><Lobby user={this.state.user}/>} />
             <Route exact path="/Landing" component={Landing} />
             <Route exact path="/GameWindow" component={GameWindow} />
             <Route exact path='/Game' component={Game} />
