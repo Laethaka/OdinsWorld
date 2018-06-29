@@ -63,6 +63,7 @@ class App extends Component {
             <Route exact path="/Lobby" render={()=><Lobby user={this.state.user}/>} />
             <Route exact path="/Landing" component={Landing} />
             <Route exact path='/Game' component={Game} />
+            <Route exact path="/Lobby" component={Lobby} />
             <Route component={NoMatch} />
           </Switch>
         </div>

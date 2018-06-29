@@ -1,37 +1,28 @@
 [
     {
         "id": 1,
-        "image": "https://cdn.discordapp.com/attachments/446103300069392385/461644947926548480/rivmtnB.png"
+        "imageName": "desert",
+        "image": "https://res.cloudinary.com/mosjoandy/image/upload/v1530297863/OdinsRavensLandCards/card-01.png"
     },
     {
         "id": 2,
-        "image": "https://cdn.discordapp.com/attachments/446103300069392385/461644958408114176/rivmtnA.png"
+        "imageName": "plain",
+        "image": "https://res.cloudinary.com/mosjoandy/image/upload/v1530297863/OdinsRavensLandCards/card-05.png"
     },
     {
         "id": 3,
-        "image": "https://cdn.discordapp.com/attachments/446103300069392385/461644951248175126/plnmtnA.png"
+        "imageName": "river",
+        "image": "https://res.cloudinary.com/mosjoandy/image/upload/v1530297863/OdinsRavensLandCards/card-03.png"
     },
     {
         "id": 4,
-        "image": "https://cdn.discordapp.com/attachments/446103300069392385/461644954138050560/plnmtnB.png"
+        "imageName": "mountain",
+        "image": "https://res.cloudinary.com/mosjoandy/image/upload/v1530297863/OdinsRavensLandCards/card-02.png"
     },
     {
         "id": 5,
-        "image": "https://cdn.discordapp.com/attachments/446103300069392385/461645810850070538/dstplnA.png"
-    },
-    {
-        "id": 6,
-        "image": "https://cdn.discordapp.com/attachments/446103300069392385/461645819330691083/dstplnB.png"
-    },
-    {
-        "id": 7,
-        "image": "https://cdn.discordapp.com/attachments/446103300069392385/461646391538614272/fstdstB.png"
-    },
-    {
-        "id": 8,
-        "image": "https://cdn.discordapp.com/attachments/446103300069392385/461646426947059714/fstdstA.png"
+        "imageName": "forest",
+        "image": "https://res.cloudinary.com/mosjoandy/image/upload/v1530297863/OdinsRavensLandCards/card-04.png"
     }
-
-
 ]
   
