@@ -1,0 +1,21 @@
+body {
+    color: #261f1e;
+}
+
+.chat-box {
+    padding: 1rem 1rem 1rem 2rem;
+}
+
+.chat-style {
+    list-style-type: none; 
+    font-size: 1.2rem;
+    line-height: 2.5rem;
+}
+
+.welcome-title {
+    margin-top: 0.2rem;
+    text-align: center;
+
+    
+}
+
