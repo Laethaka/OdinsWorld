@@ -1,3 +1,14 @@
 .redNav {
-    background-color: red;
+    background-color: #261f1eb7;
+    box-shadow: 0px 0px 27px 0px rgba(0,0,0,0.75);
+
+}
+
+.navbar-brand {
+    color: #ffd182;
+}
+.rounded-circle {
+    height: 4rem;
+    margin-right: 2rem;
+    margin-left: 1rem;
 }
