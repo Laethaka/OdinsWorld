@@ -43,14 +43,14 @@ class Lobby extends Component {
                         </div>
                     </Col>
 
-                    <Col size="md-4">
+                    <Col size="md-5">
                         {/* Lobby Chat Component */}
                         <div className="wholeSheBang">
                             <LobbyChat />
                         </div>
                     </Col>
 
-                    <Col size="md-3">
+                    <Col size="md-2">
                         {/* Users Online Component */}
                         <div className="wholeSheBang">
                             <LobbyUsers

@@ -7,7 +7,10 @@ const LobbyUsers = (props) => {
             {/* Temporary image placeholder for users box */}
             <ul>
                 {props.users.map(function (user, index) {
-                    return <li key={index}>{user}</li>;
+                    return <li key={index}>{user}
+                              
+                            </li>
+                       
                 })}
             </ul>
         </div>
