@@ -7,7 +7,7 @@ const Nav = (props) => (
 
     <div className="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
 
-      {props.children};
+      {props.children}
       {props.user ?
         <div>
           <div className='user-profile'>
@@ -18,9 +18,9 @@ const Nav = (props) => (
         <div className='wrapper'>
           <img className="rounded-circle" src="http://mikecavaliere.com/wp-content/uploads/2015/05/Question-300x300.png" />
         </div>
-      };
+      }
     </div>
   </nav>
-);
+)
 
 export default Nav;

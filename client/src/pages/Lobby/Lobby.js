@@ -50,7 +50,7 @@ class Lobby extends Component {
                         </div>
                     </Col>
 
-                    <Col size="md-3">
+                    <Col size="md-2">
                         {/* Users Online Component */}
                         <div className="box">
                             <LobbyUsers
