@@ -4,9 +4,11 @@ import './LobbyChat.css';
 const LobbyChat = () => { 
      
     return(
-        <div>
+        <div className="chat-box">
         {/* Temporary image placeholder for chat box */}
-            <img width="535px" height="700px" src="https://cdn.discordapp.com/attachments/446103300069392385/462023880718942208/unknown.png"/>
+            <h3 className="chat-title">Chat</h3>
+            <hr className="style-one"/>
+            <img src="https://cdn.discordapp.com/attachments/446103300069392385/462023880718942208/unknown.png"/>
         </div>
         // <h1>Double poop</h1>
     )

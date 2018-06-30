@@ -1,3 +1,16 @@
-.wholeSheBang {
-    border: 2px yellow solid;
+
+.box {
+    background-image: url("../../components/Images/paper.jpg");
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 28px 0px rgba(38,31,30,1);
+    box-shadow: 0px 0px 27px 0px rgba(0,0,0,0.75);
+    width: 100%;
+    background-repeat: repeat;
+    background-size: cover;
+    margin-top: 2rem;
+}
+
+
+.col-margin {
+    margin-right: 30px;
 }
