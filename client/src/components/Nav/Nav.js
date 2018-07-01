@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import "./Nav.css";
 
 const Nav = (props) => (
-  <nav className="navbar navbar-expand-lg navbar-dark redNav pt-4 pb-4">
-    <a className="navbar-brand" href="#">Odin's Ravens</a>
+  <nav className="navbar navbar-expand-lg">
+    <a className="navbar-brand" href="#"><b><h1 className="game-name ">Odin's Ravens</h1></b></a>
 
     <div className="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
 
-      {props.children};
+      {props.children}
       {props.user ?
         <div>
           <div className='user-profile'>
@@ -18,9 +18,9 @@ const Nav = (props) => (
         <div className='wrapper'>
           <img className="rounded-circle" src="http://mikecavaliere.com/wp-content/uploads/2015/05/Question-300x300.png" />
         </div>
-      };
+      }
     </div>
   </nav>
-);
+)
 
 export default Nav;

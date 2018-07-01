@@ -5,12 +5,4 @@ body {
     background-size: cover;
 }
 
-.welcome-box {
-    background-image: url("../../components/Images/paper-2.png");
-    width: 37rem;
-    height: 43©rem;
-    background-repeat: no-repeat;
-    background-size: cover;
-    margin-top: 2rem;
-    
-}
+
