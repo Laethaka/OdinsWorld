@@ -48,25 +48,26 @@ class Lobby extends Component {
         return (
             <Container fluid>
                 <Row>
-                    <Col size="md-5">
+                    <Col size="md-4">
                         {/* Game Join Component */}
-                        <div className="wholeSheBang">
-                            There are currently {this.state.gameCount} games being hosted!
+                        <div className="box">
                             <LobbyGames />
                             <button>Create Game</button>
                         </div>
                     </Col>
 
-                    <Col size="md-4">
+                    <Col size="md-5">
                         {/* Lobby Chat Component */}
-                        <div className="wholeSheBang">
-                            <LobbyChat />
+                        <div className="box">
+                            <LobbyChat 
+                             users={this.state.usersInLobby}
+                             />
                         </div>
                     </Col>
 
-                    <Col size="md-3">
+                    <Col size="md-2">
                         {/* Users Online Component */}
-                        <div className="wholeSheBang">
+                        <div className="box">
                             <LobbyUsers
                             users={this.state.usersInLobby}
                             />

@@ -4,9 +4,11 @@ import './LobbyGames.css';
 const LobbyGames = () => { 
      
     return(
-        <div>
+        <div className="games-box">
         {/* Temporary image placeholder for games box */}
-            <img width="535px" height="700px" src="https://cdn.discordapp.com/attachments/446103300069392385/462022185158967296/unknown.png"/>
+            <h3 className="games-title">Games</h3>
+            <hr className="style-one"/>
+            <img src="https://cdn.discordapp.com/attachments/446103300069392385/462022185158967296/unknown.png"/>
         </div>
         // <h1>Double poop</h1>
     )

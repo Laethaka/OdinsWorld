@@ -1,0 +1,24 @@
+.games-box {
+    padding: 1rem 1rem 1rem 2rem;
+}
+
+.games-style {
+    color: #261f1e;
+    list-style-type: none; 
+    font-size: 1.2rem;
+    line-height: 2.5rem;
+}
+
+.games-title {
+margin-top: 0.2rem;
+text-align: center;
+
+}
+
+/* Gradient color1 - color2 - color1 */
+hr.style-one {
+    border: 0;
+    height: 1.2px;
+    background: #261f1e;
+    background-image: linear-gradient(to right, #dcb175, #261f1e, #dcb175);
+}
