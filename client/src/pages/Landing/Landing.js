@@ -10,11 +10,7 @@ const Landing = () => (
         <Col size="md-7">
         </Col>
         <Col size="md-5">
-            <div className="welcome-box">
-            <br/><br/>
-            <Welcome />
-          </div>
-          
+            <Welcome />      
         </Col>
 
       </Row>

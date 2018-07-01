@@ -1,11 +1,15 @@
-.redNav {
-    background-color: #261f1eb7;
-    box-shadow: 0px 0px 27px 0px rgba(0,0,0,0.75);
 
+.navbar {
+    padding-left: 4rem !important;
+    padding-right: 4rem !important;
 }
-
-.navbar-brand {
+.game-name {
     color: #ffd182;
+    font-size: 5rem;
+    text-shadow: 12px 5px 30px rgb(21, 21, 21);
+    margin-top: 2.1rem;
+    
+    
 }
 .rounded-circle {
     height: 4rem;
