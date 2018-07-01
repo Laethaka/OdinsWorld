@@ -25,52 +25,97 @@ class Game extends Component {
                 con.onDisconnect().remove();
             }
         });
+
+        connectionsRef.once("value").then((snap) => {//PAGE LOAD AND ANY PLAYER JOIN/LEAVE
+                console.log(snap.val())
+            if (snap.val().playerOne.active === false) {
+                // console.log('no player 1 found');
+                this.becomePlayerOne();
+            } else if (snap.val().playerTwo.active === false) {
+            //     console.log('no player 2 found');
+                this.becomePlayerTwo();
+            // } else {
+            //     console.log('both players found');
+            //     // becomeSpectator();
+            };
+        });
     }
 
-  state = {
-      landcard
-  };
+    //PLAYER ONE SETUP AND DISCONNECT LISTENING
+    becomePlayerOne = () => {
+        console.log('becoming player 1')
+        //SERVER PLAYER VARS SETUP
+        firebase.database().ref(`games/Game${this.state.gameId}/playerOne`).set({
+            active: true,
+            name: firebase.auth().currentUser.displayName,
+            move: ''
+        })
+        //LOCAL PLAYER VARS SETUP
+        this.setState({ isPlayer1: true })
 
-  render() {
-    return (
-    <Container fluid>
-        <Row>
-            <Col size="md-12">
-                <Jumbotron>
-                  <div className="text-center">
-                    <div className="text-light border border-warning">
-                    {this.state.landcard.map(land => (
-                        <LandCard
-                        id={land.id}
-                        key={land.id}
-                        image={land.image}
-                        />
-                    ))}
-                    </div>
+        //DISCONNECT LISTENING
+        var presenceRef = firebase.database().ref(`games/Game${this.state.gameId}/playerOne/active`);
+        presenceRef.onDisconnect().set(false);
+    };
 
-                    <div className="text-light border border-warning img-vert">
-                    {this.state.landcard.map(land => (
-                        <LandCard
-                        id={land.id}
-                        key={land.id}
-                        image={land.image}
-                        />
-                    ))}
-                    </div>
-                  </div>
-                </Jumbotron>
-            </Col>
-        </Row>
+    //PLAYER Two SETUP AND DISCONNECT LISTENING
+    becomePlayerTwo = () => {
+        console.log('becoming player 2')
+        //SERVER PLAYER VARS SETUP
+        firebase.database().ref(`games/Game${this.state.gameId}/playerTwo`).set({
+            active: true,
+            name: firebase.auth().currentUser.displayName,
+            move: ''
+        })
+        //LOCAL PLAYER VARS SETUP
+        this.setState({ isPlayer2: true })
 
-        <Row>
-            <Col size="md-12">
+        //DISCONNECT LISTENING
+        var presenceRef = firebase.database().ref(`games/Game${this.state.gameId}/playerTwo/active`);
+        presenceRef.onDisconnect().set(false);
+    };
 
-            </Col>
-        </Row>
 
-    </Container>
-    );
-  };
+    render() {
+        return (
+            <Container fluid>
+                <Row>
+                    <Col size="md-12">
+                        <Jumbotron>
+                            <div className="text-center">
+                                <div className="text-light border border-warning">
+                                    {this.state.landcard.map(land => (
+                                        <LandCard
+                                            id={land.id}
+                                            key={land.id}
+                                            image={land.image}
+                                        />
+                                    ))}
+                                </div>
+
+                                <div className="text-light border border-warning img-vert">
+                                    {this.state.landcard.map(land => (
+                                        <LandCard
+                                            id={land.id}
+                                            key={land.id}
+                                            image={land.image}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                        </Jumbotron>
+                    </Col>
+                </Row>
+
+                <Row>
+                    <Col size="md-12">
+
+                    </Col>
+                </Row>
+
+            </Container>
+        );
+    };
 };
 
 export default Game;
