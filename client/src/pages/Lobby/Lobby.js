@@ -1,19 +1,29 @@
 import React, { Component } from "react";
 import { Col, Row, Container } from "../../components/Grid";
 import "./Lobby.css";
-import LobbyChat from "../../components/LobbyChat";
+
+
+// import LobbyChat from "../../components/LobbyChat";
 import LobbyGames from "../../components/LobbyGames";
 import LobbyUsers from "../../components/LobbyUsers";
+
+// Chat
+import Chat from "../../components/Chat";
+import { FormBtn, TextArea } from "../../components/Form";
+
 import firebase from '../../firebase.js'
 
 class Lobby extends Component {
+
     constructor() {
         super();
         this.state = {
             usersInLobby: [],
             usersInGame: [],
+            message: ""
         }
         // this.handleCreate = this.handleCreate.bind(this);
+
     }
 
 
@@ -56,6 +66,35 @@ class Lobby extends Component {
         console.log(newGameId);
         // database.ref()
     }
+    
+    //////////////////////////////////////////////////////////////
+    //Chat component
+
+    handleInputChange = event => {
+        const { name, value } = event.target;
+        this.setState({
+          [name]: value
+        });
+      };
+    
+    handleFormSubmit = event => {
+    event.preventDefault();
+
+    this.setState({
+        message: ""
+    })
+
+    if (this.state.message) {
+        console.log("pooping")
+        // Firebase ish here
+    //    ({
+    //     message: this.state.messagea,
+    //     })
+    //     .then(res => console.log("poop success"))
+    //     .catch(err => console.log(err));
+    }
+
+    };
 
     render() {
         return (
@@ -74,9 +113,27 @@ class Lobby extends Component {
                     <Col size="md-5">
                         {/* Lobby Chat Component */}
                         <div className="box">
-                            <LobbyChat
-                                users={this.state.usersInLobby}
-                            />
+
+                            <div className="row">
+                                <Chat />
+                            </div>
+
+                            <div className="row">
+                            
+                                <TextArea 
+                                    value={this.state.message}
+                                    onChange={this.handleInputChange}
+                                    name="message"
+                                    placeholder="Send to lobby"
+                                />
+                                <FormBtn
+                                    onClick={this.handleFormSubmit}
+                                    onSubmit={this.handleFormSubmit.bind(this)}
+                                >
+                                    Send Poop
+                                </FormBtn>
+                            </div>
+
                         </div>
                     </Col>
 
