@@ -11,7 +11,6 @@ const Landing = () => (
         </Col>
         <Col size="md-5">
             <div className="welcome-box">
-            <br/><br/>
             <Welcome />
           </div>
           

@@ -53,9 +53,9 @@ class App extends Component {
           <Nav user={this.state.user}>
               <div className="wrapper">
                 {this.state.user ?
-                  <button className="mr-3" onClick={this.logout}>Logout</button>
+                  <button className="mr-3 btn" onClick={this.logout}>Logout</button>
                   :
-                  <button className="mr-3" onClick={this.login}>Log In</button>
+                  <button className="mr-3 btn" onClick={this.login}>Log In</button>
                 }
               </div>
           </Nav>
