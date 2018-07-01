@@ -46,7 +46,9 @@ class Lobby extends Component {
                     <Col size="md-5">
                         {/* Lobby Chat Component */}
                         <div className="box">
-                            <LobbyChat />
+                            <LobbyChat 
+                             users={this.state.usersInLobby}
+                             />
                         </div>
                     </Col>
 
