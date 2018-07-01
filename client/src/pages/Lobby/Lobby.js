@@ -8,7 +8,9 @@ import firebase from '../../firebase.js'
 
 class Lobby extends Component {
     state = {
-        usersInLobby: []
+        usersInLobby: [],
+        gameCount: 0,
+        activeGames: []
     }
 
     componentWillReceiveProps() {
@@ -24,11 +26,21 @@ class Lobby extends Component {
                 con.onDisconnect().remove();
             }
         });
-
-        connectionsRef.on("value", snap => {
+        connectionsRef.on("value", snap => {//PLAYERS IN LOBBY CHANGED
+            //UPDATING PLAYERS LIST IN ON DOM
             let usersArr = Object.values(snap.val())
-
             this.setState({usersInLobby: usersArr})
+        })
+
+        database.ref(`/games`).on('value', snap => {
+            // console.log('games:',snap.val())
+            if (snap.val() != null) {
+                let gamesAvail = snap.val()
+                console.log('gamesAvail:', gamesAvail)
+                console.log('first game :', gamesAvail.Game1)
+                this.setState({gameCount: gamesAvail.length})
+            }
+            // this.setState({gameCount: gamesArr.length})
         })
     }
 
@@ -39,7 +51,9 @@ class Lobby extends Component {
                     <Col size="md-5">
                         {/* Game Join Component */}
                         <div className="wholeSheBang">
+                            There are currently {this.state.gameCount} games being hosted!
                             <LobbyGames />
+                            <button>Create Game</button>
                         </div>
                     </Col>
 

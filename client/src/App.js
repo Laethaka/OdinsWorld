@@ -14,7 +14,7 @@ class App extends Component {
     super();
     this.state = {
       username: '',
-      user: null
+      user: null,
     }
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
