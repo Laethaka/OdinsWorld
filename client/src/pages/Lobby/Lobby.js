@@ -14,10 +14,18 @@ import { FormBtn, TextArea } from "../../components/Form";
 import firebase from '../../firebase.js'
 
 class Lobby extends Component {
-    state = {
-        usersInLobby: [],
-        message: ""
+
+    constructor() {
+        super();
+        this.state = {
+            usersInLobby: [],
+            usersInGame: [],
+            message: ""
+        }
+        // this.handleCreate = this.handleCreate.bind(this);
+
     }
+
 
     componentWillReceiveProps() {
         const database = firebase.database();
@@ -32,12 +40,31 @@ class Lobby extends Component {
                 con.onDisconnect().remove();
             }
         });
-
-        connectionsRef.on("value", snap => {
+        connectionsRef.on("value", snap => {//PLAYERS IN LOBBY CHANGED
+            //UPDATING PLAYERS LIST IN ON DOM
             let usersArr = Object.values(snap.val())
-
-            this.setState({usersInLobby: usersArr})
+            this.setState({ usersInLobby: usersArr })
         })
+
+        database.ref(`/games`).on('value', snap => {
+            // console.log('games:',snap.val())
+            if (snap.val() != null) {
+                let gamesArr = Object.values(snap.val())
+                this.setState({usersInGame : gamesArr})
+                console.log('gamesAvail:', gamesArr)
+                // console.log('first game :', gamesAvail.Game1)
+            }
+            // this.setState({gameCount: gamesArr.length})
+        })
+
+    }
+
+    handleCreate = () => {
+        console.log(this.state.gameCount);
+        this.state.gameCount++;
+        let newGameId = this.state.gameCount;
+        console.log(newGameId);
+        // database.ref()
     }
     
     //////////////////////////////////////////////////////////////
@@ -76,7 +103,10 @@ class Lobby extends Component {
                     <Col size="md-4">
                         {/* Game Join Component */}
                         <div className="box">
-                            <LobbyGames />
+                            <LobbyGames 
+                                games={this.state.usersInGame}
+                            />
+                            <button onClick={this.handleCreate}>Join Game</button>
                         </div>
                     </Col>
 
@@ -111,7 +141,7 @@ class Lobby extends Component {
                         {/* Users Online Component */}
                         <div className="box">
                             <LobbyUsers
-                            users={this.state.usersInLobby}
+                                users={this.state.usersInLobby}
                             />
                         </div>
                     </Col>

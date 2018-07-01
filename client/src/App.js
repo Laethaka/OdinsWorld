@@ -14,7 +14,7 @@ class App extends Component {
     super();
     this.state = {
       username: '',
-      user: null
+      user: null,
     }
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
@@ -64,7 +64,6 @@ class App extends Component {
             <Route exact path="/Lobby" render={()=><Lobby user={this.state.user}/>} />
             <Route exact path="/Landing" component={Landing} />
             <Route exact path='/Game' component={Game} />
-            <Route exact path="/Lobby" component={Lobby} />
             <Route component={NoMatch} />
           </Switch>
         </div>
