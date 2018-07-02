@@ -4,17 +4,18 @@ import Welcome from "../../components/Welcome";
 import "./Landing.css";
 
 const Landing = () => (
-
-    <Container fluid>
+    // <div className="landing-background">  
+    <Container fluid> 
       <Row>
-        <Col size="md-7">
+        <Col size="md-6">
         </Col>
-        <Col size="md-5">
-            <Welcome />      
+        <Col size="md-6">
+            <Welcome />     
         </Col>
 
       </Row>
     </Container>
+    // </div>
 );
 
 export default Landing;

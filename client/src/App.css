@@ -1,3 +1,5 @@
+
+
 .log-button {
 	box-shadow: 0px 1px 0px 0px #1c1b18;
 	background-image: url("../../client/src/components/Images/paper.jpg");
@@ -12,7 +14,7 @@
 	text-shadow: 0px 1px 0px #ccc2a6;
 }
 .log-button:hover {
-	background:linear-gradient(to bottom, #ccc2a6 5%, #eae0c2 100%);
+	background:linear-gradient(to bottom, #dcb175 5%, #f39613 100%);
 	background-color:#ccc2a6;
 }
 .log-button:active {

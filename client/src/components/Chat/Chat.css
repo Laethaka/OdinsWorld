@@ -1,20 +1,15 @@
-.online-user-box {
+.chat-box {
     padding: 1rem 1rem 1rem 2rem;
 }
 
-ul {
-    padding-left: 0rem;
-    list-style-type: none
-}
-
-.online-user-style {
+.chat-style {
     color: #261f1e;
     list-style-type: none; 
     font-size: 1.2rem;
     line-height: 2.5rem;
 }
 
-.user-online-title {
+.chat-title {
     margin-top: 0.2rem;
     text-align: center;
     
@@ -28,7 +23,7 @@ hr.style-one {
     background-image: linear-gradient(to right, #dcb175, #261f1e, #dcb175);
 }
 
-.usersPoop {
+.chatPoop {
     overflow-y: scroll;
     overflow-x: hidden;
     height: 30em;
