@@ -4,6 +4,13 @@ body {
   font-size: 16px;
 }
 
+
+@font-face {
+  font-family: 'norse';
+  src: local('norse'), url(./fonts/norse.ttf) format('ttf');
+}
+
+
 h1 {
   font-family: "norse", sans-serif;
   letter-spacing: 0.7rem;
@@ -11,10 +18,4 @@ h1 {
 
 p {
   line-height: 1.6rem;
-}
-
-
-@font-face {
-  font-family: 'norse';
-  src: local('norse'), url(./fonts/norse.ttf) format('ttf');
 }

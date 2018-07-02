@@ -24,7 +24,8 @@ hr.style-one {
 }
 
 .chatPoop {
-    overflow-y: scroll;
+    word-wrap: break-word;
+    overflow-y: auto;
     overflow-x: hidden;
-    height: 30em;
+    height: 26.5em;
 }
