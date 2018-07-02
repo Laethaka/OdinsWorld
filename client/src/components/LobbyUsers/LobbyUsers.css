@@ -12,6 +12,7 @@ ul {
     list-style-type: none; 
     font-size: 1.2rem;
     line-height: 2.5rem;
+    width: 10em;
 }
 
 .user-online-title {
@@ -29,7 +30,7 @@ hr.style-one {
 }
 
 .usersPoop {
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
-    height: 30em;
+    height: 30.9em;
 }

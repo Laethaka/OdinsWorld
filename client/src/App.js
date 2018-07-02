@@ -6,10 +6,13 @@ import Nav from "./components/Nav";
 import './App.css';
 import Game from "./pages/Game";
 import Lobby from "./pages/Lobby";
+
 import LandingBG from "./components/Images/landing-page.png";
 import GameBG from "./components/Images/table-backgrond-3.png";
 import LobbyBG from "./components/Images/paper.jpg";
-import firebase, { auth, provider } from './firebase.js'
+
+import { auth, provider } from './firebase.js'
+
 
 class App extends Component {
 
@@ -19,10 +22,11 @@ class App extends Component {
       username: '',
       user: null,
       current: "/landing"
-    }
+      };
+    };
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
-  }
+  };
 
   logout() {
     auth.signOut()
@@ -31,7 +35,8 @@ class App extends Component {
           user: null
         });
       });
-  }
+  };
+
   login() {
     auth.signInWithPopup(provider)
       .then((result) => {
@@ -40,15 +45,15 @@ class App extends Component {
           user
         });
       });
-  }
+  };
 
   componentDidMount() {
     auth.onAuthStateChanged((user) => {
       if (user) {
         this.setState({ user });
-      }
+      };
     });
-  }
+  };
 
   routeCheck = (string) => {
     if (this.state.current !== string) {
@@ -84,6 +89,7 @@ class App extends Component {
             <Route exact path="/Lobby" render={()=><Lobby user={this.state.user} routeCheck={this.routeCheck}/>} />
             <Route exact path="/Landing" component={() => <Landing routeCheck={this.routeCheck}/>} />
             <Route exact path='/Game' component={() => <Game routeCheck={this.routeCheck}/>} />
+            <Route exact path="/" component={Landing} />
             <Route component={NoMatch} />
           </Switch>
         </div>

@@ -5,6 +5,7 @@ import firebase from '../../firebase'
 import LandCard from "../../components/LandCard";
 import landcard from "../../components/LandCard/landcard.json";
 import "./Game.css";
+import axios from 'axios';
 
 class Game extends Component {
     state = {
@@ -27,16 +28,14 @@ class Game extends Component {
         });
 
         connectionsRef.once("value").then((snap) => {//PAGE LOAD AND ANY PLAYER JOIN/LEAVE
-                console.log(snap.val())
             if (snap.val().playerOne.active === false) {
-                // console.log('no player 1 found');
                 this.becomePlayerOne();
             } else if (snap.val().playerTwo.active === false) {
-            //     console.log('no player 2 found');
                 this.becomePlayerTwo();
-            // } else {
-            //     console.log('both players found');
-            //     // becomeSpectator();
+                this.gameStart(this.state.gameId);
+                // } else {
+                //     console.log('both players found');
+                //     // becomeSpectator();
             };
         });
     }
@@ -52,9 +51,8 @@ class Game extends Component {
         })
         //LOCAL PLAYER VARS SETUP
         this.setState({ isPlayer1: true })
-
         //DISCONNECT LISTENING
-        var presenceRef = firebase.database().ref(`games/Game${this.state.gameId}/playerOne/active`);
+        const presenceRef = firebase.database().ref(`games/Game${this.state.gameId}/playerOne/active`);
         presenceRef.onDisconnect().set(false);
     };
 
@@ -75,10 +73,10 @@ class Game extends Component {
         presenceRef.onDisconnect().set(false);
     };
 
-
     render() {
         let current = window.location.pathname;
         this.props.routeCheck(current);
+      
         return (
             <Container fluid>
                 <Row>
