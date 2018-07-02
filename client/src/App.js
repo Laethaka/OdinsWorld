@@ -6,7 +6,13 @@ import Nav from "./components/Nav";
 import './App.css';
 import Game from "./pages/Game";
 import Lobby from "./pages/Lobby";
+
+import LandingBG from "./components/Images/landing-page.png";
+import GameBG from "./components/Images/table-backgrond-3.png";
+import LobbyBG from "./components/Images/paper.jpg";
+
 import { auth, provider } from './firebase.js'
+
 
 class App extends Component {
 
@@ -15,6 +21,8 @@ class App extends Component {
     this.state = {
       username: '',
       user: null,
+      current: "/landing"
+      };
     };
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
@@ -47,10 +55,27 @@ class App extends Component {
     });
   };
 
+  routeCheck = (string) => {
+    if (this.state.current !== string) {
+      this.setState({
+        current: string
+      })
+    }
+  }
+
   render() {
+    let bg;
+    if (this.state.current === "/landing") {
+      bg = "landingBackground"
+    } else if (this.state.current === "/game") {
+      bg = "gameBackground"
+    } else {
+      bg = "lobbyBackground"
+    }
+
     return (
       <Router>
-        <div>
+        <div style={styles[bg]}>
           <Nav user={this.state.user}>
               <div className="wrapper">
                 {this.state.user ?
@@ -61,10 +86,10 @@ class App extends Component {
               </div>
           </Nav>
           <Switch>
+            <Route exact path="/Lobby" render={()=><Lobby user={this.state.user} routeCheck={this.routeCheck}/>} />
+            <Route exact path="/Landing" component={() => <Landing routeCheck={this.routeCheck}/>} />
+            <Route exact path='/Game' component={() => <Game routeCheck={this.routeCheck}/>} />
             <Route exact path="/" component={Landing} />
-            <Route exact path="/Lobby" render={()=><Lobby user={this.state.user}/>} />
-            <Route exact path="/Landing" component={Landing} />
-            <Route exact path='/Game' component={Game} />
             <Route component={NoMatch} />
           </Switch>
         </div>
@@ -72,5 +97,18 @@ class App extends Component {
     )
   }
 };
+
+
+const styles = {
+  landingBackground: {
+    backgroundImage: `url(${LandingBG})`
+  },
+  lobbyBackground: {
+    backgroundImage: `url(${LobbyBG})`
+  },
+  gameBackground: {
+    backgroundImage: `url(${GameBG})`
+  }
+}
 
 export default App;

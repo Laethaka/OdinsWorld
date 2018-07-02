@@ -42,6 +42,7 @@ class Game extends Component {
 
     //PLAYER ONE SETUP AND DISCONNECT LISTENING
     becomePlayerOne = () => {
+        console.log('becoming player 1')
         //SERVER PLAYER VARS SETUP
         firebase.database().ref(`games/Game${this.state.gameId}/playerOne`).set({
             active: true,
@@ -57,6 +58,7 @@ class Game extends Component {
 
     //PLAYER Two SETUP AND DISCONNECT LISTENING
     becomePlayerTwo = () => {
+        console.log('becoming player 2')
         //SERVER PLAYER VARS SETUP
         firebase.database().ref(`games/Game${this.state.gameId}/playerTwo`).set({
             active: true,
@@ -65,22 +67,16 @@ class Game extends Component {
         })
         //LOCAL PLAYER VARS SETUP
         this.setState({ isPlayer2: true })
+
         //DISCONNECT LISTENING
-        const presenceRef = firebase.database().ref(`games/Game${this.state.gameId}/playerTwo/active`);
+        var presenceRef = firebase.database().ref(`games/Game${this.state.gameId}/playerTwo/active`);
         presenceRef.onDisconnect().set(false);
     };
 
-    gameStart = (gameId) => {
-        axios.get(`/gameroute/gamestart/${gameId}`)
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
-
     render() {
+        let current = window.location.pathname;
+        this.props.routeCheck(current);
+      
         return (
             <Container fluid>
                 <Row>
