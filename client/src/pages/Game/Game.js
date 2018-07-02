@@ -5,6 +5,7 @@ import firebase from '../../firebase'
 import LandCard from "../../components/LandCard";
 import landcard from "../../components/LandCard/landcard.json";
 import "./Game.css";
+import axios from 'axios';
 
 class Game extends Component {
     state = {
@@ -27,23 +28,20 @@ class Game extends Component {
         });
 
         connectionsRef.once("value").then((snap) => {//PAGE LOAD AND ANY PLAYER JOIN/LEAVE
-                console.log(snap.val())
             if (snap.val().playerOne.active === false) {
-                // console.log('no player 1 found');
                 this.becomePlayerOne();
             } else if (snap.val().playerTwo.active === false) {
-            //     console.log('no player 2 found');
                 this.becomePlayerTwo();
-            // } else {
-            //     console.log('both players found');
-            //     // becomeSpectator();
+                this.gameStart(this.state.gameId);
+                // } else {
+                //     console.log('both players found');
+                //     // becomeSpectator();
             };
         });
     }
 
     //PLAYER ONE SETUP AND DISCONNECT LISTENING
     becomePlayerOne = () => {
-        console.log('becoming player 1')
         //SERVER PLAYER VARS SETUP
         firebase.database().ref(`games/Game${this.state.gameId}/playerOne`).set({
             active: true,
@@ -52,15 +50,13 @@ class Game extends Component {
         })
         //LOCAL PLAYER VARS SETUP
         this.setState({ isPlayer1: true })
-
         //DISCONNECT LISTENING
-        var presenceRef = firebase.database().ref(`games/Game${this.state.gameId}/playerOne/active`);
+        const presenceRef = firebase.database().ref(`games/Game${this.state.gameId}/playerOne/active`);
         presenceRef.onDisconnect().set(false);
     };
 
     //PLAYER Two SETUP AND DISCONNECT LISTENING
     becomePlayerTwo = () => {
-        console.log('becoming player 2')
         //SERVER PLAYER VARS SETUP
         firebase.database().ref(`games/Game${this.state.gameId}/playerTwo`).set({
             active: true,
@@ -69,12 +65,20 @@ class Game extends Component {
         })
         //LOCAL PLAYER VARS SETUP
         this.setState({ isPlayer2: true })
-
         //DISCONNECT LISTENING
-        var presenceRef = firebase.database().ref(`games/Game${this.state.gameId}/playerTwo/active`);
+        const presenceRef = firebase.database().ref(`games/Game${this.state.gameId}/playerTwo/active`);
         presenceRef.onDisconnect().set(false);
     };
 
+    gameStart = (gameId) => {
+        axios.get(`/gameroute/gamestart/${gameId}`)
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
 
     render() {
         return (

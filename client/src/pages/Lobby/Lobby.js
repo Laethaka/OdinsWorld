@@ -19,7 +19,6 @@ class Lobby extends Component {
             message: ""
         };
         // this.handleCreate = this.handleCreate.bind(this);
-
     };
 
     componentWillReceiveProps() {
