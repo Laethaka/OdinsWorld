@@ -6,7 +6,7 @@ import Nav from "./components/Nav";
 import './App.css';
 import Game from "./pages/Game";
 import Lobby from "./pages/Lobby";
-import firebase, { auth, provider } from './firebase.js'
+import { auth, provider } from './firebase.js'
 
 class App extends Component {
 
@@ -15,10 +15,10 @@ class App extends Component {
     this.state = {
       username: '',
       user: null,
-    }
+    };
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
-  }
+  };
 
   logout() {
     auth.signOut()
@@ -27,7 +27,8 @@ class App extends Component {
           user: null
         });
       });
-  }
+  };
+
   login() {
     auth.signInWithPopup(provider)
       .then((result) => {
@@ -36,15 +37,15 @@ class App extends Component {
           user
         });
       });
-  }
+  };
 
   componentDidMount() {
     auth.onAuthStateChanged((user) => {
       if (user) {
         this.setState({ user });
-      }
+      };
     });
-  }
+  };
 
   render() {
     return (
@@ -60,6 +61,7 @@ class App extends Component {
               </div>
           </Nav>
           <Switch>
+            <Route exact path="/" component={Landing} />
             <Route exact path="/Lobby" render={()=><Lobby user={this.state.user}/>} />
             <Route exact path="/Landing" component={Landing} />
             <Route exact path='/Game' component={Game} />
