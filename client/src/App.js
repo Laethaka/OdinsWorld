@@ -10,10 +10,10 @@ import Landing from "./pages/Landing";
 import NoMatch from "./pages/NoMatch";
 import Nav from "./components/Nav";
 
-//Background
-import LandingBG from "./components/Images/landing-page.png";
-import GameBG from "./components/Images/table-backgrond-3.png";
-import LobbyBG from "./components/Images/paper.jpg";
+// // BACK GROUND POOP BREAK EVERYTHING
+// import LandingBG from "./components/Images/landing-page.png";
+// import GameBG from "./components/Images/table-backgrond-3.png";
+// import LobbyBG from "./components/Images/paper.jpg";
 
 class App extends Component {
 
@@ -64,18 +64,20 @@ class App extends Component {
   };
 
   render() {
-    let bg;
-    if (this.state.current === "/landing") {
-      bg = "landingBackground"
-    } else if (this.state.current === "/game") {
-      bg = "gameBackground"
-    } else {
-      bg = "lobbyBackground"
-    }
+    // // BACK GROUND POOP BREAK EVERYTHING
+    // let bg;
+    // if (this.state.current === "/landing") {
+    //   bg = "landingBackground"
+    // } else if (this.state.current === "/game") {
+    //   bg = "gameBackground"
+    // } else {
+    //   bg = "lobbyBackground"
+    // }
 
     return (
       <Router>
-        <div style={styles[bg]}>
+      <div>
+        {/* <div style={styles[bg]}> */}
           <Nav user={this.state.user}>
               <div className="wrapper">
                 {this.state.user ?
@@ -90,9 +92,9 @@ class App extends Component {
               </div>
           </Nav>
           <Switch>
-            <Route exact path="/Lobby" render={()=><Lobby user={this.state.user} routeCheck={this.routeCheck}/>} />
-            <Route exact path="/Landing" component={() => <Landing routeCheck={this.routeCheck}/>} />
-            <Route exact path='/Game' component={() => <Game routeCheck={this.routeCheck}/>} />
+            <Route exact path="/Lobby" render={()=><Lobby user={this.state.user}/>} />
+            <Route exact path="/Landing" component={Landing} />
+            <Route exact path='/Game' component={Game} />
             <Route exact path="/" component={Landing} />
             <Route component={NoMatch} />
           </Switch>
@@ -102,16 +104,17 @@ class App extends Component {
   }
 };
 
-const styles = {
-  landingBackground: {
-    backgroundImage: `url(${LandingBG})`
-  },
-  lobbyBackground: {
-    backgroundImage: `url(${LobbyBG})`
-  },
-  gameBackground: {
-    backgroundImage: `url(${GameBG})`
-  }
-}
+// // BACK GROUND POOP BREAK EVERYTHING
+// const styles = {
+//   landingBackground: {
+//     backgroundImage: `url(${LandingBG})`
+//   },
+//   lobbyBackground: {
+//     backgroundImage: `url(${LobbyBG})`
+//   },
+//   gameBackground: {
+//     backgroundImage: `url(${GameBG})`
+//   }
+// }
 
 export default App;
