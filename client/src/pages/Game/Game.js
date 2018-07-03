@@ -15,21 +15,18 @@ import flightcard from "../../components/FlightCard/flightcard.json";
 import DrawCard from "../../components/DrawCard";
 
 
-
 class Game extends Component {
     state = {
         landcard,
-<<<<<<< HEAD
         gameId: 1,
         toprow: [],
-        bottomrow: []
-=======
-        flightcard,
-        gameId: 1
->>>>>>> d42ba0bb0f46fbcea3df00841eb716ae713bb15c
+        bottomrow: [],
+        flightcard
     };
 
     componentWillReceiveProps() {
+        console.log('hikitty')
+
         const database = firebase.database();
         const username = firebase.auth().currentUser.displayName;
 
@@ -63,6 +60,10 @@ class Game extends Component {
                 bottomrow: snap.val().bottomrow,
             })
         })
+        setTimeout (() => {
+            let current = window.location.pathname;
+            this.props.routeCheck(current);
+        }, 2000)
     }
 
     //PLAYER ONE SETUP AND DISCONNECT LISTENING
@@ -117,8 +118,7 @@ class Game extends Component {
     }
 
     render() {
-        let current = window.location.pathname;
-        this.props.routeCheck(current);
+       
       
         return (
             <Container fluid>
@@ -129,7 +129,8 @@ class Game extends Component {
                                 <div className="text-light border border-warning">
                                     {this.state.toprow.map(land => (
                                         <LandCard
-                                            //NEEDS TO MAP OVER ARRAY
+                                            key={land}
+                                            id={land}
                                         />
                                     ))}
                                 </div>
