@@ -10,16 +10,16 @@ import firebase from '../../firebase'
 // Card components
 import LandCard from "../../components/LandCard";
 import landcard from "../../components/LandCard/landcard.json";
-import FlightCard from "../../components/FlightCard";
-import flightcard from "../../components/FlightCard/flightcard.json";
-import DrawCard from "../../components/DrawCard";
+// import FlightCard from "../../components/FlightCard";
+// import flightcard from "../../components/FlightCard/flightcard.json";
+// import DrawCard from "../../components/DrawCard";
 
 
 
 class Game extends Component {
     state = {
         landcard,
-        flightcard,
+        // flightcard,
         gameId: 1
     };
 
@@ -84,8 +84,8 @@ class Game extends Component {
     };
 
     render() {
-        let current = window.location.pathname;
-        this.props.routeCheck(current);
+        // let current = window.location.pathname;
+        // this.props.routeCheck(current);
       
         return (
             <Container fluid>
@@ -117,7 +117,7 @@ class Game extends Component {
                     </Col>
                 </Row>
 
-                <Row>
+                {/* <Row> 
                     <Col size="md-12">
                         <div className="userBoard text-center border pt-5">
                             <Row>
@@ -143,7 +143,7 @@ class Game extends Component {
                             </Row>
                         </div>
                     </Col>
-                </Row>
+                </Row>*/}
 
             </Container>
         );
