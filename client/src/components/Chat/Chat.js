@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./Chat.css";
 import firebase from "../../firebase.js"
+import $ from 'jquery'
 
 class Chat extends Component {
 
@@ -15,6 +16,7 @@ class Chat extends Component {
     componentWillMount(){
         /* Create reference to messages in Firebase Database */
         let messagesRef = firebase.database().ref("messages").orderByChild("id").limitToLast(25);
+
         messagesRef.on("child_added", snapshot => {
         /* Update React state when message is added at Firebase Database */
             let message = { 
@@ -22,9 +24,9 @@ class Chat extends Component {
                 id: snapshot.key 
             };
             this.setState({ 
-                messages: [message].concat(this.state.messages) 
-                
+                messages: [message].concat(this.state.messages)
             });
+            $(".chatPoop").animate( { scrollTop: $(".chatPoop").height()+999999999999999999 }, "fast");
         });
         
     };
@@ -32,42 +34,30 @@ class Chat extends Component {
     addMessage(event){
         event.preventDefault(); // <- prevent form submit from reloading the page
         /* Send the message to Firebase */
-        firebase.database().ref("messages").push(  + ": " + this.input.value );
+        firebase.database().ref("messages").push( firebase.auth().currentUser.displayName + ": " + this.input.value );
+        
         this.input.value = ""; // <- clear the input
-        console.log(this.username)
-      
+
+        console.log(this.state.messages);
     };
-    
-    scrollToBottom = () => {
-        this.input.scrollIntoView();
-    }
-
-      componentDidMount() {
-        this.scrollToBottom();
-    }
-      
-      componentDidUpdate() {
-        this.scrollToBottom();
-    }
-
 
     render() {
         return (
             <div className="chat-box">
-                <h3 className="chat-title">Messages</h3>
+                <h3 className="chat-title">Chat</h3>
                 <hr className="style-one"/>
 
                 <div className="col-lg-12">
 
-                <div className="row">
-                    <div className="col-lg-12 chatPoop">
-                        {this.state.messages.map( message => <h5 key={message.id}>{message.text}</h5> )}
+                    <div className="row chatPoopDad">
+                        <div className="col-lg-12 chatPoop">
+                            {this.state.messages.map( message => <h6 key={message.id}>{message.text}</h6> )}
+                        </div>
                     </div>
-                </div>
 
-                <hr className="style-one"/>
+                    <hr className="style-one"/>
 
-                <form onSubmit={this.addMessage.bind(this)}>
+                    <form onSubmit={this.addMessage.bind(this)}>
   
                         <div className="row">
 

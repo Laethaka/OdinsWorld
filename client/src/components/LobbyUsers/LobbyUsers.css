@@ -1,5 +1,5 @@
 .online-user-box {
-    padding: 1rem 1rem 1rem 2rem;
+    padding: 1rem 1rem 1rem 1rem;
 }
 
 ul {
@@ -31,6 +31,6 @@ hr.style-one {
 
 .usersPoop {
     overflow-y: auto;
-    overflow-x: hidden;
+    overflow-x: auto;
     height: 30.9em;
 }

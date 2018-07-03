@@ -26,6 +26,21 @@ hr.style-one {
 .chatPoop {
     word-wrap: break-word;
     overflow-y: auto;
-    overflow-x: hidden;
+    overflow-x: auto;
     height: 26.5em;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.chatPoopDad {
+    overflow: scroll;
+    overflow-x: auto;
+}
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+/* optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: #FF000000;
 }

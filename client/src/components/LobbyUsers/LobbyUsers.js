@@ -8,10 +8,9 @@ const LobbyUsers = (props) => {
             <hr className="style-one"/>
 
             <div className="usersPoop">
-
                 <ul>
                     {props.users.map(function (user, index) {
-                        return <li key={index}>{user}</li>
+                        return <h6 key={index}>{user}</h6>
                     })}
                 </ul>
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Link} from "react-router-dom";
 import Landing from "./pages/Landing";
 import NoMatch from "./pages/NoMatch";
 import Nav from "./components/Nav";
@@ -54,9 +54,13 @@ class App extends Component {
           <Nav user={this.state.user}>
               <div className="wrapper">
                 {this.state.user ?
+                <Link to="/Landing">
                   <button type="button" className="mr-3 btn log-button" onClick={this.logout}>Logout</button>
+                </Link>
                   :
+                <div>
                   <button type="button" className="mr-3 btn log-button" onClick={this.login}>Log In</button>
+                </div>
                 }
               </div>
           </Nav>
