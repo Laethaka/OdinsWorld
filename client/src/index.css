@@ -10,7 +10,7 @@ body {
 
 @font-face {
   font-family: 'norse';
-  src: local('norse'), url(./fonts/norse.ttf) format('ttf');
+  src: local('norse'), url('./fonts/norse.ttf') format('ttf');
 }
 
 
