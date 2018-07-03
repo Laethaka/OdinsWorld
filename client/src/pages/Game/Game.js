@@ -14,13 +14,13 @@ import FlightCard from "../../components/FlightCard";
 import flightcard from "../../components/FlightCard/flightcard.json";
 import DrawCard from "../../components/DrawCard";
 
-
-
 class Game extends Component {
     state = {
         landcard,
-        flightcard,
-        gameId: 1
+        gameId: 1,
+        toprow: [],
+        bottomrow: [],
+        flightcard
     };
 
     componentWillReceiveProps() {
@@ -43,11 +43,16 @@ class Game extends Component {
             } else if (snap.val().playerTwo.active === false) {
                 this.becomePlayerTwo();
                 this.gameStart(this.state.gameId);
-                // } else {
-                //     console.log('both players found');
-                //     // becomeSpectator();
             };
         });
+
+        //LISTENING FOR WORLD CHANGES AND UPDATING STATE
+        database.ref(`/games/Game${this.state.gameId}/world`).on('value', snap => {
+            this.setState({
+                toprow: snap.val().toprow,
+                bottomrow: snap.val().bottomrow,
+            })
+        })
     }
 
     //PLAYER ONE SETUP AND DISCONNECT LISTENING
@@ -83,10 +88,36 @@ class Game extends Component {
         presenceRef.onDisconnect().set(false);
     };
 
+    gameStart = (gameId) => {
+        let landsArr = [];
+        for (let idx = 0; idx < 32; idx++) {
+            landsArr.push(Math.floor(Math.random() * 5))
+        }
+        firebase.database().ref(`games/Game${gameId}/world`).set({
+            toprow: landsArr.slice(0, 16),
+            bottomrow: landsArr.slice(16, 32)
+        })
+        firebase.database().ref(`games/Game${gameId}/decks`).set({
+            player1FlightDeck: ['plain', 'desert ', 'river', 'mountain', 'forest', 'plain', 'desert ', 'river', 'mountain', 'forest', 'plain', 'desert ', 'river', 'mountain', 'forest', 'plain', 'desert ', 'river', 'mountain', 'forest', 'plain', 'desert ', 'river', 'mountain', 'forest'],
+            player2FlightDeck: ['plain', 'desert ', 'river', 'mountain', 'forest', 'plain', 'desert ', 'river', 'mountain', 'forest', 'plain', 'desert ', 'river', 'mountain', 'forest', 'plain', 'desert ', 'river', 'mountain', 'forest', 'plain', 'desert ', 'river', 'mountain', 'forest'],
+            player1LokiDeck: ['push', 'flip', 'slide', 'doubletrouble', 'push', 'flip', 'slide', 'doubletrouble'],
+            player2LokiDeck: ['push', 'flip', 'slide', 'doubletrouble', 'push', 'flip', 'slide', 'doubletrouble'],
+            player1Hand: [],
+            player2Hand: []
+        }).then = () => {
+            for (let idx=0; idx<5; idx++) {
+                this.cardDraw()
+            }
+        }
+    }
+
+    cardDraw = () => {
+        //MODAL PROMPTING USER TO CHOOSE A DECK
+
+    }
+
     render() {
-        // let current = window.location.pathname;
-        // this.props.routeCheck(current);
-      
+
         return (
             <Container fluid>
                 <Row>
@@ -94,21 +125,21 @@ class Game extends Component {
                         <Jumbotron>
                             <div className="landBoard text-center">
                                 <div className="text-light border border-warning">
-                                    {this.state.landcard.map(land => (
+                                    {this.state.toprow.map((landId, idx) => (
                                         <LandCard
-                                            id={land.id}
-                                            key={land.id}
-                                            image={land.image}
+                                            position={idx}
+                                            key={idx}
+                                            image={landId}
                                         />
                                     ))}
                                 </div>
 
                                 <div className="text-light border border-warning img-vert">
-                                    {this.state.landcard.map(land => (
+                                    {this.state.bottomrow.map((landId, idx) => (
                                         <LandCard
-                                            id={land.id}
-                                            key={land.id}
-                                            image={land.image}
+                                            position={idx}
+                                            key={idx}
+                                            image={landId}
                                         />
                                     ))}
                                 </div>
@@ -117,7 +148,7 @@ class Game extends Component {
                     </Col>
                 </Row>
 
-                <Row> 
+                <Row>
                     <Col size="md-12">
                         <div className="userBoard text-center border pt-5">
                             <Row>
@@ -128,18 +159,18 @@ class Game extends Component {
                                 <div className="col-sm-8 border text-light">
                                     <h4>Your Hand</h4>
                                     {this.state.flightcard.map(flight => (
-                                            <FlightCard
-                                                id={flight.id}
-                                                key={flight.id}
-                                                image={flight.image}
-                                            />
-                                        ))}
+                                        <FlightCard
+                                            id={flight.id}
+                                            key={flight.id}
+                                            image={flight.image}
+                                        />
+                                    ))}
                                 </div>
 
                                 <div className="col-sm-2 border text-light">
                                     <h4>Discard</h4>
                                 </div>
-                                
+
                             </Row>
                         </div>
                     </Col>
