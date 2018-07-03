@@ -4,8 +4,15 @@
     height: 600px;
 }
 
-
 .img-vert {
     transform: rotateX(180deg);
 
+}
+
+.landBoard {
+    height: 25em;
+}
+
+.userBoard {
+    height: 20em;
 }
