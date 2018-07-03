@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Col, Row, Container } from "../../components/Grid";
-import { BrowserRouter as Link} from "react-router-dom";
 import "./Lobby.css";
 
 import firebase from '../../firebase.js'
@@ -58,8 +57,7 @@ class Lobby extends Component {
         console.log(this.state.gameCount);
         this.state.gameCount++;
         let newGameId = this.state.gameCount;
-        console.log(newGameId);
-        <Link to="/game"/>
+       console.log(this.gamesArr)
         
         // database.ref()
     };
@@ -74,9 +72,9 @@ class Lobby extends Component {
                             <LobbyGames 
                                 games={this.state.usersInGame}
                             />
-                            
-                            <button onClick={this.handleCreate}>Join Game</button>
-                          
+
+                                <button onClick={this.handleCreate}>Join Game</button>
+   
                         </div>
                     </Col>
 
