@@ -22,7 +22,6 @@ class App extends Component {
       username: '',
       user: null,
       current: "/landing"
-      };
     };
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);

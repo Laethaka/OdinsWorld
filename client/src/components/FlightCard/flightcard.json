@@ -1,0 +1,28 @@
+[
+    {
+        "id": 0,
+        "imageName": "desert",
+        "image": "https://res.cloudinary.com/mosjoandy/image/upload/v1530300321/cards-2-02.png"
+    },
+    {
+        "id": 1,
+        "imageName": "plain",
+        "image": "https://res.cloudinary.com/mosjoandy/image/upload/v1530300321/cards-2-05.png"
+    },
+    {
+        "id": 2,
+        "imageName": "river",
+        "image": "https://res.cloudinary.com/mosjoandy/image/upload/v1530300321/cards-2-03.png"
+    },
+    {
+        "id": 3,
+        "imageName": "mountain",
+        "image": "https://res.cloudinary.com/mosjoandy/image/upload/v1530300321/cards-2-01.png"
+    },
+    {
+        "id": 4,
+        "imageName": "forest",
+        "image": "https://res.cloudinary.com/mosjoandy/image/upload/v1530300321/cards-2-04.png"
+    }
+]
+  

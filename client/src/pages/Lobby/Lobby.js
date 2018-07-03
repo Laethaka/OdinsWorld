@@ -61,48 +61,9 @@ class Lobby extends Component {
         // database.ref()
     };
 
-    handleCreate = () => {
-        console.log(this.state.gameCount);
-        this.state.gameCount++;
-        let newGameId = this.state.gameCount;
-        console.log(newGameId);
-        // database.ref()
-    }
-    
-    //////////////////////////////////////////////////////////////
-    //Chat component
-
-    handleInputChange = event => {
-        const { name, value } = event.target;
-        this.setState({
-          [name]: value
-        });
-      };
-    
-    handleFormSubmit = event => {
-    event.preventDefault();
-
-    this.setState({
-        message: ""
-    })
-
-    if (this.state.message) {
-        console.log("pooping")
-        // Firebase ish here
-    //    ({
-    //     message: this.state.messagea,
-    //     })
-    //     .then(res => console.log("poop success"))
-    //     .catch(err => console.log(err));
-    }
-
-    };
-
     render() {
-        let current = window.location.pathname;
-        this.props.routeCheck(current);
         return (
-            <Container fluid >
+            <Container fluid>
                 <Row>
                     <Col size="lg-4">
                         {/* Game Join Component */}
