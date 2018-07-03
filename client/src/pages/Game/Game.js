@@ -12,7 +12,8 @@ import LandCard from "../../components/LandCard";
 import landcard from "../../components/LandCard/landcard.json";
 import FlightCard from "../../components/FlightCard";
 import flightcard from "../../components/FlightCard/flightcard.json";
-import DrawCard from "../../components/DrawCard";
+import DrawFlight from "../../components/DrawFlight";
+import DrawLoki from "../../components/DrawLoki";
 
 class Game extends Component {
     state = {
@@ -20,7 +21,8 @@ class Game extends Component {
         gameId: 1,
         toprow: [],
         bottomrow: [],
-        flightcard
+        flightcard,
+        cardsToDraw: 0
     };
 
     componentWillReceiveProps() {
@@ -65,7 +67,7 @@ class Game extends Component {
             move: ''
         })
         //LOCAL PLAYER VARS SETUP
-        this.setState({ isPlayer1: true })
+        this.setState({ isPlayer1: true, cardsToDraw: 5 })
         //DISCONNECT LISTENING
         const presenceRef = firebase.database().ref(`games/Game${this.state.gameId}/playerOne/active`);
         presenceRef.onDisconnect().set(false);
@@ -81,7 +83,7 @@ class Game extends Component {
             move: ''
         })
         //LOCAL PLAYER VARS SETUP
-        this.setState({ isPlayer2: true })
+        this.setState({ isPlayer2: true, cardsToDraw: 5 })
 
         //DISCONNECT LISTENING
         var presenceRef = firebase.database().ref(`games/Game${this.state.gameId}/playerTwo/active`);
@@ -98,23 +100,39 @@ class Game extends Component {
             bottomrow: landsArr.slice(16, 32)
         })
         firebase.database().ref(`games/Game${gameId}/decks`).set({
-            player1FlightDeck: ['plain', 'desert ', 'river', 'mountain', 'forest', 'plain', 'desert ', 'river', 'mountain', 'forest', 'plain', 'desert ', 'river', 'mountain', 'forest', 'plain', 'desert ', 'river', 'mountain', 'forest', 'plain', 'desert ', 'river', 'mountain', 'forest'],
-            player2FlightDeck: ['plain', 'desert ', 'river', 'mountain', 'forest', 'plain', 'desert ', 'river', 'mountain', 'forest', 'plain', 'desert ', 'river', 'mountain', 'forest', 'plain', 'desert ', 'river', 'mountain', 'forest', 'plain', 'desert ', 'river', 'mountain', 'forest'],
             player1LokiDeck: ['push', 'flip', 'slide', 'doubletrouble', 'push', 'flip', 'slide', 'doubletrouble'],
             player2LokiDeck: ['push', 'flip', 'slide', 'doubletrouble', 'push', 'flip', 'slide', 'doubletrouble'],
-            player1Hand: [],
-            player2Hand: []
-        }).then = () => {
-            for (let idx=0; idx<5; idx++) {
-                this.cardDraw()
+        }).then((snap) => {
+            console.log('done setting up!')
+        })
+    }
+
+    drawFlight = () => {//USER REQUESTING TO DRAW FLIGHT
+        if (this.state.cardsToDraw > 0) {//PLAYER HAS DRAWING PERMISSION
+            let newCard = Math.floor(Math.random()*5)
+
+            if (this.state.isPlayer1) {//ROUTING TO PLAYER 1 HAND
+                firebase.database().ref(`games/Game${this.state.gameId}/decks/player1Hand`).push(newCard)
+            } else {//ROUTING TO PLAYER 2 HAND
+                firebase.database().ref(`games/Game${this.state.gameId}/decks/player2Hand`).push(newCard)
             }
+            console.log(this.state.cardsToDraw)
+            this.setState({ cardsToDraw: this.state.cardsToDraw-1 });
         }
-    }
+    };
 
-    cardDraw = () => {
-        //MODAL PROMPTING USER TO CHOOSE A DECK
+    drawLoki = () => {//USER REQUESTING TO DRAW LOKI
+        if (this.state.cardsToDraw > 0) {//PLAYER HAS DRAWING PERMISSION
+            let newCard = 'loki card!'
 
-    }
+            if (this.state.isPlayer1) {//ROUTING TO PLAYER 1 HAND
+                firebase.database().ref(`games/Game${this.state.gameId}/decks/player1Hand`).push(newCard)
+            } else {//ROUTING TO PLAYER 2 HAND
+                firebase.database().ref(`games/Game${this.state.gameId}/decks/player2Hand`).push(newCard)
+            }
+            this.setState({ cardsToDraw: this.state.cardsToDraw-1 });
+        }
+    };
 
     render() {
 
@@ -153,7 +171,8 @@ class Game extends Component {
                         <div className="userBoard text-center border pt-5">
                             <Row>
                                 <div className="col-sm-2 border">
-                                    <DrawCard />
+                                    <DrawFlight deckClick={this.drawFlight} />
+                                    <DrawLoki deckClick={this.drawLoki} />
                                 </div>
 
                                 <div className="col-sm-8 border text-light">
