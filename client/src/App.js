@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch, Link} from "react-router-dom";
+import './App.css';
+import { auth, provider } from './firebase.js'
+
+// Pages and Nav component
+import Game from "./pages/Game";
+import Lobby from "./pages/Lobby";
 import Landing from "./pages/Landing";
 import NoMatch from "./pages/NoMatch";
 import Nav from "./components/Nav";
-import './App.css';
-import Game from "./pages/Game";
-import Lobby from "./pages/Lobby";
 
+//Background
 import LandingBG from "./components/Images/landing-page.png";
 import GameBG from "./components/Images/table-backgrond-3.png";
 import LobbyBG from "./components/Images/paper.jpg";
-
-import { auth, provider } from './firebase.js'
-
 
 class App extends Component {
 
@@ -58,9 +59,9 @@ class App extends Component {
     if (this.state.current !== string) {
       this.setState({
         current: string
-      })
-    }
-  }
+      });
+    };
+  };
 
   render() {
     let bg;
@@ -100,7 +101,6 @@ class App extends Component {
     )
   }
 };
-
 
 const styles = {
   landingBackground: {
