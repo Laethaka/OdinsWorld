@@ -76,7 +76,7 @@ class App extends Component {
 
     return (
       <Router>
-      <div>
+        <div>
         {/* <div style={styles[bg]}> */}
           <Nav user={this.state.user}>
               <div className="wrapper">
