@@ -2,7 +2,10 @@ body {
   font-family: 'Artifika', serif;
   color: #2b2423;
   font-size: 16px;
-}
+  background-image: url("../../client/src/components/Images/table-backgrond-3.png");
+  background-repeat: repeat-x;
+  height: 600px;
+ }
 
 
 @font-face {
