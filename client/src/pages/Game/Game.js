@@ -10,7 +10,9 @@ import axios from 'axios';
 class Game extends Component {
     state = {
         landcard,
-        gameId: 1
+        gameId: 1,
+        toprow: [],
+        bottomrow: []
     };
 
     componentWillReceiveProps() {
@@ -38,6 +40,15 @@ class Game extends Component {
                 //     // becomeSpectator();
             };
         });
+
+        //LISTENING FOR WORLD CHANGES AND UPDATING STATE
+        database.ref(`/games/Game${this.state.gameId}/world`).on('value', snap => {
+            console.log(snap.val())
+            this.setState({
+                toprow: snap.val().toprow,
+                bottomrow: snap.val().bottomrow,
+            })
+        })
     }
 
     //PLAYER ONE SETUP AND DISCONNECT LISTENING
@@ -71,13 +82,21 @@ class Game extends Component {
     };
 
     gameStart = (gameId) => {
-        axios.get(`/gameroute/gamestart/${gameId}`)
-        .then(function (response) {
-          console.log(response);
+        let landsArr = [];
+        for (let idx = 0; idx < 24; idx++) {
+            landsArr.push(Math.floor(Math.random() * 5))
+        }
+        firebase.database().ref(`games/Game${gameId}/world`).set({
+            toprow: landsArr.slice(0, 12),
+            bottomrow: landsArr.slice(12, 24)
         })
-        .catch(function (error) {
-          console.log(error);
-        });
+        // axios.get(`/gameroute/gamestart/${gameId}`)
+        // .then(function (response) {
+        //   console.log(response);
+        // })
+        // .catch(function (error) {
+        //   console.log(error);
+        // });
     }
 
     render() {
@@ -88,17 +107,15 @@ class Game extends Component {
                         <Jumbotron>
                             <div className="text-center">
                                 <div className="text-light border border-warning">
-                                    {this.state.landcard.map(land => (
+                                    {this.state.toprow.map(land => (
                                         <LandCard
-                                            id={land.id}
-                                            key={land.id}
-                                            image={land.image}
+                                            //NEEDS TO MAP OVER ARRAY
                                         />
                                     ))}
                                 </div>
 
                                 <div className="text-light border border-warning img-vert">
-                                    {this.state.landcard.map(land => (
+                                    {this.state.bottomrow.map(land => (
                                         <LandCard
                                             id={land.id}
                                             key={land.id}

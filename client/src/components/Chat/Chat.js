@@ -23,7 +23,6 @@ class Chat extends Component {
             };
             this.setState({ 
                 messages: [message].concat(this.state.messages) 
-                
             });
         });
         
