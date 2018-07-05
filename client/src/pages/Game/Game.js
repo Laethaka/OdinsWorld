@@ -65,7 +65,7 @@ class Game extends Component {
         firebase.database().ref(`games/Game${this.state.gameId}/playerOne`).set({
             active: true,
             name: firebase.auth().currentUser.displayName,
-            move: ''
+            ready: false
         })
         //LOCAL PLAYER VARS SETUP
         this.setState({ isPlayer1: true, cardsToDraw: 5 })
@@ -81,7 +81,7 @@ class Game extends Component {
         firebase.database().ref(`games/Game${this.state.gameId}/playerTwo`).set({
             active: true,
             name: firebase.auth().currentUser.displayName,
-            move: ''
+            ready: false
         })
         //LOCAL PLAYER VARS SETUP
         this.setState({ isPlayer2: true, cardsToDraw: 5 })
@@ -117,8 +117,10 @@ class Game extends Component {
             } else {//ROUTING TO PLAYER 2 HAND
                 firebase.database().ref(`games/Game${this.state.gameId}/decks/player2Hand`).push(newCard)
             }
-            console.log(this.state.cardsToDraw)
             this.setState({ cardsToDraw: this.state.cardsToDraw-1 });
+            if (this.state.cardsToDraw === 0) {
+                //SET PLAYER READY
+            }
         }
     };
 
