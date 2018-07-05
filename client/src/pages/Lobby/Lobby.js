@@ -18,7 +18,6 @@ class Lobby extends Component {
             usersInGame: [],
             message: ""
         };
-        // this.handleCreate = this.handleCreate.bind(this);
     };
 
     componentWillReceiveProps() {
@@ -43,23 +42,13 @@ class Lobby extends Component {
 
         database.ref(`/games`).on('value', snap => {
             // console.log('games:',snap.val())
-            if (snap.val() != null) {
+            if (snap.val()) {
                 let gamesArr = Object.values(snap.val());
-                this.setState({usersInGame : gamesArr});
+                // this.setState({usersInGame : gamesArr});
                 console.log('gamesAvail:', gamesArr);
-                // console.log('first game :', gamesAvail.Game1)
             };
             // this.setState({gameCount: gamesArr.length})
         });
-    };
-
-    handleCreate = () => {
-        console.log(this.state.gameCount);
-        this.state.gameCount++;
-        let newGameId = this.state.gameCount;
-       console.log(this.gamesArr)
-        
-        // database.ref()
     };
 
     render() {
@@ -72,8 +61,6 @@ class Lobby extends Component {
                             <LobbyGames 
                                 games={this.state.usersInGame}
                             />
-
-                                <button onClick={this.handleCreate}>Join Game</button>
    
                         </div>
                     </Col>
