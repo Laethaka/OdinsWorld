@@ -11,9 +11,9 @@ import NoMatch from "./pages/NoMatch";
 import Nav from "./components/Nav";
 
 // // BACK GROUND POOP BREAK EVERYTHING
-// import LandingBG from "./components/Images/landing-page.png";
-// import GameBG from "./components/Images/table-backgrond-3.png";
-// import LobbyBG from "./components/Images/paper.jpg";
+import LandingBG from "./components/Images/landing-page.png";
+import GameBG from "./components/Images/table-backgrond-3.png";
+import LobbyBG from "./components/Images/paper.jpg";
 
 class App extends Component {
 
@@ -64,20 +64,20 @@ class App extends Component {
   };
 
   render() {
-    // // BACK GROUND POOP BREAK EVERYTHING
-    // let bg;
-    // if (this.state.current === "/landing") {
-    //   bg = "landingBackground"
-    // } else if (this.state.current === "/game") {
-    //   bg = "gameBackground"
-    // } else {
-    //   bg = "lobbyBackground"
-    // }
+    // BACK GROUND POOP BREAK EVERYTHING
+    let bg;
+    if (this.state.current === "/landing") {
+      bg = "landingBackground"
+    } else if (this.state.current === "/game") {
+      bg = "gameBackground"
+    } else {
+      bg = "lobbyBackground"
+    }
 
     return (
       <Router>
-        <div>
-        {/* <div style={styles[bg]}> */}
+        {/* <div> */}
+        <div style={styles[bg]}>
           <Nav user={this.state.user}>
               <div className="wrapper">
                 {this.state.user ?
@@ -104,17 +104,17 @@ class App extends Component {
   }
 };
 
-// // BACK GROUND POOP BREAK EVERYTHING
-// const styles = {
-//   landingBackground: {
-//     backgroundImage: `url(${LandingBG})`
-//   },
-//   lobbyBackground: {
-//     backgroundImage: `url(${LobbyBG})`
-//   },
-//   gameBackground: {
-//     backgroundImage: `url(${GameBG})`
-//   }
-// }
+// BACK GROUND POOP BREAK EVERYTHING
+const styles = {
+  landingBackground: {
+    backgroundImage: `url(${LandingBG})`
+  },
+  lobbyBackground: {
+    backgroundImage: `url(${LobbyBG})`
+  },
+  gameBackground: {
+    backgroundImage: `url(${GameBG})`
+  }
+}
 
 export default App;

@@ -46,7 +46,7 @@ class Lobby extends Component {
             if (snap.val() != null) {
                 let gamesArr = Object.values(snap.val());
                 this.setState({usersInGame : gamesArr});
-                console.log('gamesAvail:', gamesArr);
+                // console.log('gamesAvail:', gamesArr);
                 // console.log('first game :', gamesAvail.Game1)
             };
             // this.setState({gameCount: gamesArr.length})
@@ -57,7 +57,7 @@ class Lobby extends Component {
         console.log(this.state.gameCount);
         this.state.gameCount++;
         let newGameId = this.state.gameCount;
-       console.log(this.gamesArr)
+        console.log(newGameId);
         
         // database.ref()
     };

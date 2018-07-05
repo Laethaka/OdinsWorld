@@ -18,10 +18,10 @@ import DrawLoki from "../../components/DrawLoki";
 class Game extends Component {
     state = {
         landcard,
+        flightcard,
         gameId: 1,
         toprow: [],
         bottomrow: [],
-        flightcard,
         cardsToDraw: 0
     };
 
