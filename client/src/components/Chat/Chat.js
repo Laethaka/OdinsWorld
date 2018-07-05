@@ -26,7 +26,7 @@ class Chat extends Component {
             this.setState({ 
                 messages: [message].concat(this.state.messages)
             });
-            $(".chatPoop").animate( { scrollTop: $(".chatPoop").height()+999999999999999999 }, "fast");
+            $(".chatPoop").animate( { scrollTop: $(".chatPoop").height()+999999999999999999 }, "slow");
         });
         
     };
@@ -35,9 +35,7 @@ class Chat extends Component {
         event.preventDefault(); // <- prevent form submit from reloading the page
         /* Send the message to Firebase */
         firebase.database().ref("messages").push( firebase.auth().currentUser.displayName + ": " + this.input.value );
-        
         this.input.value = ""; // <- clear the input
-
         console.log(this.state.messages);
     };
 
@@ -77,45 +75,4 @@ class Chat extends Component {
     };
 };
      
-//     return(
-//             <div className="col-md-12 border">
-//                 <div className="chat-box">
-//                 {/* Temporary image placeholder for chat box */}
-//                     <h3 className="chat-title">Chat</h3>
-//                     <hr className="style-one"/>
-
-//                         <div className="chatPoop">
-//                         <div>
-                        
-//                                 {/* Replace with message history in firebase */}
-//                             Poop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop here
-//                             Poop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop here
-//                             Poop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop here
-//                             Poop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop here
-//                             Poop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop here
-//                             Poop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop here
-//                             Poop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop here
-//                             Poop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop here
-//                             Poop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop here
-//                             Poop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop here
-//                             Poop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop here
-//                             Poop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop here
-//                             Poop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop here
-//                             Poop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop here
-//                             Poop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop here
-//                             Poop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop here
-//                             Poop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop here
-//                             Poop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop here
-//                             Poop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop here
-//                             Poop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop here
-//                             Poop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop herePoop here
-                        
-//                         </div>
-//                     </div>
-                    
-//                 </div>
-//             </div>
-//     )
-// };
-
 export default Chat;
