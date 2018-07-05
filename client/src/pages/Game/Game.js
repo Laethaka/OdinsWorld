@@ -15,7 +15,6 @@ import flightcard from "../../components/FlightCard/flightcard.json";
 import DrawFlight from "../../components/DrawFlight";
 import DrawLoki from "../../components/DrawLoki";
 
-
 class Game extends Component {
     state = {
         landcard,
