@@ -24,6 +24,7 @@ class Game extends Component {
         bottomrow: [],
         flightcard,
         cardsToDraw: 0,
+        gameReady: false,
         gameRunning: false,
         playerHand: [],
         opponentHand: 0, //DOM WILL ONLY RENDER AN INTEGER
@@ -33,7 +34,7 @@ class Game extends Component {
 
     componentWillReceiveProps(props) {
         // console.log('this game id:', props.gameId)
-        this.setState({gameId: props.gameId})
+        this.setState({ gameId: props.gameId })
         const database = firebase.database();
         const username = firebase.auth().currentUser.displayName;
 
@@ -48,14 +49,12 @@ class Game extends Component {
         });
 
         connectionsRef.once("value").then((snap) => {//PAGE LOAD AND ANY PLAYER JOIN/LEAVE
-            console.log(snap.val())
             if (snap.val().playerOne.active === false) {
                 this.becomePlayerOne();
             } else if (snap.val().playerTwo.active === false) {
                 this.becomePlayerTwo();
-                if (!this.state.gameRunning) {
-                    this.gameStart(props.gameId);
-                    this.setState({ gameRunning: true })
+                if (!this.state.gameReady) {
+                    this.gamePrepare(props.gameId);
                 }
             };
         });
@@ -66,7 +65,7 @@ class Game extends Component {
                 toprow: snap.val().toprow,
                 bottomrow: snap.val().bottomrow,
             })
-        })
+        });
 
         //LISTENING FOR DECK CHANGES AND UPDATING STATE
         database.ref(`/games/Game${props.gameId}/decks`).on('value', snap => {
@@ -89,7 +88,14 @@ class Game extends Component {
                     this.setState({ playerHand: Object.values(myHand) })
                 }
             }
-        })
+        });
+
+        //LISTENING FOR PLAYER STATUS AND UPDATING GAME STATE (TURNS)
+        database.ref(`/games/Game${props.gameId}/`).on('value', snap => {
+            if (this.state.gameReady && !this.state.gameRunning && snap.val().playerOne.ready && snap.val().playerTwo.ready) {
+                this.gameStart()
+            }
+        });
     }
 
     //PLAYER ONE SETUP AND DISCONNECT LISTENING
@@ -102,7 +108,7 @@ class Game extends Component {
             ready: false
         })
         //LOCAL PLAYER VARS SETUP
-        this.setState({ isPlayer1: true, cardsToDraw: 5 })
+        this.setState({ isPlayer1: true, cardsToDraw: 5, gameReady: true })
         //DISCONNECT LISTENING
         const presenceRef = firebase.database().ref(`games/Game${this.state.gameId}/playerOne/`);
         presenceRef.onDisconnect().set({
@@ -131,7 +137,7 @@ class Game extends Component {
         });
     };
 
-    gameStart = (gameId) => {
+    gamePrepare = (gameId) => {
         let landsArr = [];
         for (let idx = 0; idx < 32; idx++) {
             landsArr.push(Math.floor(Math.random() * 5))
@@ -146,12 +152,29 @@ class Game extends Component {
             player1LokiDeck: ['push', 'flip', 'slide', 'doubletrouble', 'push', 'flip', 'slide', 'doubletrouble'],
             player2LokiDeck: ['push', 'flip', 'slide', 'doubletrouble', 'push', 'flip', 'slide', 'doubletrouble'],
         }).then((snap) => {
-            console.log('done setting up!')
+            this.setState({ gameReady: true })
+            console.log('game ready!')
+        })
+    };
+
+    gameStart = () => {
+        console.log('play ball! (game starting)')
+        this.setState({ gameRunning: true })
+        firebase.database().ref(`/games/Game${this.state.gameId}/playerOne`).update({//INITIALIZING TURN SEQUENCE
+            ready: false
         })
     }
 
+    handleCardPlay = landType => {
+        if (this.state.isPlayer1) {
+            console.log('player 1 is trying to play land ID:', landType)
+        } else if (this.state.isPlayer2) {
+            console.log('player 2 is trying to play land ID:', landType)
+        }
+    }
+
     drawFlight = () => {//USER REQUESTING TO DRAW FLIGHT
-        if (this.state.cardsToDraw > 0) {//PLAYER HAS DRAWING PERMISSION
+        if (this.state.cardsToDraw > 1) {//PLAYER CAN KEEP DRAWING
             let newCard = Math.floor(Math.random() * 5)
 
             if (this.state.isPlayer1) {//ROUTING TO PLAYER 1 HAND
@@ -160,12 +183,20 @@ class Game extends Component {
                 firebase.database().ref(`games/Game${this.state.gameId}/decks/player2Hand`).push(newCard)
             }
             this.setState({ cardsToDraw: this.state.cardsToDraw - 1 });
-            if (this.state.cardsToDraw === 0) {//PLAYER DONE DRAWING
-                if (this.state.isPlayer1) {
-                    firebase.database().ref(`games/Game${this.state.gameId}/playerOne/`).update({ ready: true })
-                } else if (this.state.isPlayer1) {
-                    firebase.database().ref(`games/Game${this.state.gameId}/playerTwo/`).update({ ready: true })
-                }
+        }
+
+        if (this.state.cardsToDraw === 1) {//PLAYER DONE DRAWING
+            let newCard = Math.floor(Math.random() * 5)
+            if (this.state.isPlayer1) {//ROUTING TO PLAYER 1 HAND
+                firebase.database().ref(`games/Game${this.state.gameId}/decks/player1Hand`).push(newCard)
+            } else {//ROUTING TO PLAYER 2 HAND
+                firebase.database().ref(`games/Game${this.state.gameId}/decks/player2Hand`).push(newCard)
+            }
+            this.setState({ cardsToDraw: 0 });
+            if (this.state.isPlayer1) {
+                firebase.database().ref(`games/Game${this.state.gameId}/playerOne/`).update({ ready: true })
+            } else if (this.state.isPlayer2) {
+                firebase.database().ref(`games/Game${this.state.gameId}/playerTwo/`).update({ ready: true })
             }
         }
     };
@@ -213,7 +244,7 @@ class Game extends Component {
                                 <div className="text-light border border-warning img-vert">
                                     {this.state.bottomrow.map((landId, idx) => (
                                         <LandCard
-                                            position={31-idx}
+                                            position={31 - idx}
                                             key={idx}
                                             image={landId}
                                             whiteRaven={this.state.whiteRaven}
@@ -239,9 +270,9 @@ class Game extends Component {
                                     <h4>Your Hand</h4>
                                     {this.state.playerHand.map((landId, idx) => (
                                         <FlightCard
-                                            position={idx}
                                             key={idx}
                                             image={landId}
+                                            cardClick={this.handleCardPlay}
                                         />
                                     ))}
                                     <h4>Opponent Cards: {this.state.opponentHand}</h4>
