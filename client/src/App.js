@@ -94,7 +94,11 @@ class App extends Component {
           <Switch>
             <Route exact path="/Lobby" render={()=><Lobby user={this.state.user}/>} />
             <Route exact path="/Landing" component={Landing} />
-            <Route exact path='/Game' component={Game} />
+            <Route exact path='/Game/1' render={()=><Game gameId='1'/>}/>
+            <Route exact path='/Game/2' render={()=><Game gameId='2'/>}/>
+            <Route exact path='/Game/3' render={()=><Game gameId='3'/>}/>
+            <Route exact path='/Game/4' render={()=><Game gameId='4'/>}/>
+            <Route exact path='/Game/5' render={()=><Game gameId='5'/>}/>
             <Route exact path="/" component={Landing} />
             <Route component={NoMatch} />
           </Switch>

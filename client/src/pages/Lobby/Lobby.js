@@ -5,7 +5,7 @@ import "./Lobby.css";
 import firebase from '../../firebase.js'
 
 //Page components
-import LobbyGames from "../../components/LobbyGames";
+import LobbyGame from "../../components/LobbyGame";
 import LobbyUsers from "../../components/LobbyUsers";
 import Chat from "../../components/Chat";
 
@@ -33,7 +33,7 @@ class Lobby extends Component {
                 con.onDisconnect().remove();
             }
         });
-        
+
         connectionsRef.on("value", snap => {//PLAYERS IN LOBBY CHANGED
             //UPDATING PLAYERS LIST IN ON DOM
             let usersArr = Object.values(snap.val());
@@ -41,13 +41,14 @@ class Lobby extends Component {
         });
 
         database.ref(`/games`).on('value', snap => {
-            // console.log('games:',snap.val())
+            let playersArr = [];
             if (snap.val()) {
                 let gamesArr = Object.values(snap.val());
-                // this.setState({usersInGame : gamesArr});
-                console.log('gamesAvail:', gamesArr);
+                gamesArr.forEach(ele => {
+                    playersArr.push([ele.playerOne.name, ele.playerTwo.name])
+                })
             };
-            // this.setState({gameCount: gamesArr.length})
+            this.setState({ usersInGame: playersArr })
         });
     };
 
@@ -57,11 +58,15 @@ class Lobby extends Component {
                 <Row>
                     <Col size="lg-4">
                         {/* Game Join Component */}
+                        <h3 className="games-title">Games</h3>
+
                         <div className="box">
-                            <LobbyGames 
-                                games={this.state.usersInGame}
-                            />
-   
+                            {this.state.usersInGame.map((playersArr, idx) => (
+                                <LobbyGame
+                                    key={idx}
+                                    players={playersArr}
+                                />
+                            ))}
                         </div>
                     </Col>
 
