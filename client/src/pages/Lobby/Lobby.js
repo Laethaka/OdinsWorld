@@ -58,15 +58,20 @@ class Lobby extends Component {
                 <Row>
                     <Col size="lg-4">
                         {/* Game Join Component */}
-                        <h3 className="games-title">Games</h3>
-
                         <div className="box">
-                            {this.state.usersInGame.map((playersArr, idx) => (
-                                <LobbyGame
-                                    key={idx}
-                                    players={playersArr}
-                                />
-                            ))}
+                            <div className="games-box">
+                            <h3 className="games-title">Games</h3>
+                            <hr className="style-one" />
+                                <div className="gamesData">
+                                    {this.state.usersInGame.map((playersArr, idx) => (
+                                        <LobbyGame
+                                            id={idx}
+                                            key={idx}
+                                            players={playersArr}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
                         </div>
                     </Col>
 
