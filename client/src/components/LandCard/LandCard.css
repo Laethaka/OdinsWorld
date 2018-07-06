@@ -1,0 +1,11 @@
+.landCardWorld {
+    width: 4.5em;
+}
+
+.landCardWorld {
+    transition: .2s ease;
+}
+
+.landCardWorld:hover {
+    transform: translateY(-1em) scale(1.5);; 
+}

@@ -1,0 +1,22 @@
+.flightCardHand {
+    margin-right: 1em;
+    width: 5em;
+        -webkit-transition: all 0.2s ease;
+        -moz-transition: all 0.2 ease;
+        -o-transition: all 0.2 ease;
+        -ms-transition: all 0.2 ease;
+        transition: all 0.2 ease;
+}
+
+.flightCardHand:hover {
+        -webkit-transform: rotate(3deg) scale(1.5);
+        -moz-transform: rotate(3deg) scale(1.5);
+        -o-transform: rotate(3deg) scale(1.5);
+        -ms-transform: rotate(3deg) scale(1.5);
+        transform: rotate(3deg) scale(1.5);
+}
+
+.flightCardHand:active {
+    transform: scale(1.25); 
+}
+
