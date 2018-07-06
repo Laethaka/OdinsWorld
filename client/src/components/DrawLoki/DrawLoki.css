@@ -1,4 +1,17 @@
-.drawPoop {
+.drawData {
     font-family: 'norse', serif;
     color: #ffd182;
+}
+
+.drawLokiDeck {
+    margin: 0 auto;
+    transition: transform .2s;
+}
+
+.drawLokiDeck:hover {
+    transform: scale(1.5); 
+}
+
+.drawLokiDeck:active {
+    transform: scale(1.25); 
 }
