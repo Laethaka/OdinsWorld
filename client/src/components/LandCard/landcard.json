@@ -2,27 +2,42 @@
     {
         "id": 0,
         "imageName": "desert",
-        "image": "https://res.cloudinary.com/mosjoandy/image/upload/v1530297863/OdinsRavensLandCards/card-01.png"
+        "image": "https://res.cloudinary.com/mosjoandy/image/upload/v1530297863/OdinsRavensLandCards/card-01.png",
+        "imageW": "https://res.cloudinary.com/mosjoandy/image/upload/v1530834811/OdinsRavensLandCards/flyCard-desert-bird-1.png",
+        "imageB": "https://res.cloudinary.com/mosjoandy/image/upload/v1530834814/OdinsRavensLandCards/flyCard-desert-bird-2.png",
+        "imageBW": "https://res.cloudinary.com/mosjoandy/image/upload/v1530834819/OdinsRavensLandCards/flyCard-desert-bird-1_2.png"
     },
     {
         "id": 1,
         "imageName": "plain",
-        "image": "https://res.cloudinary.com/mosjoandy/image/upload/v1530297863/OdinsRavensLandCards/card-05.png"
+        "image": "https://res.cloudinary.com/mosjoandy/image/upload/v1530297863/OdinsRavensLandCards/card-05.png",
+        "imageW": "https://res.cloudinary.com/mosjoandy/image/upload/v1530834956/OdinsRavensLandCards/flyCard-field-bird-1.png",
+        "imageB": "https://res.cloudinary.com/mosjoandy/image/upload/v1530834957/OdinsRavensLandCards/flyCard-field-bird-2.png",
+        "imageBW": "https://res.cloudinary.com/mosjoandy/image/upload/v1530834959/OdinsRavensLandCards/flyCard-field-bird-1_2.png"
     },
     {
         "id": 2,
         "imageName": "river",
-        "image": "https://res.cloudinary.com/mosjoandy/image/upload/v1530297863/OdinsRavensLandCards/card-03.png"
+        "image": "https://res.cloudinary.com/mosjoandy/image/upload/v1530297863/OdinsRavensLandCards/card-03.png",
+        "imageW": "https://res.cloudinary.com/mosjoandy/image/upload/v1530835220/OdinsRavensLandCards/flyCard-river-bird-1.png",
+        "imageB": "https://res.cloudinary.com/mosjoandy/image/upload/v1530835223/OdinsRavensLandCards/flyCard-river-bird-2.png",
+        "imageBW": "https://res.cloudinary.com/mosjoandy/image/upload/v1530835224/OdinsRavensLandCards/flyCard-river-bird-1_2.png"
     },
     {
         "id": 3,
         "imageName": "mountain",
-        "image": "https://res.cloudinary.com/mosjoandy/image/upload/v1530297863/OdinsRavensLandCards/card-02.png"
+        "image": "https://res.cloudinary.com/mosjoandy/image/upload/v1530297863/OdinsRavensLandCards/card-02.png",
+        "imageW": "https://res.cloudinary.com/mosjoandy/image/upload/v1530835247/OdinsRavensLandCards/flyCard-snow-bird-1.png",
+        "imageB": "https://res.cloudinary.com/mosjoandy/image/upload/v1530835249/OdinsRavensLandCards/flyCard-snow-bird-2.png",
+        "imageBW": "https://res.cloudinary.com/mosjoandy/image/upload/v1530835250/OdinsRavensLandCards/flyCard-snow-bird-1_2.png"
     },
     {
         "id": 4,
         "imageName": "forest",
-        "image": "https://res.cloudinary.com/mosjoandy/image/upload/v1530297863/OdinsRavensLandCards/card-04.png"
+        "image": "https://res.cloudinary.com/mosjoandy/image/upload/v1530297863/OdinsRavensLandCards/card-04.png",
+        "imageW": "https://res.cloudinary.com/mosjoandy/image/upload/v1530835177/OdinsRavensLandCards/flyCard-forest-bird-1.png",
+        "imageB": "https://res.cloudinary.com/mosjoandy/image/upload/v1530835180/OdinsRavensLandCards/flyCard-forest-bird-2.png",
+        "imageBW": "https://res.cloudinary.com/mosjoandy/image/upload/v1530835182/OdinsRavensLandCards/flyCard-forest-bird-1_2.png"
     }
 ]
   
