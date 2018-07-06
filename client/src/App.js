@@ -65,19 +65,20 @@ class App extends Component {
 
   render() {
     // BACK GROUND POOP BREAK EVERYTHING
-    let bg;
-    if (this.state.current === "/landing") {
-      bg = "landingBackground"
-    } else if (this.state.current === "/game") {
-      bg = "gameBackground"
-    } else {
-      bg = "lobbyBackground"
-    }
+    // let bg;
+    // if (this.state.current === "/landing") {
+    //   bg = "landingBackground"
+    // } else if (this.state.current === "/game") {
+    //   bg = "gameBackground"
+    // } else {
+    //   bg = "lobbyBackground"
+    // }
 
     return (
       <Router>
         {/* <div> */}
-        <div style={styles[bg]}>
+        {/* <div style={styles[bg]}> */}
+        <div>
           <Nav user={this.state.user}>
               <div className="wrapper">
                 {this.state.user ?
