@@ -12,7 +12,6 @@
 .chat-title {
     margin-top: 0.2rem;
     text-align: center;
-    
 }
 
 /* Gradient color1 - color2 - color1 */
@@ -36,10 +35,12 @@ hr.style-one {
     overflow: scroll;
     overflow-x: auto;
 }
+
 ::-webkit-scrollbar {
     width: 0px;  /* remove scrollbar space */
     background: transparent;  /* optional: just make scrollbar invisible */
 }
+
 /* optional: show position indicator in red */
 ::-webkit-scrollbar-thumb {
     background: #FF000000;
