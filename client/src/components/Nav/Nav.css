@@ -5,11 +5,9 @@
 }
 .game-name {
     color: #ffd182;
-    font-size: 5rem;
+    font-size: 3.8rem;
     text-shadow: 6px 5px 30px rgb(21, 21, 21);
-    margin-top: 2.1rem;
-    
-    
+    margin-top: 2.1rem;   
 }
 .rounded-circle {
     height: 4rem;

@@ -67,8 +67,7 @@ span.reference a:hover{
 	position:relative;
 	background:transparent url(../Images/bg.png) no-repeat 9px 27px;
 }
-.book_wrapper h1{
-	color:#13386a;
+.book_wrapper h2{
 	margin:5px 5px 5px 15px;
 	font-size:26px;
 	background:transparent url(../Images/h1.png) no-repeat bottom left;

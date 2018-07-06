@@ -15,10 +15,29 @@ body {
 
 
 h1 {
-  font-family: "norse", sans-serif;
-  letter-spacing: 0.7rem;
+  font-family: 'Cinzel Decorative', cursive;
+  letter-spacing: 3px;
+}
+
+h2, h3, h4, h4, h5, h6 {
+  font-family: 'Lancelot', serif;
 }
 
 p {
+  font-family: 'Caudex', serif;
   line-height: 1.6rem;
 }
+
+
+/* 
+font-family: 'Cinzel Decorative', cursive;
+font-family: 'Averia Serif Libre', cursive;
+font-family: 'Averia Serif Libre', cursive;
+font-family: 'Libre Baskerville', serif;
+font-family: 'Vollkorn', serif;
+font-family: 'Yrsa', serif;
+font-family: 'Gentium Book Basic', serif;
+font-family: 'Lusitana', serif;
+font-family: 'Lustria', serif;
+font-family: 'Halant', serif;
+font-family: 'Caudex', serif; */

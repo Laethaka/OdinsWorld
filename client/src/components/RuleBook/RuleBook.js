@@ -13,7 +13,7 @@ const RuleBook = () => {
 			<div className="b-load">
 				<div>
 					<img src={require("../Images/1.png")}/>
-					<h1>Slider Gallery</h1>
+					<h2>Slider Gallery</h2>
 					<p>This tutorial is about creating a creative gallery with a
 						slider for the thumbnails. The idea is to have an expanding
 						thumbnails area which opens once an album is chosen.
@@ -26,7 +26,7 @@ const RuleBook = () => {
 				</div>
 				<div>
 					<img src={require("../Images/2.png")}/>
-					<h1>Animated Portfolio Gallery</h1>
+					<h2>Animated Portfolio Gallery</h2>
 					<p>Today we will create an animated portfolio gallery with jQuery.
 						The gallery will contain a scroller for thumbnails and a
 						content area where we will display details about the portfolio
@@ -37,7 +37,7 @@ const RuleBook = () => {
 				</div>
 				<div>
 					<img src={require("../Images/3.png")}/>
-					<h1>Annotation Overlay Effect</h1>
+					<h2>Annotation Overlay Effect</h2>
 					<p>Today we will create a simple overlay effect to display annotations in e.g. portfolio
 						items of a web designers portfolio. We got the idea from the wonderful
 						portfolio of www.rareview.com where Flash is used to create the
@@ -47,7 +47,7 @@ const RuleBook = () => {
 				</div>
 				<div>
 					<img src={require("../Images/4.png")}/>
-					<h1>Bubbleriffic Image Gallery</h1>
+					<h2>Bubbleriffic Image Gallery</h2>
 					<p>In this tutorial we will create a bubbly image gallery that
 						shows your images in a unique way. The idea is to show the
 						thumbnails of albums in a rounded fashion allowing the
@@ -60,7 +60,7 @@ const RuleBook = () => {
 				</div>
 				<div>
 					<img src={require("../Images/5.png")}/>
-					<h1>Collapsing Site Navigation</h1>
+					<h2>Collapsing Site Navigation</h2>
 					<p>Today we will create a collapsing menu that contains vertical
 						navigation bars and a slide out content area. When hovering
 						over a menu item, an image slides down from the top and a
@@ -72,7 +72,7 @@ const RuleBook = () => {
 				</div>
 				<div>
 					<img src={require("../Images/6.png")}/>
-					<h1>Custom Animation Banner</h1>
+					<h2>Custom Animation Banner</h2>
 					<p>In today’s tutorial we will be creating a custom animation banner with jQuery.
 						The idea is to have different elements in a banner that will
 						animate step-wise in a custom way.</p>
