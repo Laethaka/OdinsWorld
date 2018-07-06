@@ -3,7 +3,8 @@ import "./Nav.css";
 
 const Nav = (props) => (
   <nav className="navbar navbar-expand-lg">
-    <a className="navbar-brand"><b><h1 className="game-name ">Odin's Ravens</h1></b></a>
+    <a className="navbar-brand"><h1 className="game-name ">Odin's Ravens</h1></a>
+    <button className="log-button" href="#" target="_blank">Lobby</button>
 
     <div className="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
 

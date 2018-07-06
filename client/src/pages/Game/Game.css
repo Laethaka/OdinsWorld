@@ -1,8 +1,8 @@
-.game-background {
+/* .game-background {
     background-image: url("../../components/Images/table-backgrond-3.png");
     background-repeat: repeat-x;
     height: 600px;
-}
+} */
 
 .img-vert {
     transform: rotateX(180deg);
