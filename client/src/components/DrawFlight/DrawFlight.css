@@ -1,4 +1,18 @@
-.drawPoop {
+.drawData {
     font-family: 'norse', serif;
     color: #ffd182;
+    margin-right: 10px;
+}
+
+.drawFlightDeck {
+    margin: 0 auto;
+    transition: transform .2s;
+}
+
+.drawFlightDeck:hover {
+    transform: scale(1.5); 
+}
+
+.drawFlightDeck:active {
+    transform: scale(1.25); 
 }
