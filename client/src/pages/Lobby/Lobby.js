@@ -5,7 +5,7 @@ import "./Lobby.css";
 import firebase from '../../firebase.js'
 
 //Page components
-import LobbyGames from "../../components/LobbyGames";
+import LobbyGame from "../../components/LobbyGame";
 import LobbyUsers from "../../components/LobbyUsers";
 import Chat from "../../components/Chat";
 
@@ -18,7 +18,6 @@ class Lobby extends Component {
             usersInGame: [],
             message: ""
         };
-        // this.handleCreate = this.handleCreate.bind(this);
     };
 
     componentWillReceiveProps() {
@@ -34,7 +33,7 @@ class Lobby extends Component {
                 con.onDisconnect().remove();
             }
         });
-        
+
         connectionsRef.on("value", snap => {//PLAYERS IN LOBBY CHANGED
             //UPDATING PLAYERS LIST IN ON DOM
             let usersArr = Object.values(snap.val());
@@ -42,24 +41,15 @@ class Lobby extends Component {
         });
 
         database.ref(`/games`).on('value', snap => {
-            // console.log('games:',snap.val())
-            if (snap.val() != null) {
+            let playersArr = [];
+            if (snap.val()) {
                 let gamesArr = Object.values(snap.val());
-                this.setState({usersInGame : gamesArr});
-                // console.log('gamesAvail:', gamesArr);
-                // console.log('first game :', gamesAvail.Game1)
+                gamesArr.forEach(ele => {
+                    playersArr.push([ele.playerOne.name, ele.playerTwo.name])
+                })
             };
-            // this.setState({gameCount: gamesArr.length})
+            this.setState({ usersInGame: playersArr })
         });
-    };
-
-    handleCreate = () => {
-        console.log(this.state.gameCount);
-        this.state.gameCount++;
-        let newGameId = this.state.gameCount;
-        console.log(newGameId);
-        
-        // database.ref()
     };
 
     render() {
@@ -68,13 +58,15 @@ class Lobby extends Component {
                 <Row>
                     <Col size="lg-4">
                         {/* Game Join Component */}
-                        <div className="box">
-                            <LobbyGames 
-                                games={this.state.usersInGame}
-                            />
+                        <h3 className="games-title">Games</h3>
 
-                                <button onClick={this.handleCreate}>Join Game</button>
-   
+                        <div className="box">
+                            {this.state.usersInGame.map((playersArr, idx) => (
+                                <LobbyGame
+                                    key={idx}
+                                    players={playersArr}
+                                />
+                            ))}
                         </div>
                     </Col>
 

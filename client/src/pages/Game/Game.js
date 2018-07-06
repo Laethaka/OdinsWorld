@@ -19,7 +19,7 @@ class Game extends Component {
     state = {
         landcard,
         flightcard,
-        gameId: 1,
+        gameId: 0,
         toprow: [],
         bottomrow: [],
         flightcard,
@@ -31,12 +31,14 @@ class Game extends Component {
         blackRaven: 31
     };
 
-    componentWillReceiveProps() {
+    componentWillReceiveProps(props) {
+        // console.log('this game id:', props.gameId)
+        this.setState({gameId: props.gameId})
         const database = firebase.database();
         const username = firebase.auth().currentUser.displayName;
 
         //CONNECTION LISTENER
-        var connectionsRef = database.ref(`/games/Game${this.state.gameId}`);
+        var connectionsRef = database.ref(`/games/Game${props.gameId}`);
         var connectedRef = database.ref(".info/connected");
         connectedRef.on("value", snap => {
             if (snap.val()) {
@@ -46,19 +48,20 @@ class Game extends Component {
         });
 
         connectionsRef.once("value").then((snap) => {//PAGE LOAD AND ANY PLAYER JOIN/LEAVE
+            console.log(snap.val())
             if (snap.val().playerOne.active === false) {
                 this.becomePlayerOne();
             } else if (snap.val().playerTwo.active === false) {
                 this.becomePlayerTwo();
                 if (!this.state.gameRunning) {
-                    this.gameStart(this.state.gameId);
+                    this.gameStart(props.gameId);
                     this.setState({ gameRunning: true })
                 }
             };
         });
 
         //LISTENING FOR WORLD CHANGES AND UPDATING STATE
-        database.ref(`/games/Game${this.state.gameId}/world`).on('value', snap => {
+        database.ref(`/games/Game${props.gameId}/world`).on('value', snap => {
             this.setState({
                 toprow: snap.val().toprow,
                 bottomrow: snap.val().bottomrow,
@@ -66,7 +69,7 @@ class Game extends Component {
         })
 
         //LISTENING FOR DECK CHANGES AND UPDATING STATE
-        database.ref(`/games/Game${this.state.gameId}/decks`).on('value', snap => {
+        database.ref(`/games/Game${props.gameId}/decks`).on('value', snap => {
             if (this.state.isPlayer1) {//THIS WINDOW IS PLAYER 1
                 let myHand = snap.val().player1Hand
                 let oppHand = snap.val().player2Hand
@@ -101,8 +104,11 @@ class Game extends Component {
         //LOCAL PLAYER VARS SETUP
         this.setState({ isPlayer1: true, cardsToDraw: 5 })
         //DISCONNECT LISTENING
-        const presenceRef = firebase.database().ref(`games/Game${this.state.gameId}/playerOne/active`);
-        presenceRef.onDisconnect().set(false);
+        const presenceRef = firebase.database().ref(`games/Game${this.state.gameId}/playerOne/`);
+        presenceRef.onDisconnect().set({
+            active: false,
+            name: 'Open slot',
+        });
     };
 
     //PLAYER Two SETUP AND DISCONNECT LISTENING
@@ -118,8 +124,11 @@ class Game extends Component {
         this.setState({ isPlayer2: true, cardsToDraw: 5 })
 
         //DISCONNECT LISTENING
-        var presenceRef = firebase.database().ref(`games/Game${this.state.gameId}/playerTwo/active`);
-        presenceRef.onDisconnect().set(false);
+        var presenceRef = firebase.database().ref(`games/Game${this.state.gameId}/playerTwo/`);
+        presenceRef.onDisconnect().set({
+            active: false,
+            name: 'Open slot',
+        });
     };
 
     gameStart = (gameId) => {
