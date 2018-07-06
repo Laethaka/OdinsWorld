@@ -259,31 +259,30 @@ class Game extends Component {
 
                 <Row>
                     <Col size="md-12">
-                        <div className="userBoard text-center border pt-5">
-                            <Row>
-                                <div className="col-sm-2 border">
+                        <div className="userBoard text-center border pt-5 row">
+                            <div className="col-sm-2 border">
+                                <div className="row text-center mx-auto">
                                     <DrawFlight deckClick={this.drawFlight} />
                                     <DrawLoki deckClick={this.drawLoki} />
                                 </div>
+                            </div>
 
-                                <div className="col-sm-8 border text-light">
-                                    <h4>Your Hand</h4>
-                                    {this.state.playerHand.map((landId, idx) => (
-                                        <FlightCard
-                                            key={idx}
-                                            image={landId}
-                                            cardClick={this.handleCardPlay}
-                                        />
-                                    ))}
-                                    <h4>Opponent Cards: {this.state.opponentHand}</h4>
-                                    <h4>Cards available to draw: {this.state.cardsToDraw}</h4>
-                                </div>
+                            <div className="col-sm-8 border text-light">
+                                <h4>Your Hand</h4>
+                                {this.state.playerHand.map((landId, idx) => (
+                                    <FlightCard
+                                        key={idx}
+                                        image={landId}
+                                        cardClick={this.handleCardPlay}
+                                    />
+                                ))}
+                                <h4>Opponent Cards: {this.state.opponentHand}</h4>
+                                <h4>Cards available to draw: {this.state.cardsToDraw}</h4>
+                            </div>
 
-                                <div className="col-sm-2 border text-light">
-                                    <h4>Discard</h4>
-                                </div>
-
-                            </Row>
+                            <div className="col-sm-2 border text-light">
+                                <h4>Discard</h4>
+                            </div>
                         </div>
                     </Col>
                 </Row>

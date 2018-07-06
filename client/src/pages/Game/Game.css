@@ -6,11 +6,10 @@
 
 .img-vert {
     transform: rotateX(180deg);
-
 }
 
 .landBoard {
-    height: 25em;
+    height: 20em;
 }
 
 .userBoard {
