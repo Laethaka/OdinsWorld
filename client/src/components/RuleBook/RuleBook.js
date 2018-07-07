@@ -81,7 +81,10 @@ const RuleBook = () => {
 					<a href="http://tympanus.net/codrops/2010/10/18/custom-animation-banner/" target="_blank" className="article">Article</a>
 					<a href="http://tympanus.net/Tutorials/CustomAnimationBanner/" target="_blank" className="demo">Demo</a>
 				</div>
-			</div>
+			</div>	
+		</div>
+		<div className="d-flex justify-content-center">
+			<button className="btn button btn-lobby" href="#" target="_blank">Lobby</button>  
 		</div>
 	</div>
 
