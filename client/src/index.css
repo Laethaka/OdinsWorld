@@ -7,31 +7,23 @@ body {
   height: 600px;
  }
 
-
-@font-face {
-  font-family: 'norse';
-  src: local('norse'), url('./fonts/norse.ttf') format('ttf');
-}
-
-
 h1 {
   font-family: 'Cinzel Decorative', cursive;
   letter-spacing: 3px;
   margin-bottom: 0rem;
 }
 
-h2, h3, h4, {
+h2, h3 {
   font-family: 'Lancelot', serif;
 }
 
 h4, h5, h6, p {
-  font-family: 'Caudex', serif;
+  font-family: 'Averia Serif Libre', cursive;
   line-height: 1.6rem;
 }
 
 
 /* 
-font-family: 'Cinzel Decorative', cursive;
 font-family: 'Averia Serif Libre', cursive;
 font-family: 'Averia Serif Libre', cursive;
 font-family: 'Libre Baskerville', serif;
