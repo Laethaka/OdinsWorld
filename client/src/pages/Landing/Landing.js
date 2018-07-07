@@ -8,10 +8,14 @@ const Landing = () => (
     <Container fluid> 
       <Row>
         <Col size="md-12">
-            <RuleBook />     
+            <RuleBook />
+            
         </Col>
-
       </Row>
+      {/* <Row className="d-flex justify-content-center">
+        <button className="btn button" href="#" target="_blank">Lobby</button>   
+      </Row> */}
+      
     </Container>
     // </div>
 );

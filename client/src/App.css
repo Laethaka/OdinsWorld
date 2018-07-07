@@ -1,4 +1,4 @@
-.log-button {
+.button {
 	box-shadow: 0px 1px 0px 0px #1c1b18;
 	background:linear-gradient(to bottom, #e9ad58 5%, #8a550b 100%);
 	border-radius:5px;
@@ -13,11 +13,16 @@
 	box-shadow: 0px 15px 10px -10px rgba(0,0,0,0.5);
     transition: all 0.2s ease-in-out;
 }
-.log-button:hover {
+.button:hover {
 	background:linear-gradient(to bottom, #e4ac5e 5%, #de8407 100%);
 	background-color:#ccc2a6;
 	transform: scale(1.02);
     box-shadow: 0px 25px 15px -15px rgb(0, 0, 0, 0.5);
+}
+
+.btn-lobby {
+	margin: 1.5rem;
+	width: 10em;
 }
 
 

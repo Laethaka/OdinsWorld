@@ -17,6 +17,7 @@ body {
 h1 {
   font-family: 'Cinzel Decorative', cursive;
   letter-spacing: 3px;
+  margin-bottom: 0rem;
 }
 
 h2, h3, h4, {

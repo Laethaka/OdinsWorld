@@ -2,12 +2,14 @@
 .navbar {
     padding-left: 4rem !important;
     padding-right: 4rem !important;
+    padding: 0rem 0rem;
 }
+
 .game-name {
     color: #ffd182;
     font-size: 3.8rem;
     text-shadow: 6px 5px 30px rgb(21, 21, 21);
-    margin-top: 2.1rem;   
+    margin-top: 2rem;   
 }
 .rounded-circle {
     height: 4rem;
