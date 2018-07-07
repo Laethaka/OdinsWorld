@@ -1,7 +1,6 @@
 .log-button {
 	box-shadow: 0px 1px 0px 0px #1c1b18;
-	background-image: url("../../client/src/components/Images/paper.jpg");
-	
+	background:linear-gradient(to bottom, #e9ad58 5%, #8a550b 100%);
 	border-radius:5px;
 	border: 3px solid #1c1b18d6;
 	display: inline-block;
@@ -10,15 +9,15 @@
 	font-weight: bold;
 	text-decoration: none;
 	text-shadow: 0px 1px 0px #ccc2a6;
+	cursor: pointer;
+	box-shadow: 0px 15px 10px -10px rgba(0,0,0,0.5);
+    transition: all 0.2s ease-in-out;
 }
 .log-button:hover {
-	background:linear-gradient(to bottom, #dcb175 5%, #f39613 100%);
+	background:linear-gradient(to bottom, #e4ac5e 5%, #de8407 100%);
 	background-color:#ccc2a6;
+	transform: scale(1.02);
+    box-shadow: 0px 25px 15px -15px rgb(0, 0, 0, 0.5);
 }
-.log-button:active {
-	position:relative;
-	top:1px;
-}
-
 
 
