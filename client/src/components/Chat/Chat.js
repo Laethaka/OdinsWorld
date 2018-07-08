@@ -8,33 +8,33 @@ class Chat extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            messages: [] 
+            messages: []
         };
 
     };
 
-    componentWillMount(){
+    componentWillMount() {
         /* Create reference to messages in Firebase Database */
         let messagesRef = firebase.database().ref("messages").orderByChild("id").limitToLast(25);
 
         messagesRef.on("child_added", snapshot => {
-        /* Update React state when message is added at Firebase Database */
-            let message = { 
-                text: snapshot.val(), 
-                id: snapshot.key 
+            /* Update React state when message is added at Firebase Database */
+            let message = {
+                text: snapshot.val(),
+                id: snapshot.key
             };
-            this.setState({ 
+            this.setState({
                 messages: [message].concat(this.state.messages)
             });
-            $(".chatPoop").animate( { scrollTop: $(".chatPoop").height()+999999999999999999 }, "slow");
+            $(".chatPoop").animate({ scrollTop: $(".chatPoop").height() + 999999999999999999 }, "slow");
         });
-        
+
     };
 
-    addMessage(event){
+    addMessage(event) {
         event.preventDefault(); // <- prevent form submit from reloading the page
         /* Send the message to Firebase */
-        firebase.database().ref("messages").push( firebase.auth().currentUser.displayName + ": " + this.input.value );
+        firebase.database().ref("messages").push(firebase.auth().currentUser.displayName + ": " + this.input.value);
         this.input.value = ""; // <- clear the input
         console.log(this.state.messages);
     };
@@ -43,24 +43,32 @@ class Chat extends Component {
         return (
             <div className="chat-box">
                 <h3 className="chat-title">Chat</h3>
-                <hr className="style-one"/>
+                <hr className="style-one" />
 
                 <div className="col-lg-12">
 
                     <div className="row chatPoopDad">
                         <div className="col-lg-12 chatPoop">
-                            {this.state.messages.map( message => <h6 key={message.id}>{message.text}</h6> )}
+                            {this.state.messages.map(message => <h6 key={message.id}>{message.text}</h6>)}
                         </div>
                     </div>
 
-                    <hr className="style-one"/>
+                    <hr className="style-one" />
 
                     <form onSubmit={this.addMessage.bind(this)}>
-  
+
                         <div className="row">
 
                             <div className="col-lg-10">
-                                <input className="form-control" type="text" placeholder="Your message" ref={ msg => this.input = msg } required title="Anti-Chris Abuse" minLength="1" maxLength="100" />
+                                <input
+                                    className="form-control"
+                                    type="text"
+                                    placeholder="Your message"
+                                    ref={msg => this.input = msg}
+                                    required title="Anti-Chris Abuse"
+                                    minLength="1"
+                                    maxLength="100"
+                                />
                             </div>
 
                             <div className="col-lg-2">
@@ -74,5 +82,5 @@ class Chat extends Component {
         );
     };
 };
-     
+
 export default Chat;
