@@ -4,6 +4,26 @@
     height: 600px;
 } */
 
+.game-status-box {
+    height: 6rem;
+}
+
+.game-status-box img {
+    position: absolute;
+    
+}
+
+.coin-size {
+    height: 7rem;
+}
+
+.games-text {
+    text-transform: uppercase;
+    font-family: 'Caudex', serif;
+    font-weight: bolder;
+    font-size: 1.2em;
+}
+
 .img-vert {
     transform: rotateX(180deg);
 }

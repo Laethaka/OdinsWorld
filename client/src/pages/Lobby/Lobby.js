@@ -55,10 +55,10 @@ class Lobby extends Component {
     render() {
         return (
             <Container fluid>
-                <Row>
+                <Row className="d-flex justify-content-center">
                     <Col size="md-2">
                         {/* Users Online Component */}
-                        <div className="box">
+                        <div className="box info-background">
                             <h2 className="lobby-subtitle">Users</h2>
                             <hr className="style-one"/>
                                 <LobbyUsers
@@ -68,17 +68,16 @@ class Lobby extends Component {
 
                     <Col size="md-5">
                         {/* Lobby Chat Component */}
-                        <div className="box">           
+                        <div className="box info-background">           
                             <h2 className="lobby-subtitle">Chat</h2>
                             <hr className="style-one"/>
                                 <Chat />
                         </div>
                     </Col>
-
-            
+    
                     <Col size="md-4">
                         {/* Game Join Component */}
-                        <div className="box">
+                        <div className="box info-background">
                             <div className="games-box">
                             <h2 className="lobby-subtitle">Games</h2>
                             <hr className="style-one" />

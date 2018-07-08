@@ -1,24 +1,39 @@
 body {
-  color: #2b2423;
+  color: #1b1716;
   font-size: 16px;
   background-image: url("../../client/src/components/Images/table-backgrond-3.png");
   background-repeat: repeat-x;
   height: 600px;
  }
 
+a {
+  color: #1b1716;
+}
+
+a:hover {
+  color: #1b1716;
+}
+
 h1 {
   font-family: 'Cinzel Decorative', cursive;
-  letter-spacing: 1rem;
+  letter-spacing: 0.4rem;
   margin-bottom: 0rem;
 }
 
-h2, h3, h4, h5, h6 {
+h2 {
   /* font-family: 'Libre Baskerville', serif; */
   /* font-weight: 700; */
   font-family: 'Lustria', serif;
   letter-spacing: 0.06rem;
+  margin-bottom: 0rem;
+}
 
-
+h3, h4, h5, h6 {
+  text-transform: uppercase;
+  font-family: 'Caudex', serif;
+  font-weight: bolder;
+  font-size: 1.2em;
+  margin-bottom: 0rem;
 }
 
 p {
@@ -27,5 +42,14 @@ p {
   line-height: 1.2rem;
   letter-spacing: 0.02rem;
   /* font-weight: bold; */
+}
+
+.info-background {
+  background-image: url("../src/components/Images/paper-info-background.jpg");
+  /* border: 1px solid rgb(11, 11, 11); */
+  border: 10px solid white;
+  border: 10px solid rgba(77, 54, 32, 0.127);
+  border-radius: 0.4rem;
+  box-shadow: 0px 0px 29px 6px rgba(0,0,0,0.75);
 }
 
