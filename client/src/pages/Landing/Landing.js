@@ -3,7 +3,7 @@ import { Col, Row, Container } from "../../components/Grid";
 import RuleBook from "../../components/RuleBook";
 import "./Landing.css";
 
-const Landing = () => (
+const Landing = (props) => (
     // <div className="landing-background">  
     <Container fluid> 
       <Row>
@@ -12,10 +12,7 @@ const Landing = () => (
             
         </Col>
       </Row>
-      {/* <Row className="d-flex justify-content-center">
-        <button className="btn button" href="#" target="_blank">Lobby</button>   
-      </Row> */}
-      
+   
     </Container>
     // </div>
 );
