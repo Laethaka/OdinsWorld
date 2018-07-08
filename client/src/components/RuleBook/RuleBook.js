@@ -70,7 +70,7 @@ const RuleBook = () => {
 			</div>	
 		</div>
 		<div className="d-flex justify-content-center">
-			<button className="btn button btn-lobby" href="#" target="_blank">Lobby</button>  
+			<a className="btn button button-lobby" href="#" target="_blank">Lobby</a>  
 		</div>
 	</div>
 

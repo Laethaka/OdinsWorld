@@ -1,15 +1,15 @@
 .button {
-	box-shadow: 0px 1px 0px 0px #1c1b18;
+	font-family: 'Caudex', serif;
 	background:linear-gradient(to bottom, #e9ad58 5%, #8a550b 100%);
 	border-radius:5px;
 	border: 3px solid #1c1b18d6;
 	display: inline-block;
 	cursor: pointer;
 	font-size: 1.3rem;
+	letter-spacing: 0.05rem;
 	font-weight: bold;
 	text-decoration: none;
 	text-shadow: 0px 1px 0px #ccc2a6;
-	cursor: pointer;
 	box-shadow: 0px 15px 10px -10px rgba(0,0,0,0.5);
     transition: all 0.2s ease-in-out;
 }
@@ -20,9 +20,13 @@
     box-shadow: 0px 25px 15px -15px rgb(0, 0, 0, 0.5);
 }
 
-.btn-lobby {
+.button-lobby {
 	margin: 1.5rem;
 	width: 10em;
+}
+
+.button-join {
+	box-shadow: none;
 }
 
 
