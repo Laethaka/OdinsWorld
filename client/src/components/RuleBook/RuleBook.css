@@ -1,20 +1,4 @@
 
-span.reference{
-	font-family:Arial;
-	display:block;
-	font-size:12px;
-	text-align:center;
-	margin-bottom:10px;
-}
-span.reference a{
-	color:#000;
-	text-transform:uppercase;
-	text-decoration:none;
-	margin:0px 20px;
-}
-span.reference a:hover{
-	color:#ddd;
-}
 /* Booklet jQuery Plugin Style*/
 .booklet{
 	-moz-box-shadow:0px 0px 1px #fff;

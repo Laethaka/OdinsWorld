@@ -5,12 +5,28 @@
 } */
 
 .game-status-box {
-    height: 6rem;
+    height: 4.1rem;
+    padding: 0.3rem;
+    margin-left: 4rem !important;
+    margin-right: 4rem !important;
 }
 
 .game-status-box img {
     position: absolute;
-    
+    left: 0.09rem;
+    top: 0.09rem;
+}
+
+.game-status-margin {
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
+}
+
+.game-status-box h3 {
+    text-transform: none !important;
+    letter-spacing: 0.05rem;
+    font-size: 1.4rem;
+    color: #1b1716;
 }
 
 .coin-size {
@@ -28,10 +44,10 @@
     transform: rotateX(180deg);
 }
 
-.landBoard {
+/* .landBoard {
     height: 20em;
-}
+} */
 
-.userBoard {
+/* .userBoard {
     height: 20em;
-}
+} */

@@ -309,35 +309,35 @@ class Game extends Component {
         return (
             <Container fluid>
 
-                <Row >
+                <div className="row info-background game-status-margin">
                     <Col size="md-4">
-                        <div className="game-status-box info-background">
-                            {this.state.isPlayer1 ? <span><img className="coin-size" src={require('../../components/Images/coin-2.png')} /><h3 className="d-flex justify-content-center">Your Raven!</h3></span> : null}
-                            {this.state.isPlayer2 ? <span><img className="coin-size" src={require('../../components/Images/coin-1.png')} /><h3 className="d-flex justify-content-center">You are the Black Raven!</h3></span> : null}
+                        <div className="game-status-box text-center">
+                            {this.state.isPlayer1 ? <span><img className="coin-size" src={require('../../components/Images/coin-2.png')} /><h3 className="d-flex justify-content-center">Rememeber: You are the ligther Raven!</h3></span> : null}
+                            {this.state.isPlayer2 ? <span><img className="coin-size" src={require('../../components/Images/coin-1.png')} /><h3 className="d-flex justify-content-center">Rememeber: You are the dark Raven!</h3></span> : null}
                         </div>
                     </Col>
 
                     <Col size="md-4">
-                        <div className="game-status-box info-background d-flex justify-content-center">
+                        <div className="game-status-box  d-flex justify-content-center text-center">
                             {this.state.isPlayer1 && this.state.myTurn && this.state.cardsToDraw==0 ? <EndTurnButton buttonClick={this.endTurnClick} /> : null}
                             {this.state.isPlayer2 && this.state.myTurn && this.state.cardsToDraw==0 ? <EndTurnButton buttonClick={this.endTurnClick} /> : null}
                         </div>
                     </Col>
 
                     <Col size="md-4">
-                        <div className="info-background game-status-box d-flex justify-content-center">
+                        <div className=" game-status-box d-flex justify-content-center text-center">
                             {this.state.myTurn && this.state.cardsToDraw==0 ? <h3>It's your turn! Ride like the wind!</h3> : null}
                             {this.state.myTurn && this.state.cardsToDraw>0 ? <h3>Please draw your cards!</h3> : null}
                             {!this.state.myTurn ? <h3>Please wait for your opponent!</h3> : null}
                         </div>
                     </Col>
-                </Row>
+                </div>
                 
                 <Row>
                     <Col size="md-12">
                         <Jumbotron>
                             <div className="landBoard text-center">
-                                <div className="text-light border border-warning">
+                                <div className="border border-warning">
                                     {this.state.toprow.map((landId, idx) => (
                                         <LandCard
                                             position={idx}
@@ -349,7 +349,7 @@ class Game extends Component {
                                     ))}
                                 </div>
 
-                                <div className="text-light border border-warning img-vert">
+                                <div className="border border-warning img-vert">
                                     {this.state.bottomrow.map((landId, idx) => (
                                         <LandCard
                                             position={31 - idx}

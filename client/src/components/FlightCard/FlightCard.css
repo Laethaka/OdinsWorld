@@ -1,19 +1,13 @@
 .flightCardHand {
-    margin-right: 1em;
-    width: 5em;
-        -webkit-transition: all 0.2s ease;
-        -moz-transition: all 0.2 ease;
-        -o-transition: all 0.2 ease;
-        -ms-transition: all 0.2 ease;
-        transition: all 0.2 ease;
+    margin: 1.2rem 0.5rem;
+    width: 5rem;
+    box-shadow: 0px 0px 42px 1px rgba(0,0,0,0.75);
+    transition: all 0.5s ease-in-out;
 }
 
 .flightCardHand:hover {
-        -webkit-transform: rotate(3deg) scale(1.5);
-        -moz-transform: rotate(3deg) scale(1.5);
-        -o-transform: rotate(3deg) scale(1.5);
-        -ms-transform: rotate(3deg) scale(1.5);
-        transform: rotate(3deg) scale(1.5);
+    transform: rotate(2.8deg) scale(1.4);
+    box-shadow: 0px 0px 70px 4px rgba(0,0,0,0.75);
 }
 
 .flightCardHand:active {

@@ -4,7 +4,7 @@ import "./DrawFlight.css";
 const DrawFlight = (props) => (
     <div className="col-sm-6">
         <div className=" drawData" onClick={() => props.deckClick()}>
-            <h4>Land</h4>
+            <h4>Lands Cards</h4>
             <img
                 className="drawFlightDeck"
                 width="100"

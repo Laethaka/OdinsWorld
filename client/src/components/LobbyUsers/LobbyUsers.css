@@ -11,8 +11,10 @@ ul {
     width: 10em;
 }
 
-.usersPoop {
-    overflow-y: auto;
-    overflow-x: auto;
+.users-cointainer {
+    overflow-y: scroll;
+    overflow-x: hidden;
     height: 30.9em;
+    padding: 1rem 1rem 0rem 1rem;
+    text-align: center;
 }

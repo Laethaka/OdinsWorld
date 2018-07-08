@@ -11,24 +11,20 @@ const RuleBook = () => {
 		<div id="mybook" style={{"display":"none"}}>
 			<div className="b-load">
 				<div>
-					<h2>Odin's Ravens</h2>
-					<p>This is a story of Odin's Ravens, Huginn and Muninn, who are sent to watch 
-					the land. They race each other around the world, heading in opposite directions, 
-					and the raven that reaches a full loop is the winner. They can ask for help 
-					from Loki, who can either help or hinder the lands before them.</p>
-					<img src="https://res.cloudinary.com/mosjoandy/image/upload/v1531008017/OdinsRavensDesignGarbage/odinthing.png" />
+					<h2>Welcome to Odin's World</h2>
+					<p>This game about Odin's Ravens, Huginn - player 1 IMG - & Muninn - player 2 + IMG, who are sent to watch Odin's Lands.</p>
+					<p>They race each other around the world, heading through Land Cards in opposite directions, and the raven that reaches a full loop is the winner. + IMG OF THE LOOP!! </p>
 				</div>
 				<div>
-					<img src="https://res.cloudinary.com/mosjoandy/image/upload/v1531008020/OdinsRavensDesignGarbage/odinraven.png" />
 					<h2>Goal</h2>
-					<p>Let the racing begin! The first player controlling their raven fly across 
-					the land and complete the loop is the winner.</p>
-					<h2>Components</h2>
-					The Game World:
+					<p>Let the racing begin! The first player controlling their raven fly across all the lands cards completing the loop is the winner.</p>
+					<p>Each player can also ask for some trickery help 
+					from Loki that need to use wisely.</p>
+					<h2>Each player have</h2>
 					<ul>
-						<li>16 Land Cards</li>
-						<li>Player One White Raven</li>
-						<li>Player Two Black Raven</li>
+						<li>1 dark or lighter Raven Coin + IMG</li>
+						<li>X Fly Cards + IMG</li>
+						<li>X Loki Cards + IMG</li>
 					</ul>
 				</div>
 				<div>
@@ -76,12 +72,11 @@ const RuleBook = () => {
 					<p>* Loki Cards cannot be played on a Land Card that is occupied by a raven.</p>
 				</div>
 				<div>
-					<h2>Playing The Game</h2>
-					<p>When both players have connected to the game, each player will draw draw 5 
+					<h2>Play Begins!</h2>
+					<p>When both players have connected to the game, each player will draw 5 
 					cards either Flight or Loki. Once both players have 5 cards in their hands, the game 
 					will begin.</p>
 					<img src="https://res.cloudinary.com/mosjoandy/image/upload/v1531006858/OdinsRavensDesignGarbage/Thing.png" />
-					<h2 />
 					<p>Turn:</p>
 					<ul>
 						<li>Play in any order either Flight or Loki Cards to move their raven, 
@@ -97,7 +92,9 @@ const RuleBook = () => {
 					be declared the winner. However, if Player One completes their loop, Player 
 					Two will have an opportunity to play their turn. If both Players complete their 
 					loops, the game is a draw!</p>
-					<p>Orginal Credits: </p>
+				</div>
+				<div>
+					<h2>Orginal Credits: </h2>
 					<ul>
 						<li>Game Design by Thornsten Gimmler</li>
 						<li>Cover and Card Art by Johan Egerkrans</li>
@@ -105,7 +102,7 @@ const RuleBook = () => {
 						<li>PO Box 883, Oxford, OX1 9PL, UK</li>
 						<li>2015 Thorsten Gimmler & Osprey Publishing Ltd.</li>
 					</ul>
-					<p>Digital Credits: </p>
+					<h2>Digital Credits: </h2>
 					<ul>
 						<li>Jesse Lofland</li>
 						<li>Maria Ortero</li>

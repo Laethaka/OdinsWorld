@@ -46,10 +46,16 @@ p {
 
 .info-background {
   background-image: url("../src/components/Images/paper-info-background.jpg");
-  /* border: 1px solid rgb(11, 11, 11); */
   border: 10px solid white;
   border: 10px solid rgba(77, 54, 32, 0.127);
   border-radius: 0.4rem;
   box-shadow: 0px 0px 29px 6px rgba(0,0,0,0.75);
+}
+
+
+
+.container-fluid {
+  padding-right: 0rem;
+  padding-left: 0rem;
 }
 
