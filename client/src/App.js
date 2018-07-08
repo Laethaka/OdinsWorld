@@ -83,7 +83,7 @@ class App extends Component {
               <div className="wrapper">
                 {this.state.user ?
                 <Link to="/Landing">
-                  <button type="button" className="mr-3 btn button" onClick={this.logout}>Logout</button>
+                  <button type="button" className="mr-3 btn button" onClick={this.logout}>Log Out</button>
                 </Link>
                   :
                 <div>
