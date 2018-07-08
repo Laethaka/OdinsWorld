@@ -117,9 +117,7 @@ const RuleBook = () => {
 			</div>
 		</div>
 	</div>
-	
 	);
-	
 };
 
 export default RuleBook;

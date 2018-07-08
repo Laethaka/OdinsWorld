@@ -26,7 +26,7 @@ class Chat extends Component {
             this.setState({
                 messages: [message].concat(this.state.messages)
             });
-            $(".chatPoop").animate({ scrollTop: $(".chatPoop").height() + 999999999999999999 }, "slow");
+            $(".chat-scroll").animate( { scrollTop: $(".chat-scroll").height()+999999999999999999 }, "slow");
         });
 
     };
@@ -34,36 +34,28 @@ class Chat extends Component {
     addMessage(event) {
         event.preventDefault(); // <- prevent form submit from reloading the page
         /* Send the message to Firebase */
-        firebase.database().ref("messages").push(firebase.auth().currentUser.displayName + ": " + this.input.value);
+        firebase.database().ref("messages").push( firebase.auth().currentUser.displayName + " – " + this.input.value );
         this.input.value = ""; // <- clear the input
         console.log(this.state.messages);
     };
 
     render() {
         return (
-            <div className="chat-box">
-                <h3 className="chat-title">Chat</h3>
-                <hr className="style-one" />
-
                 <div className="col-lg-12">
-
-                    <div className="row chatPoopDad">
-                        <div className="col-lg-12 chatPoop">
-                            {this.state.messages.map(message => <h6 key={message.id}>{message.text}</h6>)}
+                    <div className="row chat-scroll">
+                        <div className="col-lg-12 chat-scroll">
+                            {this.state.messages.map( message => <p key={message.id}>{message.text}</p> )}
                         </div>
                     </div>
 
-                    <hr className="style-one" />
-
+                    <hr className="style-one"/>
                     <form onSubmit={this.addMessage.bind(this)}>
-
                         <div className="row">
-
                             <div className="col-lg-10">
                                 <input
                                     className="form-control"
                                     type="text"
-                                    placeholder="Your message"
+                                    placeholder="YOUR MESSAGE"
                                     ref={msg => this.input = msg}
                                     required title="Anti-Chris Abuse"
                                     minLength="1"
@@ -72,13 +64,12 @@ class Chat extends Component {
                             </div>
 
                             <div className="col-lg-2">
-                                <input className="btn btn-dark" type="submit" />
+                                <input className="btn button button-join" type="submit" />
                             </div>
-
                         </div>
                     </form>
                 </div>
-            </div>
+
         );
     };
 };
