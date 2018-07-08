@@ -18,7 +18,7 @@ const LobbyGame = (props) => (
             </div>
         
             <div className="col-sm-3">
-                <button type="btn" className="btn button button-join" id="joinButton" href={"/game/" + (props.id + 1) }>Join</button>
+                <a type="btn" className="btn button button-join" id="joinButton" href={"/game/" + (props.id + 1) }>Join</a>
             </div>  
         </div>
         <hr className="style-one" />
