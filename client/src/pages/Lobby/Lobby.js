@@ -56,13 +56,33 @@ class Lobby extends Component {
         return (
             <Container fluid>
                 <Row>
-                    <Col size="lg-4">
+                    <Col size="md-2">
+                        {/* Users Online Component */}
+                        <div className="box">
+                            <h2 className="lobby-subtitle">Users</h2>
+                            <hr className="style-one"/>
+                                <LobbyUsers
+                                    users={this.state.usersInLobby} />
+                        </div>
+                    </Col>
+
+                    <Col size="md-5">
+                        {/* Lobby Chat Component */}
+                        <div className="box">           
+                            <h2 className="lobby-subtitle">Chat</h2>
+                            <hr className="style-one"/>
+                                <Chat />
+                        </div>
+                    </Col>
+
+            
+                    <Col size="md-4">
                         {/* Game Join Component */}
                         <div className="box">
                             <div className="games-box">
-                            <h3 className="games-title">Games</h3>
+                            <h2 className="lobby-subtitle">Games</h2>
                             <hr className="style-one" />
-                                <div className="gamesData">
+                                <div className="games-data">
                                     {this.state.usersInGame.map((playersArr, idx) => (
                                         <LobbyGame
                                             id={idx}
@@ -75,21 +95,6 @@ class Lobby extends Component {
                         </div>
                     </Col>
 
-                    <Col size="lg-5">
-                        {/* Lobby Chat Component */}
-                        <div className="box">
-                            <Chat />
-                        </div>
-                    </Col>
-
-                    <Col size="xl-2">
-                        {/* Users Online Component */}
-                        <div className="box">
-                            <LobbyUsers
-                                users={this.state.usersInLobby}
-                            />
-                        </div>
-                    </Col>
                 </Row>
             </Container>
         )

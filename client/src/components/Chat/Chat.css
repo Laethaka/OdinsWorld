@@ -1,39 +1,18 @@
-.chat-box {
-    padding: 1rem 1rem 1rem 2rem;
-}
 
-.chat-style {
-    color: #261f1e;
-    list-style-type: none; 
+input {
+    font-family: 'Averia Serif Libre', cursive;
     font-size: 1.2rem;
-    line-height: 2.5rem;
+    line-height: 1rem;
+    letter-spacing: 0.02rem;
 }
 
-.chat-title {
-    margin-top: 0.2rem;
-    text-align: center;
-}
-
-/* Gradient color1 - color2 - color1 */
-hr.style-one {
-    border: 0;
-    height: 1.2px;
-    background: #261f1e;
-    background-image: linear-gradient(to right, #dcb175, #261f1e, #dcb175);
-}
-
-.chatPoop {
+.chat-scroll {
     word-wrap: break-word;
     overflow-y: auto;
     overflow-x: auto;
     height: 26.5em;
     display: flex;
     flex-direction: column-reverse;
-}
-
-.chatPoopDad {
-    overflow: scroll;
-    overflow-x: auto;
 }
 
 ::-webkit-scrollbar {
