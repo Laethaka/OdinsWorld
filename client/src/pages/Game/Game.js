@@ -14,6 +14,7 @@ import FlightCard from "../../components/FlightCard";
 import flightcard from "../../components/FlightCard/flightcard.json";
 import DrawFlight from "../../components/DrawFlight";
 import DrawLoki from "../../components/DrawLoki";
+import EndTurnButton from "../../components/EndTurnButton";
 
 class Game extends Component {
     state = {
@@ -29,7 +30,8 @@ class Game extends Component {
         playerHand: [],
         opponentHand: 0, //DOM WILL ONLY RENDER AN INTEGER
         whiteRaven: 0,
-        blackRaven: 31
+        blackRaven: 31,
+        myTurn: false
     };
 
     componentWillReceiveProps(props) {
@@ -92,17 +94,33 @@ class Game extends Component {
             }
         });
 
-        //LISTENING FOR PLAYER STATUS AND UPDATING GAME STATE (TURNS)
+        //LISTENING FOR PLAYER READY DURING SETUP AND STARTING GAME
         database.ref(`/games/Game${props.gameId}/`).on('value', snap => {
-            if (this.state.gameReady && !this.state.gameRunning && snap.val().playerOne.ready && snap.val().playerTwo.ready) {
+            if (this.state.gameReady && !snap.val().world.gameRunning && snap.val().playerOne.ready && snap.val().playerTwo.ready) {
                 this.gameStart()
             }
         });
+
+        //LISTENING FOR TURN STATUS DURING ACTIVE GAME
+        database.ref(`/games/Game${props.gameId}/world`).on('value', snap => {
+            if (snap.val().gameRunning && this.state.isPlayer1 && snap.val().playerTurn == 1) {//RENDERING FOR ACTIVE PLAYER 1
+                this.setState({ myTurn: true })
+                // console.log('i am player 1 and its my turn')
+            } else if (snap.val().gameRunning && this.state.isPlayer1 && snap.val().playerTurn == 2) {//RENDERING FOR INACTIVE PLAYER 2
+                this.setState({ myTurn: false })
+                // console.log('i am player 1 and its not my turn')
+            } else if (snap.val().gameRunning && this.state.isPlayer2 && snap.val().playerTurn == 1) {
+                this.setState({ myTurn: false })
+                // console.log('i am player 2 and its not my turn') 
+            } else if (snap.val().gameRunning && this.state.isPlayer2 && snap.val().playerTurn == 2) {
+                this.setState({ myTurn: true })
+                // console.log ('i am player 2 and its my turn')
+            }
+        })
     }
 
     //PLAYER ONE SETUP AND DISCONNECT LISTENING
     becomePlayerOne = () => {
-        console.log('becoming player 1')
         //SERVER PLAYER VARS SETUP
         firebase.database().ref(`games/Game${this.state.gameId}/playerOne`).set({
             active: true,
@@ -121,7 +139,6 @@ class Game extends Component {
 
     //PLAYER Two SETUP AND DISCONNECT LISTENING
     becomePlayerTwo = () => {
-        console.log('becoming player 2')
         //SERVER PLAYER VARS SETUP
         firebase.database().ref(`games/Game${this.state.gameId}/playerTwo`).set({
             active: true,
@@ -150,6 +167,7 @@ class Game extends Component {
             bottomrow: landsArr.slice(16, 32).reverse(),
             whiteRaven: 0,
             blackRaven: 31,
+            gameRunning: false
         })
         firebase.database().ref(`games/Game${gameId}/decks`).set({
             player1Hand: [],
@@ -165,13 +183,17 @@ class Game extends Component {
     gameStart = () => {
         console.log('play ball! (game starting)')
         this.setState({ gameRunning: true })
-        firebase.database().ref(`/games/Game${this.state.gameId}/playerOne`).update({//INITIALIZING TURN SEQUENCE
-            ready: false
+        // firebase.database().ref(`/games/Game${this.state.gameId}/playerOne`).update({//INITIALIZING TURN SEQUENCE
+        //     ready: true
+        // })
+        firebase.database().ref(`/games/Game${this.state.gameId}/world`).update({//INITIALIZING TURN SEQUENCE
+            gameRunning: true,
+            playerTurn: '1'
         })
     }
 
-    handleCardPlay = landType => {
-        if (this.state.isPlayer1 && this.state.gameRunning) {
+    handleCardPlay = landType => {//PLAYER ATTEMPTING TO PLAY A CARD IN HAND
+        if (this.state.isPlayer1 && this.state.gameRunning && this.state.myTurn) {
             firebase.database().ref(`/games/Game${this.state.gameId}/world/completerow`).once('value').then((snap) => {
                 if (landType === snap.val()[this.state.whiteRaven + 1]) {//LEGAL FAST MOVE
                     for (let idx = this.state.whiteRaven + 1; idx < 32; idx++) {//LOOPING TO END OF MATCHING TERRAIN
@@ -182,11 +204,19 @@ class Game extends Component {
                             break;
                         }
                     }
+                    firebase.database().ref(`/games/Game${this.state.gameId}/decks/player1Hand`).once('value').then((snap) => {
+                        let handCards = Object.values(snap.val())
+                        let cutIdx = handCards.indexOf(landType)
+                        handCards.splice(cutIdx, 1)
+                        firebase.database().ref(`/games/Game${this.state.gameId}/decks/`).update({
+                            player1Hand: handCards
+                        })
+                    })
                 } else {
                     console.log('not a legal fast move! (or they won the game)')
                 }
             })
-        } else if (this.state.isPlayer2 && this.state.gameRunning) {
+        } else if (this.state.isPlayer2 && this.state.gameRunning && this.state.myTurn) {
             firebase.database().ref(`/games/Game${this.state.gameId}/world/completerow`).once('value').then((snap) => {
                 if (landType === snap.val()[this.state.blackRaven - 1]) {//LEGAL FAST MOVE
                     for (let idx = this.state.blackRaven - 1; idx > -1; idx--) {//LOOPING TO END OF MATCHING TERRAIN
@@ -197,6 +227,14 @@ class Game extends Component {
                             break;
                         }
                     }
+                    firebase.database().ref(`/games/Game${this.state.gameId}/decks/player2Hand`).once('value').then((snap) => {
+                        let handCards = Object.values(snap.val())
+                        let cutIdx = handCards.indexOf(landType)
+                        handCards.splice(cutIdx, 1)
+                        firebase.database().ref(`/games/Game${this.state.gameId}/decks/`).update({
+                            player2Hand: handCards
+                        })
+                    })
                 } else {
                     console.log('not a legal fast move! (or they won the game)')
                 }
@@ -204,124 +242,162 @@ class Game extends Component {
         }
     }
 
-        drawFlight = () => {//USER REQUESTING TO DRAW FLIGHT
-            if (this.state.cardsToDraw > 1) {//PLAYER CAN KEEP DRAWING
-                let newCard = Math.floor(Math.random() * 5)
+    drawFlight = () => {//USER REQUESTING TO DRAW FLIGHT
+        if (this.state.cardsToDraw > 1) {//PLAYER CAN KEEP DRAWING
+            let newCard = Math.floor(Math.random() * 5)
 
-                if (this.state.isPlayer1) {//ROUTING TO PLAYER 1 HAND
-                    firebase.database().ref(`games/Game${this.state.gameId}/decks/player1Hand`).push(newCard)
-                } else {//ROUTING TO PLAYER 2 HAND
-                    firebase.database().ref(`games/Game${this.state.gameId}/decks/player2Hand`).push(newCard)
-                }
-                this.setState({ cardsToDraw: this.state.cardsToDraw - 1 });
+            if (this.state.isPlayer1) {//ROUTING TO PLAYER 1 HAND
+                firebase.database().ref(`games/Game${this.state.gameId}/decks/player1Hand`).push(newCard)
+            } else {//ROUTING TO PLAYER 2 HAND
+                firebase.database().ref(`games/Game${this.state.gameId}/decks/player2Hand`).push(newCard)
             }
+            this.setState({ cardsToDraw: this.state.cardsToDraw - 1 });
+        }
 
-            if (this.state.cardsToDraw === 1) {//PLAYER DONE DRAWING
-                let newCard = Math.floor(Math.random() * 5)
-                if (this.state.isPlayer1) {//ROUTING TO PLAYER 1 HAND
-                    firebase.database().ref(`games/Game${this.state.gameId}/decks/player1Hand`).push(newCard)
-                } else {//ROUTING TO PLAYER 2 HAND
-                    firebase.database().ref(`games/Game${this.state.gameId}/decks/player2Hand`).push(newCard)
-                }
-                this.setState({ cardsToDraw: 0 });
+        if (this.state.cardsToDraw === 1) {//PLAYER DONE DRAWING
+            let newCard = Math.floor(Math.random() * 5)
+            if (this.state.isPlayer1) {//ROUTING TO PLAYER 1 HAND
+                firebase.database().ref(`games/Game${this.state.gameId}/decks/player1Hand`).push(newCard)
+            } else {//ROUTING TO PLAYER 2 HAND
+                firebase.database().ref(`games/Game${this.state.gameId}/decks/player2Hand`).push(newCard)
+            }
+            this.setState({ cardsToDraw: 0 });
+            if (this.state.isPlayer1 && !this.state.gameRunning) {//FLAGGING PLAYER 1 READY TO START
+                firebase.database().ref(`games/Game${this.state.gameId}/playerOne/`).update({ ready: true })
+            } else if (this.state.isPlayer2 && !this.state.gameRunning) {//FLAGGING PLAYER 2 READY TO START
+                firebase.database().ref(`games/Game${this.state.gameId}/playerTwo/`).update({ ready: true })
+            } else if (this.state.isPlayer1 && this.state.gameRunning) {//HANDING ACTIVE TURN TO PLAYER 2
+                firebase.database().ref(`games/Game${this.state.gameId}/world/`).update({ playerTurn: '2' })
+            } else if (this.state.isPlayer2 && this.state.gameRunning) {//HANDING ACTIVE TURN TO PLAYER 2
+                firebase.database().ref(`games/Game${this.state.gameId}/world/`).update({ playerTurn: '1' })
+            }
+        }
+    };
+
+    drawLoki = () => {//USER REQUESTING TO DRAW LOKI
+        if (this.state.cardsToDraw > 0) {//PLAYER HAS DRAWING PERMISSION
+            let newCard = 'loki card!'
+
+            if (this.state.isPlayer1) {//ROUTING TO PLAYER 1 HAND
+                firebase.database().ref(`games/Game${this.state.gameId}/decks/player1Hand`).push(newCard)
+            } else {//ROUTING TO PLAYER 2 HAND
+                firebase.database().ref(`games/Game${this.state.gameId}/decks/player2Hand`).push(newCard)
+            }
+            this.setState({ cardsToDraw: this.state.cardsToDraw - 1 });
+            if (this.state.cardsToDraw === 0) {//PLAYER DONE DRAWING
                 if (this.state.isPlayer1) {
                     firebase.database().ref(`games/Game${this.state.gameId}/playerOne/`).update({ ready: true })
-                } else if (this.state.isPlayer2) {
+                } else if (this.state.isPlayer1) {
                     firebase.database().ref(`games/Game${this.state.gameId}/playerTwo/`).update({ ready: true })
                 }
             }
-        };
-
-        drawLoki = () => {//USER REQUESTING TO DRAW LOKI
-            if (this.state.cardsToDraw > 0) {//PLAYER HAS DRAWING PERMISSION
-                let newCard = 'loki card!'
-
-                if (this.state.isPlayer1) {//ROUTING TO PLAYER 1 HAND
-                    firebase.database().ref(`games/Game${this.state.gameId}/decks/player1Hand`).push(newCard)
-                } else {//ROUTING TO PLAYER 2 HAND
-                    firebase.database().ref(`games/Game${this.state.gameId}/decks/player2Hand`).push(newCard)
-                }
-                this.setState({ cardsToDraw: this.state.cardsToDraw - 1 });
-                if (this.state.cardsToDraw === 0) {//PLAYER DONE DRAWING
-                    if (this.state.isPlayer1) {
-                        firebase.database().ref(`games/Game${this.state.gameId}/playerOne/`).update({ ready: true })
-                    } else if (this.state.isPlayer1) {
-                        firebase.database().ref(`games/Game${this.state.gameId}/playerTwo/`).update({ ready: true })
-                    }
-                }
-            }
-        };
-
-        render() {
-
-            return (
-                <Container fluid>
-                    <Row>
-                        <Col size="md-12">
-                            <Jumbotron>
-                                <div className="landBoard text-center">
-                                    <div className="text-light border border-warning">
-                                        {this.state.toprow.map((landId, idx) => (
-                                            <LandCard
-                                                position={idx}
-                                                key={idx}
-                                                image={landId}
-                                                whiteRaven={this.state.whiteRaven}
-                                                blackRaven={this.state.blackRaven}
-                                            />
-                                        ))}
-                                    </div>
-
-                                    <div className="text-light border border-warning img-vert">
-                                        {this.state.bottomrow.map((landId, idx) => (
-                                            <LandCard
-                                                position={31 - idx}
-                                                key={idx}
-                                                image={landId}
-                                                whiteRaven={this.state.whiteRaven}
-                                                blackRaven={this.state.blackRaven}
-                                            />
-                                        ))}
-                                    </div>
-                                </div>
-                            </Jumbotron>
-                        </Col>
-                    </Row>
-
-                    <Row>
-                        <Col size="md-12">
-                            <div className="userBoard text-center border pt-5">
-                                <Row>
-                                    <div className="col-sm-2 border">
-                                        <DrawFlight deckClick={this.drawFlight} />
-                                        <DrawLoki deckClick={this.drawLoki} />
-                                    </div>
-
-                                    <div className="col-sm-8 border text-light">
-                                        <h4>Your Hand</h4>
-                                        {this.state.playerHand.map((landId, idx) => (
-                                            <FlightCard
-                                                key={idx}
-                                                image={landId}
-                                                cardClick={this.handleCardPlay}
-                                            />
-                                        ))}
-                                        <h4>Opponent Cards: {this.state.opponentHand}</h4>
-                                        <h4>Cards available to draw: {this.state.cardsToDraw}</h4>
-                                    </div>
-
-                                    <div className="col-sm-2 border text-light">
-                                        <h4>Discard</h4>
-                                    </div>
-
-                                </Row>
-                            </div>
-                        </Col>
-                    </Row>
-
-                </Container>
-            );
-        };
+        }
     };
 
-    export default Game;
+    endTurnClick = () => {
+        if (this.state.isPlayer1 && this.state.cardsToDraw == 0) {
+            this.setState({ cardsToDraw: this.state.cardsToDraw + 3 })
+            // firebase.database().ref(`games/Game${this.state.gameId}/world/`).update({ playerTurn: '2' })
+        } else if (this.state.isPlayer2 && this.state.cardsToDraw == 0) {
+            this.setState({ cardsToDraw: this.state.cardsToDraw + 3 })
+            // firebase.database().ref(`games/Game${this.state.gameId}/world/`).update({ playerTurn: '1' })
+        }
+    }
+
+    render() {
+
+        return (
+            <Container fluid>
+                <Row>
+                    <Col size="md-12">
+                        <Jumbotron>
+                            <div className="landBoard text-center">
+                                <div className="text-light border border-warning">
+                                    {this.state.toprow.map((landId, idx) => (
+                                        <LandCard
+                                            position={idx}
+                                            key={idx}
+                                            image={landId}
+                                            whiteRaven={this.state.whiteRaven}
+                                            blackRaven={this.state.blackRaven}
+                                        />
+                                    ))}
+                                </div>
+
+                                <div className="text-light border border-warning img-vert">
+                                    {this.state.bottomrow.map((landId, idx) => (
+                                        <LandCard
+                                            position={31 - idx}
+                                            key={idx}
+                                            image={landId}
+                                            whiteRaven={this.state.whiteRaven}
+                                            blackRaven={this.state.blackRaven}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                        </Jumbotron>
+                    </Col>
+                </Row>
+
+                <Row >
+                    <Col size="md-4">
+                        <div className="text-left border">
+                            {this.state.isPlayer1 ? <h1 className="text-light">You are the White Raven!</h1> : null}
+                            {this.state.isPlayer2 ? <h1 className="text-light">You are the Black Raven!</h1> : null}
+                        </div>
+                    </Col>
+
+                    <Col size="md-4">
+                        <div className="text-center border">
+                            {this.state.isPlayer1 && this.state.myTurn && this.state.cardsToDraw==0 ? <EndTurnButton buttonClick={this.endTurnClick} /> : null}
+                            {this.state.isPlayer2 && this.state.myTurn && this.state.cardsToDraw==0 ? <EndTurnButton buttonClick={this.endTurnClick} /> : null}
+                        </div>
+                    </Col>
+
+                    <Col size="md-4">
+                        <div className="text-right border">
+                            {this.state.myTurn && this.state.cardsToDraw==0 ? <h2>It's your turn! Ride like the wind!</h2> : null}
+                            {this.state.myTurn && this.state.cardsToDraw>0 ? <h2>Please draw your cards!</h2> : null}
+                            {!this.state.myTurn ? <h2>Please wait for your opponent!</h2> : null}
+                        </div>
+                    </Col>
+                </Row>
+
+                <Row>
+                    <Col size="md-12">
+                        <div className="userBoard text-center border pt-5">
+                            <Row>
+                                <div className="col-sm-2 border">
+                                    <DrawFlight deckClick={this.drawFlight} />
+                                    <DrawLoki deckClick={this.drawLoki} />
+                                </div>
+
+                                <div className="col-sm-8 border text-light">
+                                    <h4>Your Hand</h4>
+                                    {this.state.playerHand.map((landId, idx) => (
+                                        <FlightCard
+                                            key={idx}
+                                            image={landId}
+                                            cardClick={this.handleCardPlay}
+                                        />
+                                    ))}
+                                    <h4>Opponent Cards: {this.state.opponentHand}</h4>
+                                    <h4>Cards available to draw: {this.state.cardsToDraw}</h4>
+                                </div>
+
+                                <div className="col-sm-2 border text-light">
+                                    <h4>Discard</h4>
+                                </div>
+
+                            </Row>
+                        </div>
+                    </Col>
+                </Row>
+
+            </Container>
+        );
+    };
+};
+
+export default Game;
