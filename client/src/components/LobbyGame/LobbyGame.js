@@ -1,6 +1,5 @@
 import React from "react";
 import './LobbyGame.css';
-import { BrowserRouter as Link} from "react-router-dom";
 
 const LobbyGame = (props) => (
 
