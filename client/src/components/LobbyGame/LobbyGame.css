@@ -6,13 +6,6 @@
     margin-bottom: 2em;
 }
 
-.games-title {
-    text-transform: uppercase;
-    font-family: 'Caudex', serif;
-    font-weight: bolder;
-    font-size: 1.2em;
-}
-
 .playersInGame {
     float: left;
 }

@@ -308,6 +308,31 @@ class Game extends Component {
 
         return (
             <Container fluid>
+
+                <Row >
+                    <Col size="md-4">
+                        <div className="game-status-box info-background">
+                            {this.state.isPlayer1 ? <span><img className="coin-size" src={require('../../components/Images/coin-2.png')} /><h3 className="d-flex justify-content-center">Your Raven!</h3></span> : null}
+                            {this.state.isPlayer2 ? <span><img className="coin-size" src={require('../../components/Images/coin-1.png')} /><h3 className="d-flex justify-content-center">You are the Black Raven!</h3></span> : null}
+                        </div>
+                    </Col>
+
+                    <Col size="md-4">
+                        <div className="game-status-box info-background d-flex justify-content-center">
+                            {this.state.isPlayer1 && this.state.myTurn && this.state.cardsToDraw==0 ? <EndTurnButton buttonClick={this.endTurnClick} /> : null}
+                            {this.state.isPlayer2 && this.state.myTurn && this.state.cardsToDraw==0 ? <EndTurnButton buttonClick={this.endTurnClick} /> : null}
+                        </div>
+                    </Col>
+
+                    <Col size="md-4">
+                        <div className="info-background game-status-box d-flex justify-content-center">
+                            {this.state.myTurn && this.state.cardsToDraw==0 ? <h3>It's your turn! Ride like the wind!</h3> : null}
+                            {this.state.myTurn && this.state.cardsToDraw>0 ? <h3>Please draw your cards!</h3> : null}
+                            {!this.state.myTurn ? <h3>Please wait for your opponent!</h3> : null}
+                        </div>
+                    </Col>
+                </Row>
+                
                 <Row>
                     <Col size="md-12">
                         <Jumbotron>
@@ -337,30 +362,6 @@ class Game extends Component {
                                 </div>
                             </div>
                         </Jumbotron>
-                    </Col>
-                </Row>
-
-                <Row >
-                    <Col size="md-4">
-                        <div className="text-left border">
-                            {this.state.isPlayer1 ? <h1 className="text-light">You are the White Raven!</h1> : null}
-                            {this.state.isPlayer2 ? <h1 className="text-light">You are the Black Raven!</h1> : null}
-                        </div>
-                    </Col>
-
-                    <Col size="md-4">
-                        <div className="text-center border">
-                            {this.state.isPlayer1 && this.state.myTurn && this.state.cardsToDraw==0 ? <EndTurnButton buttonClick={this.endTurnClick} /> : null}
-                            {this.state.isPlayer2 && this.state.myTurn && this.state.cardsToDraw==0 ? <EndTurnButton buttonClick={this.endTurnClick} /> : null}
-                        </div>
-                    </Col>
-
-                    <Col size="md-4">
-                        <div className="text-right border">
-                            {this.state.myTurn && this.state.cardsToDraw==0 ? <h2>It's your turn! Ride like the wind!</h2> : null}
-                            {this.state.myTurn && this.state.cardsToDraw>0 ? <h2>Please draw your cards!</h2> : null}
-                            {!this.state.myTurn ? <h2>Please wait for your opponent!</h2> : null}
-                        </div>
                     </Col>
                 </Row>
 

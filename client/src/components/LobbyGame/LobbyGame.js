@@ -6,7 +6,7 @@ const LobbyGame = (props) => (
     <div className="gamesAvail">
         <div className="row">
             <div className="col-sm-12">
-                <h6 className="games-title">Players in game</h6>
+                <h3>Players in game</h3>
             </div>
         </div>
 
