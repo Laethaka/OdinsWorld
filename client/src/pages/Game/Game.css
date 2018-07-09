@@ -20,6 +20,7 @@
 .game-status-margin {
     margin-top: 2rem !important;
     margin-bottom: 2rem !important;
+    padding-bottom: 1rem;
 }
 
 .game-status-box h3 {
@@ -31,6 +32,11 @@
 
 .coin-size {
     height: 7rem;
+    border-radius: 50%;
+    transition: all .8s ease-in-out;
+}
+.coin-size:hover {
+    transform: rotate(-360deg);
 }
 
 .games-text {
@@ -42,4 +48,13 @@
 
 .img-vert {
     transform: rotateX(180deg);
+}
+
+.gameHr {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.cardsToDrawNum {
+    font-weight: bold;
 }
