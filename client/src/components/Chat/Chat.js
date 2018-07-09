@@ -41,19 +41,21 @@ class Chat extends Component {
 
     render() {
         return (
-                <div className="col-lg-12">
-                    <div className="row chat-scroll">
-                        <div className="col-lg-12 chat-scroll">
+                <div>
+                    <div className="row">
+                        <div className="col-lg-12 chat-container">
                             {this.state.messages.map( message => <p key={message.id}>{message.text}</p> )}
                         </div>
                     </div>
 
-                    <hr className="style-one"/>
-                    <form onSubmit={this.addMessage.bind(this)}>
+                    <img className="h1-img" src={require('../../components/Images/h1.png')} />
+                   
+                   <div className="d-flex justify-content-start">
+                    <form className="form-padding" onSubmit={this.addMessage.bind(this)}>
                         <div className="row">
                             <div className="col-lg-10">
                                 <input
-                                    className="form-control"
+                                    className="form-control input-inner-shadow "
                                     type="text"
                                     placeholder="YOUR MESSAGE"
                                     ref={msg => this.input = msg}
@@ -62,12 +64,13 @@ class Chat extends Component {
                                     maxLength="100"
                                 />
                             </div>
-
+            
                             <div className="col-lg-2">
                                 <input className="btn button button-join" type="submit" />
                             </div>
                         </div>
                     </form>
+                    </div>
                 </div>
 
         );
