@@ -240,7 +240,7 @@ class Game extends Component {
                         if (val === landType) { counter++ }
                     })
                     if (counter > 1) {//EXECUTING SLOW MOVE
-                        // console.log('slow moving!')
+                        // console.log('slow moving!') 
                         // console.log(snap.val()[this.state.whiteRaven + 1])
                         // console.log(snap.val()[this.state.whiteRaven + 2])
                         if (snap.val()[this.state.whiteRaven + 1] === snap.val()[this.state.whiteRaven + 2]) {//STRETCH OF SIMILAR TERRAIN AHEAD
@@ -417,32 +417,69 @@ class Game extends Component {
                 <div className="row info-background game-status-margin">
                     <Col size="md-4">
                         <div className="game-status-box text-center">
-                            {this.state.isPlayer1 ? <span><img className="coin-size" src={require('../../components/Images/coin-2.png')} /><h3 className="d-flex justify-content-center">Light Raven</h3></span> : null}
-                            {this.state.isPlayer2 ? <span><img className="coin-size" src={require('../../components/Images/coin-1.png')} /><h3 className="d-flex justify-content-center">Dark Raven</h3></span> : null}
+                            {this.state.isPlayer1 ? 
+                            <div>
+                                <img className="coin-size" src={require('../../components/Images/coin-2.png')} />
+                                <h3 className="d-flex justify-content-center">Player One</h3>
+                                <hr className="gameHr"/>
+                                <h3 className="d-flex justify-content-center">Light Raven</h3>
+                                </div> : null}
+                            {this.state.isPlayer2 ? 
+                            <div>
+                                <img className="coin-size" src={require('../../components/Images/coin-1.png')} />
+                                <h3 className="d-flex justify-content-center">Player Two</h3>
+                                <hr className="gameHr"/>
+                                <h3 className="d-flex justify-content-center">Dark Raven</h3>
+                                </div> : null}
                         </div>
                     </Col>
 
                     <Col size="md-4">
                         <div className=" game-status-box d-flex justify-content-center text-center">
                             <h3 className="d-flex justify-content-center"></h3>
-                            {this.state.myTurn && this.state.cardsToDraw == 0 ? <h3 className="d-flex justify-content-center">Turn: Play Cards</h3> : null}
-                            {this.state.myTurn && this.state.cardsToDraw > 0 ? <div><h3>Turn: Draw Cards </h3><h3>Cards available to draw: {this.state.cardsToDraw}</h3></div> : null}
-                            {!this.state.myTurn ? <h3>Waiting: Opponent's Turn</h3> : null}
-                            {this.state.gameWinner === 'white' && this.state.isPlayer1 ? <p>YOU WON!</p> : null}
-                            {this.state.gameWinner === 'white' && this.state.isPlayer2 ? <p>YOU LOST!</p> : null}
-                            {this.state.gameWinner === 'black' && this.state.isPlayer1 ? <p>YOU LOST!</p> : null}
-                            {this.state.gameWinner === 'black' && this.state.isPlayer2 ? <p>YOU WON!</p> : null}
+                            {this.state.myTurn && this.state.cardsToDraw == 0 && this.state.gameWinner === null ? 
+                                <div>
+                                    <h3 className="d-flex justify-content-center">Turn: Play Cards</h3>
+                                    <hr className="gameHr"/>
+                                    <p>Click Flight Cards from your hand to move</p>
+                                </div> : null}
+
+                            {this.state.myTurn && this.state.cardsToDraw > 0 && this.state.gameWinner === null ? 
+                                <div>
+                                    <h3 className="d-flex justify-content-center">Turn: Draw Cards </h3>
+                                    <hr className="gameHr"/>
+                                    <p>Cards available to draw: <span className="cardsToDrawNum">{this.state.cardsToDraw}</span></p>
+                                </div> : null}
+
+                            {!this.state.myTurn && this.state.gameWinner === null ? 
+                                <div>
+                                    <h3 className="d-flex justify-content-center">Waiting: Opponent's Turn</h3> 
+                                    <hr className="gameHr"/>
+                                </div> : null}
+                                    
+                            {this.state.gameWinner === 'white' && this.state.isPlayer1 ? <h3 className="d-flex justify-content-center">Victorious</h3> : null}
+                            {this.state.gameWinner === 'white' && this.state.isPlayer2 ? <h3 className="d-flex justify-content-center">Defeat</h3> : null}
+                            {this.state.gameWinner === 'black' && this.state.isPlayer1 ? <h3 className="d-flex justify-content-center">Defeat</h3> : null}
+                            {this.state.gameWinner === 'black' && this.state.isPlayer2 ? <h3 className="d-flex justify-content-center">Victorious</h3> : null}
                         </div>
                     </Col>
 
                     <Col size="md-4">
-                        <div className="game-status-box  d-flex justify-content-center text-center">
-                            {this.state.isPlayer1 && this.state.myTurn && this.state.cardsToDraw == 0 ? <EndTurnButton buttonClick={this.endTurnClick} /> : null}
-                            {this.state.isPlayer2 && this.state.myTurn && this.state.cardsToDraw == 0 ? <EndTurnButton buttonClick={this.endTurnClick} /> : null}
-                            {this.state.gameWinner !== null ? <a type="button" className="btn button btn-dark pr-4 pl-4" href="/lobby/">Back to Lobby</a> : null}
+                        <div className="game-status-box d-flex justify-content-center text-center">
+                            {this.state.isPlayer1 && this.state.myTurn && this.state.cardsToDraw == 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
+                            {this.state.isPlayer2 && this.state.myTurn && this.state.cardsToDraw == 0 && this.state.gameWinner === null ? <EndTurnButton buttonClick={this.endTurnClick} /> : null}
+                            {this.state.gameWinner !== null ? <a type="btn" className="btn button pr-4 pl-4" href="/lobby/">Back to Lobby</a> : null}
                         </div>
                     </Col>
 
+                </div>
+
+                <div className="row">
+                    <div className="col-md-12 text-light mb-3">
+                        <div className="d-flex justify-content-center">
+                            <h4>Opponent Cards: {this.state.opponentHand}</h4>
+                        </div>
+                    </div>
                 </div>
 
                 <Row>
@@ -479,7 +516,7 @@ class Game extends Component {
 
                 <Row>
                     <Col size="md-12">
-                        <div className="userBoard text-center border pt-5">
+                        <div className="userBoard text-center border pt-3">
                             <Row>
                                 <div className="col-sm-1 border text-light">
                                     <h4>Flight</h4>
@@ -500,8 +537,7 @@ class Game extends Component {
                                             cardClick={this.handleCardPlay}
                                         />
                                     ))}
-                                    <h4>Opponent Cards: {this.state.opponentHand}</h4>
-                                    <h4>Cards available to draw: {this.state.cardsToDraw}</h4>
+                                    
                                 </div>
 
                                 <div className="col-sm-2 border text-light">
