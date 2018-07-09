@@ -3,21 +3,25 @@
     margin-left: 4rem !important;
     margin-right: 4rem !important;
     padding: 0rem 0rem;
+    margin-top: 1.5rem;
 }
 
 .game-name {
     color: #fac66c;
-    font-size: 3.2rem;
+    font-size: 3.4rem;
     text-shadow: 6px 5px 30px rgb(21, 21, 21);
-    margin-top: 2rem;   
+    padding-left: 15px; 
 }
 .rounded-circle {
     height: 4rem;
     width: 4rem;
-    margin-right: 2rem;
+    margin-right: 15px;
     margin-left: 1rem;
     border-radius: 4rem;
     border: 3px solid #1c1b18d6;
 }
 
+.user-profile {
+    padding-right: 15px;
+}
 

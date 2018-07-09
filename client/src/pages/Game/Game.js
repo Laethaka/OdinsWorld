@@ -35,7 +35,9 @@ class Game extends Component {
         myTurn: false,
         gameWinner: null,
         myLokiDeck: 8,
-        oppLokiDeck: 8
+        oppLokiDeck: 8,
+        showingHand: true,
+        showingPush: false,
     };
 
     componentWillReceiveProps(props) {
@@ -90,12 +92,18 @@ class Game extends Component {
 
                 if (oppHand) {//UPDATING OPPONENT CARD COUNT ON DOM
                     this.setState({ opponentHand: Object.values(oppHand).length })
+                } else {
+                    this.setState({ opponentHand: 0 })
                 }
                 if (myLoki) {//UPDATING MY LOKI DECK COUNT ON DOM
                     this.setState({ myLokiDeck: myLoki.length })
+                } else {
+                    this.setState({ myLokiDeck: 0 })
                 }
                 if (oppLoki) {//UPDATING OPPONENT LOKI DECK COUNT ON DOM
                     this.setState({ oppLokiDeck: oppLoki.length })
+                } else {
+                    this.setState({ oppLokiDeck: 0 })
                 }
                 if (myHand) {//DISPLAYING HAND CARDS IN DOM
                     // console.log('i now have this many cards: ', Object.values(myHand).length)
@@ -217,7 +225,6 @@ class Game extends Component {
     };
 
     gameStart = () => {
-        console.log('play ball! (game starting)')
         this.setState({ gameRunning: true })
         firebase.database().ref(`/games/Game${this.state.gameId}/world`).update({//INITIALIZING TURN SEQUENCE
             gameRunning: true,
@@ -350,8 +357,8 @@ class Game extends Component {
                     }
                 })
             }
-        } else if (cardId===5 && this.state.gameRunning && this.state.myTurn && this.state.cardsToDraw === 0) {
-            console.log('loki push played!')
+        } else if (cardId === 5 && this.state.gameRunning && this.state.myTurn && this.state.cardsToDraw === 0) {//SHOWING PUSH OPTION
+            this.setState({ showingHand: false, showingPush: true })
         }
     }
 
@@ -385,47 +392,52 @@ class Game extends Component {
     };
 
     drawLoki = () => {//USER REQUESTING TO DRAW LOKI
-        let newCard;
+        if (this.state.myLokiDeck > 0) {
 
-        if (this.state.isPlayer1) {//ROUTING TO CHECK PLAYER 1 HAND
-            firebase.database().ref(`games/Game${this.state.gameId}/decks/player1LokiDeck`).once('value', snap => {
-                let myLoki = snap.val()
-                myLoki = Object.values(myLoki)
-                newCard = myLoki.splice([Math.floor(Math.random() * myLoki.length)], 1)[0]
-                firebase.database().ref(`games/Game${this.state.gameId}/decks/`).update({ player1LokiDeck: myLoki })
-            })
-        } else if (this.state.isPlayer2) {//ROUTING TO CHECK PLAYER 2 HAND
-            firebase.database().ref(`games/Game${this.state.gameId}/decks/player2LokiDeck`).once('value', snap => {
-                let myLoki = snap.val()
-                myLoki = Object.values(myLoki)
-                newCard = myLoki.splice([Math.floor(Math.random() * myLoki.length)], 1)[0]
-                firebase.database().ref(`games/Game${this.state.gameId}/decks/`).update({ player2LokiDeck: myLoki })
-            })
-        }
+            let newCard;
 
-        if (this.state.cardsToDraw > 1) {//PLAYER CAN KEEP DRAWING
-
-            if (this.state.isPlayer1) {//ROUTING TO PLAYER 1 HAND
-                firebase.database().ref(`games/Game${this.state.gameId}/decks/player1Hand`).push(newCard)
-            } else {//ROUTING TO PLAYER 2 HAND
-                firebase.database().ref(`games/Game${this.state.gameId}/decks/player2Hand`).push(newCard)
+            if (this.state.cardsToDraw > 0) {
+                if (this.state.isPlayer1) {//ROUTING TO CHECK PLAYER 1 HAND
+                    firebase.database().ref(`games/Game${this.state.gameId}/decks/player1LokiDeck`).once('value', snap => {
+                        let myLoki = snap.val()
+                        myLoki = Object.values(myLoki)
+                        newCard = myLoki.splice([Math.floor(Math.random() * myLoki.length)], 1)[0]
+                        firebase.database().ref(`games/Game${this.state.gameId}/decks/`).update({ player1LokiDeck: myLoki })
+                    })
+                } else if (this.state.isPlayer2) {//ROUTING TO CHECK PLAYER 2 HAND
+                    firebase.database().ref(`games/Game${this.state.gameId}/decks/player2LokiDeck`).once('value', snap => {
+                        let myLoki = snap.val()
+                        myLoki = Object.values(myLoki)
+                        newCard = myLoki.splice([Math.floor(Math.random() * myLoki.length)], 1)[0]
+                        firebase.database().ref(`games/Game${this.state.gameId}/decks/`).update({ player2LokiDeck: myLoki })
+                    })
+                }
             }
-            this.setState({ cardsToDraw: this.state.cardsToDraw - 1 });
-        } else if (this.state.cardsToDraw === 1) {//PLAYER DONE DRAWING
-            if (this.state.isPlayer1) {//ROUTING TO PLAYER 1 HAND
-                firebase.database().ref(`games/Game${this.state.gameId}/decks/player1Hand`).push(newCard)
-            } else {//ROUTING TO PLAYER 2 HAND
-                firebase.database().ref(`games/Game${this.state.gameId}/decks/player2Hand`).push(newCard)
-            }
-            this.setState({ cardsToDraw: 0 });
-            if (this.state.isPlayer1 && !this.state.gameRunning) {//FLAGGING PLAYER 1 READY TO START
-                firebase.database().ref(`games/Game${this.state.gameId}/playerOne/`).update({ ready: true })
-            } else if (this.state.isPlayer2 && !this.state.gameRunning) {//FLAGGING PLAYER 2 READY TO START
-                firebase.database().ref(`games/Game${this.state.gameId}/playerTwo/`).update({ ready: true })
-            } else if (this.state.isPlayer1 && this.state.gameRunning) {//HANDING ACTIVE TURN TO PLAYER 2
-                firebase.database().ref(`games/Game${this.state.gameId}/world/`).update({ playerTurn: '2' })
-            } else if (this.state.isPlayer2 && this.state.gameRunning) {//HANDING ACTIVE TURN TO PLAYER 2
-                firebase.database().ref(`games/Game${this.state.gameId}/world/`).update({ playerTurn: '1' })
+
+            if (this.state.cardsToDraw > 1) {//PLAYER CAN KEEP DRAWING
+
+                if (this.state.isPlayer1) {//ROUTING TO PLAYER 1 HAND
+                    firebase.database().ref(`games/Game${this.state.gameId}/decks/player1Hand`).push(newCard)
+                } else {//ROUTING TO PLAYER 2 HAND
+                    firebase.database().ref(`games/Game${this.state.gameId}/decks/player2Hand`).push(newCard)
+                }
+                this.setState({ cardsToDraw: this.state.cardsToDraw - 1 });
+            } else if (this.state.cardsToDraw === 1) {//PLAYER DONE DRAWING
+                if (this.state.isPlayer1) {//ROUTING TO PLAYER 1 HAND
+                    firebase.database().ref(`games/Game${this.state.gameId}/decks/player1Hand`).push(newCard)
+                } else {//ROUTING TO PLAYER 2 HAND
+                    firebase.database().ref(`games/Game${this.state.gameId}/decks/player2Hand`).push(newCard)
+                }
+                this.setState({ cardsToDraw: 0 });
+                if (this.state.isPlayer1 && !this.state.gameRunning) {//FLAGGING PLAYER 1 READY TO START
+                    firebase.database().ref(`games/Game${this.state.gameId}/playerOne/`).update({ ready: true })
+                } else if (this.state.isPlayer2 && !this.state.gameRunning) {//FLAGGING PLAYER 2 READY TO START
+                    firebase.database().ref(`games/Game${this.state.gameId}/playerTwo/`).update({ ready: true })
+                } else if (this.state.isPlayer1 && this.state.gameRunning) {//HANDING ACTIVE TURN TO PLAYER 2
+                    firebase.database().ref(`games/Game${this.state.gameId}/world/`).update({ playerTurn: '2' })
+                } else if (this.state.isPlayer2 && this.state.gameRunning) {//HANDING ACTIVE TURN TO PLAYER 2
+                    firebase.database().ref(`games/Game${this.state.gameId}/world/`).update({ playerTurn: '1' })
+                }
             }
         }
     };
@@ -436,6 +448,40 @@ class Game extends Component {
         } else if (this.state.isPlayer2 && this.state.cardsToDraw === 0) {
             this.setState({ cardsToDraw: this.state.cardsToDraw + 3 })
         }
+    };
+
+    selfPush = () => {
+        if (this.state.isPlayer1) {
+            firebase.database().ref(`games/Game${this.state.gameId}/world`).update({ whiteRaven: this.state.whiteRaven + 1 })
+            let myHand = this.state.playerHand
+            let cutIdx = myHand.indexOf(5)
+            myHand.splice(cutIdx, 1)
+            firebase.database().ref(`games/Game${this.state.gameId}/decks`).update({ player1Hand: myHand })
+        } else if (this.state.isPlayer2) {
+            firebase.database().ref(`games/Game${this.state.gameId}/world`).update({ blackRaven: this.state.blackRaven - 1 })
+            let myHand = this.state.playerHand
+            let cutIdx = myHand.indexOf(5)
+            myHand.splice(cutIdx, 1)
+            firebase.database().ref(`games/Game${this.state.gameId}/decks`).update({ player2Hand: myHand })
+        }
+        this.setState({ showingHand: true, showingPush: false })
+    }
+
+    oppPush = () => {
+        if (this.state.isPlayer1 && this.state.blackRaven < 31) {
+            firebase.database().ref(`games/Game${this.state.gameId}/world`).update({ blackRaven: this.state.blackRaven + 1 })
+            let myHand = this.state.playerHand
+            let cutIdx = myHand.indexOf(5)
+            myHand.splice(cutIdx, 1)
+            firebase.database().ref(`games/Game${this.state.gameId}/decks`).update({ player1Hand: myHand })
+        } else if (this.state.isPlayer2 && this.state.whiteRaven > 0) {
+            firebase.database().ref(`games/Game${this.state.gameId}/world`).update({ whiteRaven: this.state.whiteRaven - 1 })
+            let myHand = this.state.playerHand
+            let cutIdx = myHand.indexOf(5)
+            myHand.splice(cutIdx, 1)
+            firebase.database().ref(`games/Game${this.state.gameId}/decks`).update({ player2Hand: myHand })
+        }
+        this.setState({ showingHand: true, showingPush: false })
     }
 
     render() {
@@ -446,26 +492,69 @@ class Game extends Component {
                 <div className="row info-background game-status-margin">
                     <Col size="md-4">
                         <div className="game-status-box text-center">
-                            {this.state.isPlayer1 ? <span><img className="coin-size" src={require('../../components/Images/coin-2.png')} /><h3 className="d-flex justify-content-center">White Raven</h3></span> : null}
-                            {this.state.isPlayer2 ? <span><img className="coin-size" src={require('../../components/Images/coin-1.png')} /><h3 className="d-flex justify-content-center">Dark Raven</h3></span> : null}
-                        </div>
-                    </Col>
-
-                    <Col size="md-4">
-                        <div className="game-status-box  d-flex justify-content-center text-center">
-                            {this.state.isPlayer1 && this.state.myTurn && this.state.cardsToDraw == 0 ? <EndTurnButton buttonClick={this.endTurnClick} /> : null}
-                            {this.state.isPlayer2 && this.state.myTurn && this.state.cardsToDraw == 0 ? <EndTurnButton buttonClick={this.endTurnClick} /> : null}
+                            {this.state.isPlayer1 ?
+                                <div>
+                                    <img className="coin-size" src={require('../../components/Images/coin-2.png')} />
+                                    <h3 className="d-flex justify-content-center">Player One</h3>
+                                    <hr className="gameHr" />
+                                    <h3 className="d-flex justify-content-center">Light Raven</h3>
+                                </div> : null}
+                            {this.state.isPlayer2 ?
+                                <div>
+                                    <img className="coin-size" src={require('../../components/Images/coin-1.png')} />
+                                    <h3 className="d-flex justify-content-center">Player Two</h3>
+                                    <hr className="gameHr" />
+                                    <h3 className="d-flex justify-content-center">Dark Raven</h3>
+                                </div> : null}
                         </div>
                     </Col>
 
                     <Col size="md-4">
                         <div className=" game-status-box d-flex justify-content-center text-center">
                             <h3 className="d-flex justify-content-center"></h3>
-                            {this.state.myTurn && this.state.cardsToDraw == 0 ? <h3 className="d-flex justify-content-center">Your Turn</h3> : null}
-                            {this.state.myTurn && this.state.cardsToDraw > 0 ? <h3>Please draw your cards!</h3> : null}
-                            {!this.state.myTurn ? <h3>Please wait for your opponent!</h3> : null}
+                            {this.state.myTurn && this.state.cardsToDraw == 0 && this.state.gameWinner === null ?
+                                <div>
+                                    <h3 className="d-flex justify-content-center">Turn: Play Cards</h3>
+                                    <hr className="gameHr" />
+                                    <p>Click Flight Cards from your hand to move</p>
+                                </div> : null}
+
+                            {this.state.myTurn && this.state.cardsToDraw > 0 && this.state.gameWinner === null ?
+                                <div>
+                                    <h3 className="d-flex justify-content-center">Turn: Draw Cards </h3>
+                                    <hr className="gameHr" />
+                                    <p>Cards available to draw: <span className="cardsToDrawNum">{this.state.cardsToDraw}</span></p>
+                                </div> : null}
+
+                            {!this.state.myTurn && this.state.gameWinner === null ?
+                                <div>
+                                    <h3 className="d-flex justify-content-center">Waiting: Opponent's Turn</h3>
+                                    <hr className="gameHr" />
+                                </div> : null}
+
+                            {this.state.gameWinner === 'white' && this.state.isPlayer1 ? <h3 className="d-flex justify-content-center">Victorious</h3> : null}
+                            {this.state.gameWinner === 'white' && this.state.isPlayer2 ? <h3 className="d-flex justify-content-center">Defeat</h3> : null}
+                            {this.state.gameWinner === 'black' && this.state.isPlayer1 ? <h3 className="d-flex justify-content-center">Defeat</h3> : null}
+                            {this.state.gameWinner === 'black' && this.state.isPlayer2 ? <h3 className="d-flex justify-content-center">Victorious</h3> : null}
                         </div>
                     </Col>
+
+                    <Col size="md-4">
+                        <div className="game-status-box d-flex justify-content-center text-center">
+                            {this.state.isPlayer1 && this.state.myTurn && this.state.cardsToDraw == 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
+                            {this.state.isPlayer2 && this.state.myTurn && this.state.cardsToDraw == 0 && this.state.gameWinner === null ? <EndTurnButton buttonClick={this.endTurnClick} /> : null}
+                            {this.state.gameWinner !== null ? <a type="btn" className="btn button pr-4 pl-4" href="/lobby/">Back to Lobby</a> : null}
+                        </div>
+                    </Col>
+
+                </div>
+
+                <div className="row">
+                    <div className="col-md-12 text-light mb-3">
+                        <div className="d-flex justify-content-center">
+                            <h4>Opponent Cards: {this.state.opponentHand}</h4>
+                        </div>
+                    </div>
                 </div>
 
                 <Row>
@@ -500,35 +589,6 @@ class Game extends Component {
                     </Col>
                 </Row>
 
-                <Row >
-                    <Col size="md-4">
-                        <div className="text-left border">
-                            {this.state.isPlayer1 ? <h1 className="text-light">You are the White Raven!</h1> : null}
-                            {this.state.isPlayer2 ? <h1 className="text-light">You are the Black Raven!</h1> : null}
-                        </div>
-                    </Col>
-
-                    <Col size="md-4">
-                        <div className="text-center border">
-                            {this.state.isPlayer1 && this.state.myTurn && this.state.cardsToDraw == 0 ? <EndTurnButton buttonClick={this.endTurnClick} /> : null}
-                            {this.state.isPlayer2 && this.state.myTurn && this.state.cardsToDraw == 0 ? <EndTurnButton buttonClick={this.endTurnClick} /> : null}
-                            {this.state.gameWinner !== null ? <a type="btn" className="btn btn-dark pr-4 pl-4" href="/lobby/">Back to Lobby</a> : null}
-                        </div>
-                    </Col>
-
-                    <Col size="md-4">
-                        <div className="text-right border">
-                            {this.state.myTurn && this.state.cardsToDraw == 0 ? <h2>It's your turn! Ride like the wind!</h2> : null}
-                            {this.state.myTurn && this.state.cardsToDraw > 0 ? <h2>Please draw your cards!</h2> : null}
-                            {!this.state.myTurn ? <h2>Please wait for your opponent!</h2> : null}
-                            {this.state.gameWinner === 'white' && this.state.isPlayer1 ? <p>YOU WON!</p> : null}
-                            {this.state.gameWinner === 'white' && this.state.isPlayer2 ? <p>YOU LOST!</p> : null}
-                            {this.state.gameWinner === 'black' && this.state.isPlayer1 ? <p>YOU LOST!</p> : null}
-                            {this.state.gameWinner === 'black' && this.state.isPlayer2 ? <p>YOU WON!</p> : null}
-                        </div>
-                    </Col>
-                </Row>
-
                 <Row>
                     <Col size="md-12">
                         <div className="userBoard text-center border pt-5">
@@ -542,31 +602,38 @@ class Game extends Component {
                                     <DrawLoki deckClick={this.drawLoki} />
                                 </div>
 
+                                {this.state.showingHand ?
+                                    <div className="col-sm-8 border text-light">
 
-                                <div className="col-sm-8 border text-light">
-                                    <h4>Your Hand</h4>
-                                    {this.state.playerHand.map((landId, idx) => (
-                                        <FlightCard
-                                            key={idx}
-                                            image={landId}
-                                            cardClick={this.handleCardPlay}
-                                        />
-                                    ))}
-                                    <h4>Opponent Cards: {this.state.opponentHand}</h4>
-                                    <h4>Cards available to draw: {this.state.cardsToDraw}</h4>
-                                </div>
+                                        <h4>Your Hand</h4>
+                                        {this.state.playerHand.map((landId, idx) => (
+                                            <FlightCard
+                                                key={idx}
+                                                image={landId}
+                                                cardClick={this.handleCardPlay}
+                                            />
+                                        ))}
+                                    </div>
+                                    : null}
+
+                                {this.state.showingPush ?
+                                    <div className="col-sm-8 border text-light">
+                                        <h4>Whom do you want to push?</h4>
+                                        <button onClick={this.selfPush}>Myself</button>
+                                        <button onClick={this.oppPush}>Opponent</button>
+                                    </div>
+                                    : null}
 
                                 <div className="col-sm-2 border text-light">
                                     <h4>My Loki Deck Cards: {this.state.myLokiDeck}</h4>
                                     <h4>Opponent Loki Deck Cards: {this.state.oppLokiDeck}</h4>
                                 </div>
-
                             </Row>
                         </div>
                     </Col>
                 </Row>
 
-            </Container >
+            </Container>
         );
     };
 };

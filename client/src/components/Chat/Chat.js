@@ -42,18 +42,18 @@ class Chat extends Component {
     render() {
         return (
                 <div>
-                    <div className="row">
+                    <div className="row no-margins">
                         <div className="col-lg-12 chat-container">
                             {this.state.messages.map( message => <p key={message.id}>{message.text}</p> )}
                         </div>
                     </div>
 
-                    <img className="h1-img" src={require('../../components/Images/h1.png')} />
+                    <img className="h1-img-top" src={require('../../components/Images/h1.png')} />
                    
-                   <div className="d-flex justify-content-start">
+                   <div>
                     <form className="form-padding" onSubmit={this.addMessage.bind(this)}>
-                        <div className="row">
-                            <div className="col-lg-10">
+                        <div className="row no-margins">
+                            <div className="col-10">
                                 <input
                                     className="form-control input-inner-shadow "
                                     type="text"
@@ -65,7 +65,7 @@ class Chat extends Component {
                                 />
                             </div>
             
-                            <div className="col-lg-2">
+                            <div className="col-2 d-flex justify-content-end">
                                 <input className="btn button button-join" type="submit" />
                             </div>
                         </div>
