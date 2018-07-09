@@ -409,6 +409,19 @@ class Game extends Component {
         }
     }
 
+    // opponentHandRender = () => {
+    //     let opponentHandCards = [];
+        
+    //     for (let i=0; i < this.state.opponentHand; i++) {
+    //         opponentHandCards.push(
+    //             <img
+    //             alt="Draw Land"
+    //             src="https://res.cloudinary.com/mosjoandy/image/upload/v1530297893/OdinsRavensLandCards/card-14.png"
+    //             />)
+    //     }
+    //     return
+    // }
+
     render() {
 
         return (
@@ -448,14 +461,21 @@ class Game extends Component {
                                 <div>
                                     <h3 className="d-flex justify-content-center">Turn: Draw Cards </h3>
                                     <hr className="gameHr"/>
-                                    <p>Cards available to draw: <span className="cardsToDrawNum">{this.state.cardsToDraw}</span></p>
+                                    <p>Cards to draw: <span className="cardsToDrawNum">{this.state.cardsToDraw}</span></p>
                                 </div> : null}
 
-                            {!this.state.myTurn && this.state.gameWinner === null ? 
+                            {!this.state.myTurn && this.state.gameWinner && this.state.gameRunning === null ? 
                                 <div>
                                     <h3 className="d-flex justify-content-center">Waiting: Opponent's Turn</h3> 
                                     <hr className="gameHr"/>
                                 </div> : null}
+                            {this.state.gameRunning === false ?
+                                <div>
+                                    <h3>World Generated</h3>
+                                    <hr className="gameHr"/>
+                                    <h3>Cards to draw: {this.state.cardsToDraw}</h3>
+                                </div>
+                             : null}
                                     
                             {this.state.gameWinner === 'white' && this.state.isPlayer1 ? <h3 className="d-flex justify-content-center">Victorious</h3> : null}
                             {this.state.gameWinner === 'white' && this.state.isPlayer2 ? <h3 className="d-flex justify-content-center">Defeat</h3> : null}
@@ -516,7 +536,7 @@ class Game extends Component {
 
                 <Row>
                     <Col size="md-12">
-                        <div className="userBoard text-center border pt-3">
+                        <div className="userBoard text-center border pt-5">
                             <Row>
                                 <div className="col-sm-1 border text-light">
                                     <h4>Flight</h4>
