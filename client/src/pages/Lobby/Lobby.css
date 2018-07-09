@@ -12,12 +12,12 @@
     padding: 1rem 0rem;
     display: inline-block;
     overflow-x: hidden;
+
 }
 
-.box img {
+.box .h1-img {
     box-shadow: 0px 0px 1px 1px #765c37;
 }
-
 
 .lobby-subtitle {
     padding-left: 2rem;
@@ -27,17 +27,22 @@
     /* font-family: 'Quintessential', cursive; */
 }
 
-hr.style-one {
-    border: 0;
-    height: 1.2px;
-    background: #261f1e;
-    background-image: linear-gradient(to right, #dcb175, #261f1e, #dcb175);
+
+.lobby-cards-cointainer {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 30.9em;
+    padding: 1rem 1rem 0rem 1rem;
+    text-align: center;
 }
+
+
 
 .button-hr {
     position: absolute;
     bottom: 10px;
-    overflow-y: hidden;
+    overflow: hidden;
+
 }
 
 .games-box {
@@ -47,16 +52,9 @@ hr.style-one {
 }
 
 
-/* Gradient color1 - color2 - color1 */
-hr.style-one {
-    border: 0;
-    height: 1.2px;
-    background: #261f1e;
-    background-image: linear-gradient(to right, #dcb175, #261f1e, #dcb175);
-}
 
 .games-data {
-    height: 30em;
+    height: 30.9em;
     overflow: scroll;
     overflow-y: auto;
     overflow-x: auto;
