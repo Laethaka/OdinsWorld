@@ -1,0 +1,16 @@
+.lokiCardHand {
+    margin-right: 0.5rem;
+    width: 5rem;
+    box-shadow: 0px 0px 42px 1px rgba(0,0,0,0.75);
+    transition: all 0.2s ease;
+}
+
+.lokiCardHand:hover {
+    transform: rotate(2.8deg)scale(1.25);
+    box-shadow: 0px 0px 70px 4px rgba(248, 162, 3, 0.75);
+}
+
+.lokiCardHand:active {
+    transform: rotate(2.8deg)scale(1.4)translateY(-1em);
+}
+

@@ -1,0 +1,23 @@
+[
+    {
+        "id": 0,
+        "imageName": "push",
+        "image": "https://res.cloudinary.com/mosjoandy/image/upload/v1530300322/cards-2-09.png"
+    },
+    {
+        "id": 1,
+        "imageName": "doubletrouble",
+        "image": "https://res.cloudinary.com/mosjoandy/image/upload/v1530300322/cards-2-08.png"
+    },
+    {
+        "id": 2,
+        "imageName": "flip",
+        "image": "https://res.cloudinary.com/mosjoandy/image/upload/v1530300322/cards-2-07.png"
+    },
+    {
+        "id": 3,
+        "imageName": "slide",
+        "image": "https://res.cloudinary.com/mosjoandy/image/upload/v1530300321/cards-2-06.png"
+    }
+]
+  
