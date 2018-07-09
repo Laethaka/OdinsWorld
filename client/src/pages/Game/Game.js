@@ -326,10 +326,10 @@ class Game extends Component {
 
                     <Col size="md-4">
                         <div className=" game-status-box d-flex justify-content-center text-center">
-                        <h3 className="d-flex justify-content-center">Turn: </h3>
-                            {this.state.myTurn && this.state.cardsToDraw==0 ? <h3 className="d-flex justify-content-center">You</h3>: null}
-                            {this.state.myTurn && this.state.cardsToDraw>0 ? <h3>Draw Cards</h3> : null}
-                            {!this.state.myTurn ? <h3>Rival's</h3> : null}
+                        <h3 className="d-flex justify-content-center"></h3>
+                            {this.state.myTurn && this.state.cardsToDraw==0 ? <h3 className="d-flex justify-content-center">Your Turn</h3>: null}
+                            {this.state.myTurn && this.state.cardsToDraw>0 ? <h3>Please draw your cards!</h3> : null}
+                            {!this.state.myTurn ? <h3>Please wait for your opponent!</h3> : null}
                         </div>
                     </Col>
                 </div>
