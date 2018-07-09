@@ -12,8 +12,8 @@ import LandCard from "../../components/LandCard";
 import landcard from "../../components/LandCard/landcard.json";
 import FlightCard from "../../components/FlightCard";
 import flightcard from "../../components/FlightCard/flightcard.json";
-import LokiCard from "../../components/LokiCard";
-import lokicard from "../../LokiCard/lokicard.json";
+// import LokiCard from "../../components/LokiCard";
+// import lokicard from "../../LokiCard/lokicard.json";
 import DrawFlight from "../../components/DrawFlight";
 import DrawLoki from "../../components/DrawLoki";
 import EndTurnButton from "../../components/EndTurnButton";
@@ -210,7 +210,7 @@ class Game extends Component {
     }
 
     handleCardPlay = landType => {//PLAYER ATTEMPTING TO PLAY A CARD IN HAND
-        if (this.state.isPlayer1 && this.state.gameRunning && this.state.myTurn) {//ROUTING TO PLAYER 1
+        if (this.state.isPlayer1 && this.state.gameRunning && this.state.myTurn && this.state.cardsToDraw===0) {//ROUTING TO PLAYER 1
             firebase.database().ref(`/games/Game${this.state.gameId}/world/completerow`).once('value', snap => {
                 if (landType === snap.val()[this.state.whiteRaven + 1]) {//EXECUTING FAST MOVE
                     for (let idx = this.state.whiteRaven + 1; idx < 33; idx++) {//LOOPING TO END OF MATCHING TERRAIN
@@ -277,7 +277,7 @@ class Game extends Component {
                     }
                 }
             })
-        } else if (this.state.isPlayer2 && this.state.gameRunning && this.state.myTurn) {//ROUTING TO PLAYER 2
+        } else if (this.state.isPlayer2 && this.state.gameRunning && this.state.myTurn && this.state.cardsToDraw===0) {//ROUTING TO PLAYER 2
             firebase.database().ref(`/games/Game${this.state.gameId}/world/completerow`).once('value', snap => {
                 if (landType === snap.val()[this.state.blackRaven - 1]) {//EXECUTING FAST MOVE
                     for (let idx = this.state.blackRaven - 1; idx > -2; idx--) {//LOOPING TO END OF MATCHING TERRAIN
