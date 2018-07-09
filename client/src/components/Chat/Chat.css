@@ -13,6 +13,7 @@ input {
     color: #261f1e;
 }
 
+
 .button-join {
 	box-shadow: none;
 }
@@ -20,11 +21,13 @@ input {
 .chat-container {
     text-align: left;
     word-wrap: break-word;
-    overflow-y: auto;
-    overflow-x: auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
     height: 26.5em;
     display: flex;
     flex-direction: column-reverse;
+    padding-left: 30px;
+    /* box-shadow: inset 0px 0px 26px -1px rgba(118,92,55,1); */
 }
 
 
