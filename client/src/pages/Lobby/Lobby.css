@@ -3,22 +3,29 @@
 }
 .box {
     width: 100%;
-    background-repeat: repeat;
-    background-size: cover;
     margin-top: 2rem;
     height: 37.5em;
-    padding: 1rem 0rem;
+    padding: 1rem 0rem 0rem 0rem;
     display: inline-block;
-    overflow-x: hidden;
-
+    overflow: hidden;
+    
 }
 
-.box .h1-img {
+
+.h1-img-top {
     box-shadow: 0px 0px 1px 1px #765c37;
+    overflow-x: hidden;
+}
+
+.h1-img-bottom {
+    box-shadow: 0px 0px 1px 1px #765c37;
+    overflow-x: hidden;
+    margin-bottom: 20px;
 }
 
 .lobby-subtitle {
     padding-left: 2rem;
+    /* posi */
     /* font-weight: bolder; */
     /* font-family: 'Eagle Lake', cursive; */
     font-family: 'Meddon', cursive;
@@ -32,21 +39,6 @@
     height: 30.9em;
     padding: 1rem 1rem 0rem 1rem;
     text-align: center;
-}
-
-
-
-.button-hr {
-    position: absolute;
-    bottom: 10px;
-    overflow: hidden;
-
-}
-
-.games-box {
-    word-wrap: break-word;
-    overflow-y: auto;
-    overflow-x: auto;
 }
 
 .games-data {
