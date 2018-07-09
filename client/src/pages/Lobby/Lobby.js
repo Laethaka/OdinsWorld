@@ -60,30 +60,33 @@ class Lobby extends Component {
                         {/* Users Online Component */}
                         <div className="box info-background">
                             <h2 className="lobby-subtitle">Users</h2>
-                            <img src={require('../../components/Images/h1.png')} />
+                            <img className="h1-img" src={require('../../components/Images/h1.png')} />
                                 <LobbyUsers
                                     users={this.state.usersInLobby} />
                             <div className="button-hr">
-                                <img src={require('../../components/Images/h1.png')} />
+                                <img className="h1-img" src={require('../../components/Images/h1.png')} />
                             </div>
                         </div>
                     </Col>
 
-                    <Col size="md-5">
+                    <Col size="xl-5">
                         {/* Lobby Chat Component */}
                         <div className="box info-background">           
                             <h2 className="lobby-subtitle">Chat</h2>
-                            <img src={require('../../components/Images/h1.png')} />
+                            <img className="h1-img" src={require('../../components/Images/h1.png')} />
                                 <Chat />
+                            <div className="button-hr">
+                                <img className="h1-img" src={require('../../components/Images/h1.png')} />
+                            </div>
                         </div>
                     </Col>
     
-                    <Col size="md-4">
+                    <Col size="xl-4">
                         {/* Game Join Component */}
                         <div className="box info-background">
                             <div className="games-box">
                             <h2 className="lobby-subtitle">Games</h2>
-                            <img src={require('../../components/Images/h1.png')} />
+                            <img  className="h1-img" src={require('../../components/Images/h1.png')} />
                                 <div className="games-data">
                                     {this.state.usersInGame.map((playersArr, idx) => (
                                         <LobbyGame
@@ -92,6 +95,9 @@ class Lobby extends Component {
                                             players={playersArr}
                                         />
                                     ))}
+                                <div className="button-hr">
+                                    <img className="h1-img" src={require('../../components/Images/h1.png')} />
+                                </div>
                                 </div>
                             </div>
                         </div>

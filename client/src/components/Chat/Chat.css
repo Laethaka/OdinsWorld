@@ -1,18 +1,36 @@
-
 input {
     font-family: 'Averia Serif Libre', cursive;
     font-size: 1.2rem;
-    line-height: 1rem;
+    height: 2.7rem;
     letter-spacing: 0.02rem;
 }
 
-.chat-scroll {
+.input-inner-shadow {
+    box-shadow: inset 0px 0px 13px -1px rgba(69,53,30,1);
+    background-color: #e4d2b0d3;
+    border: 2px solid #261f1e;
+    border-radius: 0.3rem;
+    color: #261f1e;
+}
+
+.button-join {
+	box-shadow: none;
+}
+
+.chat-container {
+    text-align: left;
     word-wrap: break-word;
     overflow-y: auto;
     overflow-x: auto;
     height: 26.5em;
     display: flex;
     flex-direction: column-reverse;
+}
+
+
+.form-padding {
+    position: relative;
+    bottom: 0rem;
 }
 
 ::-webkit-scrollbar {
