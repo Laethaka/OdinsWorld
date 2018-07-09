@@ -484,6 +484,19 @@ class Game extends Component {
         this.setState({ showingHand: true, showingPush: false })
     }
 
+    // opponentHandRender = () => {
+    //     let opponentHandCards = [];
+        
+    //     for (let i=0; i < this.state.opponentHand; i++) {
+    //         opponentHandCards.push(
+    //             <img
+    //             alt="Draw Land"
+    //             src="https://res.cloudinary.com/mosjoandy/image/upload/v1530297893/OdinsRavensLandCards/card-14.png"
+    //             />)
+    //     }
+    //     return
+    // }
+
     render() {
 
         return (
@@ -522,15 +535,23 @@ class Game extends Component {
                             {this.state.myTurn && this.state.cardsToDraw > 0 && this.state.gameWinner === null ?
                                 <div>
                                     <h3 className="d-flex justify-content-center">Turn: Draw Cards </h3>
-                                    <hr className="gameHr" />
-                                    <p>Cards available to draw: <span className="cardsToDrawNum">{this.state.cardsToDraw}</span></p>
+
+                                    <hr className="gameHr"/>
+                                    <p>Cards to draw: <span className="cardsToDrawNum">{this.state.cardsToDraw}</span></p>
                                 </div> : null}
 
-                            {!this.state.myTurn && this.state.gameWinner === null ?
+                            {!this.state.myTurn && this.state.gameWinner && this.state.gameRunning === null ? 
                                 <div>
                                     <h3 className="d-flex justify-content-center">Waiting: Opponent's Turn</h3>
                                     <hr className="gameHr" />
                                 </div> : null}
+
+                            {this.state.gameRunning === false ?
+                                <div>
+                                    <h3>World Generated</h3>
+                                    <hr className="gameHr"/>
+                                    <h3>Cards to draw: {this.state.cardsToDraw}</h3>
+                                </div : null}
 
                             {this.state.gameWinner === 'white' && this.state.isPlayer1 ? <h3 className="d-flex justify-content-center">Victorious</h3> : null}
                             {this.state.gameWinner === 'white' && this.state.isPlayer2 ? <h3 className="d-flex justify-content-center">Defeat</h3> : null}
