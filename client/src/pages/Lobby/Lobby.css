@@ -1,5 +1,3 @@
-
-
 .paper-background {
     background-image: url("../../components/Images/paper-2-3.png");
 }
@@ -50,8 +48,6 @@
     overflow-y: auto;
     overflow-x: auto;
 }
-
-
 
 .games-data {
     height: 30.9em;

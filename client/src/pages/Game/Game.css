@@ -42,19 +42,3 @@
 
 .img-vert {
     transform: rotateX(180deg);
-}
-
-/* .landBoard {
-    height: 20em;
-} */
-
-/* .userBoard {
-    height: 20em;
-} */
-
-hr.style-one {
-    border: 0;
-    height: 1.2px;
-    background: #261f1e;
-    background-image: linear-gradient(to right, #dcb175, #261f1e, #dcb175);
-}
