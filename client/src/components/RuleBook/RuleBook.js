@@ -12,7 +12,12 @@ const RuleBook = () => {
 			<div className="b-load">
 				<div>
 					<h2>Welcome to Odin's World</h2>
-					<p>This game about Odin's Ravens, Huginn - player 1 IMG - & Muninn - player 2 + IMG, who are sent to watch Odin's Lands.</p>
+					<p>This is a game about Odin's Ravens, who are sent to watch Odin's Lands:
+					
+					Raven Huginn - player 1 IMG - 
+					Raven Muninn - player 2 + IMG
+					
+					</p>
 					<p>They race each other around the world, heading through Land Cards in opposite directions, and the raven that reaches a full loop is the winner. + IMG OF THE LOOP!! </p>
 				</div>
 				<div>
