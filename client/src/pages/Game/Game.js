@@ -91,6 +91,8 @@ class Game extends Component {
                     } else {
                         this.setState({ playerHand: Object.values(myHand) })
                     }
+                } else {//PLAYER HAS NO CARDS
+                    this.setState({ playerHand: [] })
                 }
             } else if (this.state.isPlayer2) {//THIS WINDOW IS PLAYER 2
                 let myHand = snap.val().player2Hand
@@ -105,6 +107,8 @@ class Game extends Component {
                     } else {
                         this.setState({ playerHand: Object.values(myHand) })
                     }
+                } else {
+                    this.setState({ playerHand: [] })
                 }
             }
         })
