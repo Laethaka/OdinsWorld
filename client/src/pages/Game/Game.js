@@ -211,8 +211,13 @@ class Game extends Component {
         if (this.state.isPlayer1 && this.state.gameRunning && this.state.myTurn) {//ROUTING TO PLAYER 1
             firebase.database().ref(`/games/Game${this.state.gameId}/world/completerow`).once('value', snap => {
                 if (landType === snap.val()[this.state.whiteRaven + 1]) {//EXECUTING FAST MOVE
-                    for (let idx = this.state.whiteRaven + 1; idx < 32; idx++) {//LOOPING TO END OF MATCHING TERRAIN
-                        if (snap.val()[idx] !== landType) {//MATCHING TERRAIN ENDS
+                    for (let idx = this.state.whiteRaven + 1; idx < 33; idx++) {//LOOPING TO END OF MATCHING TERRAIN
+                        if (idx===32) {//WHITE RAVEN REACHED THE END
+                            firebase.database().ref(`/games/Game${this.state.gameId}/world/`).update({//UPDATING RAVEN POSITION IN FIREBASE
+                                whiteRaven: 31
+                            })
+                            break;
+                        } else if (snap.val()[idx] !== landType) {//MATCHING TERRAIN ENDS
                             firebase.database().ref(`/games/Game${this.state.gameId}/world/`).update({//UPDATING RAVEN POSITION IN FIREBASE
                                 whiteRaven: idx - 1
                             })
@@ -237,11 +242,16 @@ class Game extends Component {
                         // console.log(snap.val()[this.state.whiteRaven + 1])
                         // console.log(snap.val()[this.state.whiteRaven + 2])
                         if (snap.val()[this.state.whiteRaven + 1] === snap.val()[this.state.whiteRaven + 2]) {//STRETCH OF SIMILAR TERRAIN AHEAD
-                            for (let idx = this.state.whiteRaven + 2; idx < 32; idx++) {//LOOPING TO END OF MATCHING TERRAIN
+                            for (let idx = this.state.whiteRaven + 2; idx < 33; idx++) {//LOOPING TO END OF MATCHING TERRAIN
                                 // console.log('world: ', snap.val())
                                 // console.log('looking at square:', snap.val()[idx])
                                 // console.log('square before this:', snap.val()[idx - 1])
-                                if (snap.val()[idx] !== snap.val()[idx - 1]) {//MATCHING TERRAIN ENDS
+                                if (idx===32) {//WHITE RAVEN REACHED THE END
+                                    firebase.database().ref(`/games/Game${this.state.gameId}/world/`).update({//UPDATING RAVEN POSITION IN FIREBASE
+                                        whiteRaven: 31
+                                    })
+                                    break;
+                                } else if (snap.val()[idx] !== snap.val()[idx - 1]) {//MATCHING TERRAIN ENDS
                                     firebase.database().ref(`/games/Game${this.state.gameId}/world/`).update({//UPDATING RAVEN POSITION IN FIREBASE
                                         whiteRaven: idx - 1
                                     })
@@ -249,12 +259,10 @@ class Game extends Component {
                                 }
                             }
                         } else {
-                            // console.log('only bumping raven one square')
                             firebase.database().ref(`/games/Game${this.state.gameId}/world/`).update({//UPDATING RAVEN POSITION IN FIREBASE
                                 whiteRaven: this.state.whiteRaven + 1
                             })
                         }
-                        // console.log('done slow moving; removing cards!')
                         firebase.database().ref(`/games/Game${this.state.gameId}/decks/player1Hand`).once('value', snap => {//REMOVING PLAYED CARD
                             let handCards = Object.values(snap.val());
                             handCards.sort();
@@ -270,8 +278,13 @@ class Game extends Component {
         } else if (this.state.isPlayer2 && this.state.gameRunning && this.state.myTurn) {//ROUTING TO PLAYER 2
             firebase.database().ref(`/games/Game${this.state.gameId}/world/completerow`).once('value', snap => {
                 if (landType === snap.val()[this.state.blackRaven - 1]) {//EXECUTING FAST MOVE
-                    for (let idx = this.state.blackRaven - 1; idx > -1; idx--) {//LOOPING TO END OF MATCHING TERRAIN
-                        if (snap.val()[idx] !== landType) {//MATCHING TERRAIN ENDS
+                    for (let idx = this.state.blackRaven - 1; idx > -2; idx--) {//LOOPING TO END OF MATCHING TERRAIN
+                        if (idx===-1) {//BLACK RAVEN REACHED THE END
+                            firebase.database().ref(`/games/Game${this.state.gameId}/world/`).update({//UPDATING RAVEN POSITION IN FIREBASE
+                                blackRaven: 0
+                            })
+                            break;
+                        } else if (snap.val()[idx] !== landType) {//MATCHING TERRAIN ENDS
                             firebase.database().ref(`/games/Game${this.state.gameId}/world/`).update({//UPDATING RAVEN POSITION IN FIREBASE
                                 blackRaven: idx + 1
                             })
@@ -296,11 +309,16 @@ class Game extends Component {
                         // console.log(snap.val()[this.state.whiteRaven + 1])
                         // console.log(snap.val()[this.state.whiteRaven + 2])
                         if (snap.val()[this.state.blackRaven - 1] === snap.val()[this.state.blackRaven - 2]) {//STRETCH OF SIMILAR TERRAIN AHEAD
-                            for (let idx = this.state.blackRaven - 2; idx > 0; idx--) {//LOOPING TO END OF MATCHING TERRAIN
+                            for (let idx = this.state.blackRaven - 2; idx > -2; idx--) {//LOOPING TO END OF MATCHING TERRAIN
                                 // console.log('world: ', snap.val())
                                 // console.log('looking at square:', snap.val()[idx])
                                 // console.log('square before this:', snap.val()[idx - 1])
-                                if (snap.val()[idx] !== snap.val()[idx + 1]) {//MATCHING TERRAIN ENDS
+                                if (idx===-1) {//BLACK RAVEN REACHED THE END
+                                    firebase.database().ref(`/games/Game${this.state.gameId}/world/`).update({//UPDATING RAVEN POSITION IN FIREBASE
+                                        blackRaven: 0
+                                    })
+                                    break;
+                                } else if (snap.val()[idx] !== snap.val()[idx + 1]) {//MATCHING TERRAIN ENDS
                                     firebase.database().ref(`/games/Game${this.state.gameId}/world/`).update({//UPDATING RAVEN POSITION IN FIREBASE
                                         blackRaven: idx + 1
                                     })
