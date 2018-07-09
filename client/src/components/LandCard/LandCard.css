@@ -3,9 +3,11 @@
 }
 
 .landCardWorld {
-    transition: .2s ease;
+    box-shadow: 17px 0px 36px -4px rgba(0,0,0,0.75);
+    transition: all 0.6s ease-in-out;
 }
 
 .landCardWorld:hover {
-    transform: translateY(-1em) scale(1.5);; 
+    transform: scale(1.5)translateY(-0.8em);
+    box-shadow: 21px 0px 40px -8px rgba(0,0,0,0.75);
 }

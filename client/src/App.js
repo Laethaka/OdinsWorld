@@ -64,7 +64,7 @@ class App extends Component {
   };
 
   render() {
-    // BACK GROUND POOP BREAK EVERYTHING
+
     // let bg;
     // if (this.state.current === "/landing") {
     //   bg = "landingBackground"
@@ -76,18 +76,18 @@ class App extends Component {
 
     return (
       <Router>
-        {/* <div> */}
         {/* <div style={styles[bg]}> */}
         <div>
           <Nav user={this.state.user}>
               <div className="wrapper">
                 {this.state.user ?
-                <Link to="/Landing">
-                  <button type="button" className="mr-3 btn log-button" onClick={this.logout}>Logout</button>
-                </Link>
+                <div>
+                  <a type="button" className="mr-3 btn button" href={"/Lobby"}>Lobby</a>
+                  <a type="button" className="mr-3 btn button" onClick={this.logout} href={"/Landing"}>Log Out</a>
+                </div>
                   :
                 <div>
-                  <button type="button" className="mr-3 btn log-button" onClick={this.login}>Log In</button>
+                  <button type="button" className="mr-3 btn button" onClick={this.login}>Log In</button>
                 </div>
                 }
               </div>
@@ -110,16 +110,16 @@ class App extends Component {
 };
 
 // BACK GROUND POOP BREAK EVERYTHING
-const styles = {
-  landingBackground: {
-    backgroundImage: `url(${LandingBG})`
-  },
-  lobbyBackground: {
-    backgroundImage: `url(${LobbyBG})`
-  },
-  gameBackground: {
-    backgroundImage: `url(${GameBG})`
-  }
-}
+// const styles = {
+//   landingBackground: {
+//     backgroundImage: `url(${LandingBG})`
+//   },
+//   lobbyBackground: {
+//     backgroundImage: `url(${LobbyBG})`
+//   },
+//   gameBackground: {
+//     backgroundImage: `url(${GameBG})`
+//   }
+// }
 
 export default App;

@@ -87,7 +87,7 @@ class Game extends Component {
                 if (myHand) {//DISPLAYING HAND CARDS IN DOM
                     // console.log('i now have this many cards: ', Object.values(myHand).length)
                     if (Object.values(myHand).length > 7) {
-                        database.ref(`/games/Game${props.gameId}/decks/`).update({ player1Hand: Object.values(myHand).slice(1,8) })
+                        database.ref(`/games/Game${props.gameId}/decks/`).update({ player1Hand: Object.values(myHand).slice(1, 8) })
                     } else {
                         this.setState({ playerHand: Object.values(myHand) })
                     }
@@ -101,36 +101,12 @@ class Game extends Component {
                 if (myHand) {//DISPLAYING HAND CARDS IN DOM
                     // console.log('i now have this many cards: ', Object.values(myHand).length)
                     if (Object.values(myHand).length > 7) {
-                        database.ref(`/games/Game${props.gameId}/decks/`).update({ player2Hand: Object.values(myHand).slice(1,8) })
+                        database.ref(`/games/Game${props.gameId}/decks/`).update({ player2Hand: Object.values(myHand).slice(1, 8) })
                     } else {
                         this.setState({ playerHand: Object.values(myHand) })
                     }
                 }
             }
-
-            // console.log('i now have this many cards: ', this.state.playerHand.length +1)
-            // if (this.state.playerHand.length > 7) {//FORCING DISCARD
-            //     console.log('forcing discard on ', this.state.playerHand)
-            //     let myHand = this.state.playerHand.slice(1,8)
-            //     if (this.state.isPlayer1) {//ROUTING TO PLAYER 1 HAND
-            //         firebase.database().ref(`games/Game${this.state.gameId}/decks/`).update({ player1Hand: myHand })
-            //     } else {//ROUTING TO PLAYER 2 HAND
-            //         firebase.database().ref(`games/Game${this.state.gameId}/decks/`).update({ player2Hand: myHand })
-            //     }
-            // }
-
-
-        // }).then( (snap) => {
-        //     console.log('i now have this many cards: ', this.state.playerHand.length)
-        //     if (this.state.playerHand.length > 7) {//FORCING DISCARD
-        //         console.log('forcing discard on ', this.state.playerHand)
-        //         let myHand = this.state.playerHand.slice(1,8)
-        //         if (this.state.isPlayer1) {//ROUTING TO PLAYER 1 HAND
-        //             firebase.database().ref(`games/Game${this.state.gameId}/decks/`).update({ player1Hand: myHand })
-        //         } else {//ROUTING TO PLAYER 2 HAND
-        //             firebase.database().ref(`games/Game${this.state.gameId}/decks/`).update({ player2Hand: myHand })
-        //         }
-        //     }
         })
 
         //LISTENING FOR PLAYER READY DURING SETUP AND STARTING GAME
@@ -379,16 +355,6 @@ class Game extends Component {
                 firebase.database().ref(`games/Game${this.state.gameId}/world/`).update({ playerTurn: '1' })
             }
         }
-
-        // if (this.state.playerHand.length > 7) {//FORCING DISCARD
-        //     console.log('forcing discard on ', this.state.playerHand)
-        //     let myHand = this.state.playerHand.slice(1,8)
-        //     if (this.state.isPlayer1) {//ROUTING TO PLAYER 1 HAND
-        //         firebase.database().ref(`games/Game${this.state.gameId}/decks/`).update({ player1Hand: myHand })
-        //     } else {//ROUTING TO PLAYER 2 HAND
-        //         firebase.database().ref(`games/Game${this.state.gameId}/decks/`).update({ player2Hand: myHand })
-        //     }
-        // }
     };
 
     drawLoki = () => {//USER REQUESTING TO DRAW LOKI
@@ -423,11 +389,37 @@ class Game extends Component {
 
         return (
             <Container fluid>
+
+                <div className="row info-background game-status-margin">
+                    <Col size="md-4">
+                        <div className="game-status-box text-center">
+                            {this.state.isPlayer1 ? <span><img className="coin-size" src={require('../../components/Images/coin-2.png')} /><h3 className="d-flex justify-content-center">White Raven</h3></span> : null}
+                            {this.state.isPlayer2 ? <span><img className="coin-size" src={require('../../components/Images/coin-1.png')} /><h3 className="d-flex justify-content-center">Dark Raven</h3></span> : null}
+                        </div>
+                    </Col>
+
+                    <Col size="md-4">
+                        <div className="game-status-box  d-flex justify-content-center text-center">
+                            {this.state.isPlayer1 && this.state.myTurn && this.state.cardsToDraw == 0 ? <EndTurnButton buttonClick={this.endTurnClick} /> : null}
+                            {this.state.isPlayer2 && this.state.myTurn && this.state.cardsToDraw == 0 ? <EndTurnButton buttonClick={this.endTurnClick} /> : null}
+                        </div>
+                    </Col>
+
+                    <Col size="md-4">
+                        <div className=" game-status-box d-flex justify-content-center text-center">
+                            <h3 className="d-flex justify-content-center"></h3>
+                            {this.state.myTurn && this.state.cardsToDraw == 0 ? <h3 className="d-flex justify-content-center">Your Turn</h3> : null}
+                            {this.state.myTurn && this.state.cardsToDraw > 0 ? <h3>Please draw your cards!</h3> : null}
+                            {!this.state.myTurn ? <h3>Please wait for your opponent!</h3> : null}
+                        </div>
+                    </Col>
+                </div>
+
                 <Row>
                     <Col size="md-12">
                         <Jumbotron>
                             <div className="landBoard text-center">
-                                <div className="text-light border border-warning">
+                                <div className="border border-warning">
                                     {this.state.toprow.map((landId, idx) => (
                                         <LandCard
                                             position={idx}
@@ -439,7 +431,7 @@ class Game extends Component {
                                     ))}
                                 </div>
 
-                                <div className="text-light border border-warning img-vert">
+                                <div className="border border-warning img-vert">
                                     {this.state.bottomrow.map((landId, idx) => (
                                         <LandCard
                                             position={31 - idx}
@@ -455,67 +447,72 @@ class Game extends Component {
                     </Col>
                 </Row>
 
-                <Row >
-                    <Col size="md-4">
-                        <div className="text-left border">
-                            {this.state.isPlayer1 ? <h1 className="text-light">You are the White Raven!</h1> : null}
-                            {this.state.isPlayer2 ? <h1 className="text-light">You are the Black Raven!</h1> : null}
-                        </div>
-                    </Col>
+        <Row >
+            <Col size="md-4">
+                <div className="text-left border">
+                    {this.state.isPlayer1 ? <h1 className="text-light">You are the White Raven!</h1> : null}
+                    {this.state.isPlayer2 ? <h1 className="text-light">You are the Black Raven!</h1> : null}
+                </div>
+            </Col>
 
-                    <Col size="md-4">
-                        <div className="text-center border">
-                            {this.state.isPlayer1 && this.state.myTurn && this.state.cardsToDraw == 0 ? <EndTurnButton buttonClick={this.endTurnClick} /> : null}
-                            {this.state.isPlayer2 && this.state.myTurn && this.state.cardsToDraw == 0 ? <EndTurnButton buttonClick={this.endTurnClick} /> : null}
-                            {this.state.gameWinner !== null ? <a type="btn" className="btn btn-dark pr-4 pl-4" href="/lobby/">Back to Lobby</a> : null}
-                        </div>
-                    </Col>
+            <Col size="md-4">
+                <div className="text-center border">
+                    {this.state.isPlayer1 && this.state.myTurn && this.state.cardsToDraw == 0 ? <EndTurnButton buttonClick={this.endTurnClick} /> : null}
+                    {this.state.isPlayer2 && this.state.myTurn && this.state.cardsToDraw == 0 ? <EndTurnButton buttonClick={this.endTurnClick} /> : null}
+                    {this.state.gameWinner !== null ? <a type="btn" className="btn btn-dark pr-4 pl-4" href="/lobby/">Back to Lobby</a> : null}
+                </div>
+            </Col>
 
-                    <Col size="md-4">
-                        <div className="text-right border">
-                            {this.state.myTurn && this.state.cardsToDraw == 0 ? <h2>It's your turn! Ride like the wind!</h2> : null}
-                            {this.state.myTurn && this.state.cardsToDraw > 0 ? <h2>Please draw your cards!</h2> : null}
-                            {!this.state.myTurn ? <h2>Please wait for your opponent!</h2> : null}
-                            {this.state.gameWinner === 'white' && this.state.isPlayer1 ? <p>YOU WON!</p> : null}
-                            {this.state.gameWinner === 'white' && this.state.isPlayer2 ? <p>YOU LOST!</p> : null}
-                            {this.state.gameWinner === 'black' && this.state.isPlayer1 ? <p>YOU LOST!</p> : null}
-                            {this.state.gameWinner === 'black' && this.state.isPlayer2 ? <p>YOU WON!</p> : null}
-                        </div>
-                    </Col>
-                </Row>
+            <Col size="md-4">
+                <div className="text-right border">
+                    {this.state.myTurn && this.state.cardsToDraw == 0 ? <h2>It's your turn! Ride like the wind!</h2> : null}
+                    {this.state.myTurn && this.state.cardsToDraw > 0 ? <h2>Please draw your cards!</h2> : null}
+                    {!this.state.myTurn ? <h2>Please wait for your opponent!</h2> : null}
+                    {this.state.gameWinner === 'white' && this.state.isPlayer1 ? <p>YOU WON!</p> : null}
+                    {this.state.gameWinner === 'white' && this.state.isPlayer2 ? <p>YOU LOST!</p> : null}
+                    {this.state.gameWinner === 'black' && this.state.isPlayer1 ? <p>YOU LOST!</p> : null}
+                    {this.state.gameWinner === 'black' && this.state.isPlayer2 ? <p>YOU WON!</p> : null}
+                </div>
+            </Col>
+        </Row>
 
-                <Row>
-                    <Col size="md-12">
-                        <div className="userBoard text-center border pt-5">
-                            <Row>
-                                <div className="col-sm-2 border">
-                                    <DrawFlight deckClick={this.drawFlight} />
-                                    <DrawLoki deckClick={this.drawLoki} />
-                                </div>
+            <Row>
+                <Col size="md-12">
+                    <div className="userBoard text-center border pt-5">
+                        <Row>
+                            <div className="col-sm-1 border text-light">
+                                <h4>Flight</h4>
+                                <DrawFlight deckClick={this.drawFlight} />
+                            </div>
+                            <div className="col-sm-1 border text-light">
+                                <h4>Loki</h4>
+                                <DrawLoki deckClick={this.drawLoki} />
+                            </div>
 
-                                <div className="col-sm-8 border text-light">
-                                    <h4>Your Hand</h4>
-                                    {this.state.playerHand.map((landId, idx) => (
-                                        <FlightCard
-                                            key={idx}
-                                            image={landId}
-                                            cardClick={this.handleCardPlay}
-                                        />
-                                    ))}
-                                    <h4>Opponent Cards: {this.state.opponentHand}</h4>
-                                    <h4>Cards available to draw: {this.state.cardsToDraw}</h4>
-                                </div>
 
-                                <div className="col-sm-2 border text-light">
-                                    <h4>Discard</h4>
-                                </div>
+                            <div className="col-sm-8 border text-light">
+                                <h4>Your Hand</h4>
+                                {this.state.playerHand.map((landId, idx) => (
+                                    <FlightCard
+                                        key={idx}
+                                        image={landId}
+                                        cardClick={this.handleCardPlay}
+                                    />
+                                ))}
+                                <h4>Opponent Cards: {this.state.opponentHand}</h4>
+                                <h4>Cards available to draw: {this.state.cardsToDraw}</h4>
+                            </div>
 
-                            </Row>
-                        </div>
-                    </Col>
-                </Row>
+                            <div className="col-sm-2 border text-light">
+                                <h4>Discard</h4>
+                            </div>
 
-            </Container>
+                        </Row>
+                    </div>
+                </Col>
+            </Row>
+
+            </Container >
         );
     };
 };

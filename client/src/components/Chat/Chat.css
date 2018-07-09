@@ -1,28 +1,24 @@
-.chat-box {
-    padding: 1rem 1rem 1rem 2rem;
-}
-
-.chat-style {
-    color: #261f1e;
-    list-style-type: none; 
+input {
+    font-family: 'Averia Serif Libre', cursive;
     font-size: 1.2rem;
-    line-height: 2.5rem;
+    height: 2.7rem;
+    letter-spacing: 0.02rem;
 }
 
-.chat-title {
-    margin-top: 0.2rem;
-    text-align: center;
+.input-inner-shadow {
+    box-shadow: inset 0px 0px 13px -1px rgba(69,53,30,1);
+    background-color: #e4d2b0d3;
+    border: 2px solid #261f1e;
+    border-radius: 0.3rem;
+    color: #261f1e;
 }
 
-/* Gradient color1 - color2 - color1 */
-hr.style-one {
-    border: 0;
-    height: 1.2px;
-    background: #261f1e;
-    background-image: linear-gradient(to right, #dcb175, #261f1e, #dcb175);
+.button-join {
+	box-shadow: none;
 }
 
-.chatPoop {
+.chat-container {
+    text-align: left;
     word-wrap: break-word;
     overflow-y: auto;
     overflow-x: auto;
@@ -31,9 +27,10 @@ hr.style-one {
     flex-direction: column-reverse;
 }
 
-.chatPoopDad {
-    overflow: scroll;
-    overflow-x: auto;
+
+.form-padding {
+    position: relative;
+    bottom: 0rem;
 }
 
 ::-webkit-scrollbar {

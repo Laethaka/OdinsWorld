@@ -56,13 +56,38 @@ class Lobby extends Component {
         return (
             <Container fluid>
                 <Row>
-                    <Col size="lg-4">
+                    <Col size="md-2">
+                        {/* Users Online Component */}
+                        <div className="box info-background">
+                            <h2 className="lobby-subtitle">Users</h2>
+                            <img className="h1-img" src={require('../../components/Images/h1.png')} />
+                                <LobbyUsers
+                                    users={this.state.usersInLobby} />
+                            <div className="button-hr">
+                                <img className="h1-img" src={require('../../components/Images/h1.png')} />
+                            </div>
+                        </div>
+                    </Col>
+
+                    <Col size="xl-5">
+                        {/* Lobby Chat Component */}
+                        <div className="box info-background">           
+                            <h2 className="lobby-subtitle">Chat</h2>
+                            <img className="h1-img" src={require('../../components/Images/h1.png')} />
+                                <Chat />
+                            <div className="button-hr">
+                                <img className="h1-img" src={require('../../components/Images/h1.png')} />
+                            </div>
+                        </div>
+                    </Col>
+    
+                    <Col size="xl-4">
                         {/* Game Join Component */}
-                        <div className="box">
+                        <div className="box info-background">
                             <div className="games-box">
-                            <h3 className="games-title">Games</h3>
-                            <hr className="style-one" />
-                                <div className="gamesData">
+                            <h2 className="lobby-subtitle">Games</h2>
+                            <img  className="h1-img" src={require('../../components/Images/h1.png')} />
+                                <div className="games-data">
                                     {this.state.usersInGame.map((playersArr, idx) => (
                                         <LobbyGame
                                             id={idx}
@@ -70,26 +95,14 @@ class Lobby extends Component {
                                             players={playersArr}
                                         />
                                     ))}
+                                <div className="button-hr">
+                                    <img className="h1-img" src={require('../../components/Images/h1.png')} />
+                                </div>
                                 </div>
                             </div>
                         </div>
                     </Col>
 
-                    <Col size="lg-5">
-                        {/* Lobby Chat Component */}
-                        <div className="box">
-                            <Chat />
-                        </div>
-                    </Col>
-
-                    <Col size="xl-2">
-                        {/* Users Online Component */}
-                        <div className="box">
-                            <LobbyUsers
-                                users={this.state.usersInLobby}
-                            />
-                        </div>
-                    </Col>
                 </Row>
             </Container>
         )

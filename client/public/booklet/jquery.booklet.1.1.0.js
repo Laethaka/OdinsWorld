@@ -589,7 +589,7 @@ function booklet(target, options, id){
 		//update css
 		wraps.attr('style','');
 		// wraps.css({'width':opts.pWidth-(opts.pagePadding*2), 'height':opts.pHeight-(opts.pagePadding*2), 'padding': opts.pagePadding});
-		wraps.css({'width':opts.pWidth-(opts.pagePadding*2), 'height':'500px', 'padding': opts.pagePadding});
+		wraps.css({'width': '400px', 'height':'500px', 'padding': opts.pagePadding});
 		p1.css({'left':0,'width':opts.pWidth, 'height':opts.pHeight});			
 		p2.css({'left':opts.pWidth, 'width':opts.pWidth, 'opacity':1, 'height':opts.pHeight});
 		pN.css({'left':0, 'width':opts.pWidth, 'height':opts.pHeight});
