@@ -312,8 +312,8 @@ class Game extends Component {
                 <div className="row info-background game-status-margin">
                     <Col size="md-4">
                         <div className="game-status-box text-center">
-                            {this.state.isPlayer1 ? <span><img className="coin-size" src={require('../../components/Images/coin-2.png')} /><h3 className="d-flex justify-content-center">Rememeber: You are the ligther Raven!</h3></span> : null}
-                            {this.state.isPlayer2 ? <span><img className="coin-size" src={require('../../components/Images/coin-1.png')} /><h3 className="d-flex justify-content-center">Rememeber: You are the dark Raven!</h3></span> : null}
+                            {this.state.isPlayer1 ? <span><img className="coin-size" src={require('../../components/Images/coin-2.png')} /><h3 className="d-flex justify-content-center">White Raven</h3></span> : null}
+                            {this.state.isPlayer2 ? <span><img className="coin-size" src={require('../../components/Images/coin-1.png')} /><h3 className="d-flex justify-content-center">Dark Raven</h3></span> : null}
                         </div>
                     </Col>
 
@@ -326,9 +326,10 @@ class Game extends Component {
 
                     <Col size="md-4">
                         <div className=" game-status-box d-flex justify-content-center text-center">
-                            {this.state.myTurn && this.state.cardsToDraw==0 ? <h3>It's your turn! Ride like the wind!</h3> : null}
-                            {this.state.myTurn && this.state.cardsToDraw>0 ? <h3>Please draw your cards!</h3> : null}
-                            {!this.state.myTurn ? <h3>Please wait for your opponent!</h3> : null}
+                        <h3 className="d-flex justify-content-center">Turn: </h3>
+                            {this.state.myTurn && this.state.cardsToDraw==0 ? <h3 className="d-flex justify-content-center">You</h3>: null}
+                            {this.state.myTurn && this.state.cardsToDraw>0 ? <h3>Draw Cards</h3> : null}
+                            {!this.state.myTurn ? <h3>Rival's</h3> : null}
                         </div>
                     </Col>
                 </div>
@@ -365,36 +366,35 @@ class Game extends Component {
                     </Col>
                 </Row>
 
-                <Row>
-                    <Col size="md-12">
-                        <div className="userBoard text-center border pt-5">
-                            <Row>
-                                <div className="col-sm-2 border">
-                                    <DrawFlight deckClick={this.drawFlight} />
-                                    <DrawLoki deckClick={this.drawLoki} />
-                                </div>
+                <div className="row text-center border">
 
-                                <div className="col-sm-8 border text-light">
-                                    <h4>Your Hand</h4>
-                                    {this.state.playerHand.map((landId, idx) => (
-                                        <FlightCard
-                                            key={idx}
-                                            image={landId}
-                                            cardClick={this.handleCardPlay}
-                                        />
-                                    ))}
-                                    <h4>Opponent Cards: {this.state.opponentHand}</h4>
-                                    <h4>Cards available to draw: {this.state.cardsToDraw}</h4>
-                                </div>
+                    <div className="col-sm-1 border text-light">
+                        <h4>Flight</h4>
+                        <DrawFlight deckClick={this.drawFlight} />
+                    </div>
+                    <div className="col-sm-1 border text-light">
+                       <h4>Loki</h4>
+                        <DrawLoki deckClick={this.drawLoki} />
+                    </div>
 
-                                <div className="col-sm-2 border text-light">
-                                    <h4>Discard</h4>
-                                </div>
+                    <div className="col-sm-8 border text-light">
+                        <h4>Your Hand</h4>
+                        {this.state.playerHand.map((landId, idx) => (
+                            <FlightCard
+                                key={idx}
+                                image={landId}
+                                cardClick={this.handleCardPlay}
+                            />
+                        ))}
+                        <h4>Opponent Cards: {this.state.opponentHand}</h4>
+                        <h4>Cards available to draw: {this.state.cardsToDraw}</h4>
+                    </div>
 
-                            </Row>
-                        </div>
-                    </Col>
-                </Row>
+                    <div className="col-sm-2 border text-light">
+                        <h4>Discard</h4>
+                    </div>
+
+                </div>
 
             </Container>
         );

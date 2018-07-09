@@ -13,7 +13,7 @@ const LobbyGame = (props) => (
         <div className="row">
             <div className="col-sm-9">
                 <p className="margin-left">– {props.players[0]}</p>
-                <p className="margin-left">–{props.players[1]}</p>
+                <p className="margin-left">– {props.players[1]}</p>
             </div>
         
             <div className="col-sm-3">
