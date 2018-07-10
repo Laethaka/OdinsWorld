@@ -11,3 +11,14 @@
     transform: scale(1.5)translateY(-0.8em);
     box-shadow: 21px 0px 40px -8px rgba(0,0,0,0.75);
 }
+
+@keyframes glowing {
+    0% { box-shadow: 0 0 10px #c4a300; }
+    40% { box-shadow: 0 0 40px #c4a300; }
+    60% { box-shadow: 0 0 40px #c4a300; }
+    100% { box-shadow: 0 0 10px #c4a300; }
+}
+  
+.glowLand {
+    animation: glowing 4000ms infinite;
+}

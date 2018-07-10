@@ -622,7 +622,7 @@ class Game extends Component {
                                     <hr className="gameHr" />
                                 </div> : null}
 
-                            {!this.state.gameRunning ?
+                            {!this.state.gameRunning && !this.state.gameWinner ?
                                 <div>
                                     <h3 className="d-flex justify-content-center">World Generated</h3>
                                     <hr className="gameHr" />
@@ -647,12 +647,12 @@ class Game extends Component {
 
                      <Col size="md-1">
                         <div className="game-status-box d-flex justify-content-center text-center">
-                            {/* <audio
+                            <audio
                                 src={require("./vanaheim.mp3")}
                                 type="audio/mp3"
                                 autoPlay="autoplay"
                                 loop="true"
-                                /> */}
+                                />
                             <div id="audioplayer">
                                 <button id="muteButton" className="mute"></button>
                             </div>
@@ -665,7 +665,7 @@ class Game extends Component {
                     <Col size="md-12">
                         <Jumbotron>
                             <div className="landBoard text-center">
-                                <div className="border border-warning">
+                                <div className="">
                                     {this.state.toprow.map((landId, idx) => (
                                         <LandCard
                                             position={idx}
@@ -678,7 +678,7 @@ class Game extends Component {
                                     ))}
                                 </div>
 
-                                <div className="border border-warning img-vert">
+                                <div className="img-vert">
                                     {this.state.bottomrow.map((landId, idx) => (
                                         <LandCard
                                             position={31 - idx}
@@ -697,6 +697,7 @@ class Game extends Component {
 
                 <Row>
                     <Col size="md-12">
+                    
                         <div className="userBoard text-center border pt-5">
                             <Row>
                                 <div className="col-sm-1 border text-light">
@@ -721,11 +722,6 @@ class Game extends Component {
                                                 key={idx}
                                                 image={landId}
                                                 cardClick={this.handleCardPlay}
-                                                onHover={<audio 
-                                                        src={require("./se_Turn_Page02.wav")}
-                                                        type="audio/wav"
-                                                        autoPlay="autoplay"
-                                                        preload="true" />}
                                             />
                                         ))}
                                     </div>
