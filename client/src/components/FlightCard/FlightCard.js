@@ -67,6 +67,7 @@ function FlightCard(props) {
                 src={flightcard[8].image}
                 onClick={() => props.cardClick(props.image)}
             />
+        default:
     }
 };
 

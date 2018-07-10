@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Col, Row, Container } from "../../components/Grid";
+import { Col, Container } from "../../components/Grid";
 import "./Lobby.css";
 
 import firebase from '../../firebase.js'
@@ -60,11 +60,11 @@ class Lobby extends Component {
                         {/* Users Online Component */}
                         <div className="box info-background">
                             <h2 className="lobby-subtitle">Users</h2>
-                            <img className="h1-img-top" src={require('../../components/Images/h1.png')} />
+                            <img className="h1-img-top" alt="breakLine" src={require('../../components/Images/h1.png')} />
                                 <LobbyUsers
                                     users={this.state.usersInLobby} />
                             
-                            <img className="h1-img-bottom" src={require('../../components/Images/h1.png')} />
+                            <img className="h1-img-bottom" alt="breakLine" src={require('../../components/Images/h1.png')} />
                             
                         </div>
                     </Col>
@@ -73,9 +73,9 @@ class Lobby extends Component {
                         {/* Lobby Chat Component */}
                         <div className="box info-background">           
                             <h2 className="lobby-subtitle">Chat</h2>
-                            <img className="h1-img-top" src={require('../../components/Images/h1.png')} />
+                            <img className="h1-img-top" alt="breakLine" src={require('../../components/Images/h1.png')} />
                                 <Chat />
-                            <img className="h1-img-bottom" src={require('../../components/Images/h1.png')} />
+                            <img className="h1-img-bottom" alt="breakLine" src={require('../../components/Images/h1.png')} />
                         </div>
                     </Col>
     
@@ -83,7 +83,7 @@ class Lobby extends Component {
                         {/* Game Join Component */}
                         <div className="box info-background">
                             <h2 className="lobby-subtitle">Games</h2>
-                            <img  className="h1-img-top" src={require('../../components/Images/h1.png')} />
+                            <img  className="h1-img-top" alt="breakLine" src={require('../../components/Images/h1.png')} />
                                 <div className="games-data">
                                     {this.state.usersInGame.map((playersArr, idx) => (
                                         <LobbyGame
@@ -94,7 +94,7 @@ class Lobby extends Component {
                                     ))}
                                     
                                 </div>
-                            <img className="h1-img-bottom" src={require('../../components/Images/h1.png')} />
+                            <img className="h1-img-bottom" alt="breakLine" src={require('../../components/Images/h1.png')} />
                         </div>
                     </Col>
 
