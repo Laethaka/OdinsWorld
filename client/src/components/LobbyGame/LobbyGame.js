@@ -6,6 +6,7 @@ const LobbyGame = (props) => (
         <div className="join-game-rectangle">
             <div className="row no-margins">
                 <div className="col-8">
+                    <h3>Game {props.id+1}</h3>
                     <h3>Players in game</h3>
                     <p className="margin-left">– {props.players[0]}</p>
                     <p className="margin-left">– {props.players[1]}</p>
