@@ -27,16 +27,9 @@ const RuleBook = () => {
 						</table>
 					</div>
 				</div>
-				<div className="page-2 text-center">
-					<h2>Let the racing begin!</h2>
-					<p>The 1st Raven to fly across all the Lands Cards completing the loop is the winner.</p>
-					<img id="img-loop-1" src={require('../../components/Images/loop-1.png')} />
-					<br/>
-					<img id="img-loop-2" src={require('../../components/Images/loop-2.png')} />	
-				</div>
 
 				<div>
-					<h2>Each player have</h2>
+					<h2>Game components</h2>
 						<ul>
 							<li>1 dark or lighter Raven Coin + IMG</li>
 							<li>X Fly Cards + IMG</li>
@@ -46,6 +39,17 @@ const RuleBook = () => {
 					<p className="text-left">Each player can also ask for some trickery help from Loki that need to use wisely.</p>
 					<img src={require('../../components/Images/loki.png')} />
 				</div>
+
+				<div className="page-2 text-center">
+					<h2>Goal</h2>
+					<p>Let the racing begin!</p>
+					<p>The 1st Raven to fly across all the Lands Cards completing the loop is the winner.</p>
+					<img id="img-loop-1" src={require('../../components/Images/loop-1.png')} />
+					<br/>
+					<img id="img-loop-2" src={require('../../components/Images/loop-2.png')} />	
+				</div>
+
+
 
 				<div>
 					<h2>Flying</h2>

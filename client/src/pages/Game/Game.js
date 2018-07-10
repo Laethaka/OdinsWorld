@@ -507,14 +507,15 @@ class Game extends Component {
                         <div className="game-status-box text-center">
                             {this.state.isPlayer1 ?
                                 <div>
-                                    <img className="coin-size" src={require('../../components/Images/coin-2.png')} />
+                                    <img className="coin-size" src={require('../../components/Images/coin-1.png')} />
                                     <h3 className="d-flex justify-content-center">Player One</h3>
                                     <hr className="gameHr" />
+                                    {/* <img src={require('../../components/Images/line-2.png')} /> */}
                                     <h3 className="d-flex justify-content-center">Light Raven</h3>
                                 </div> : null}
                             {this.state.isPlayer2 ?
                                 <div>
-                                    <img className="coin-size" src={require('../../components/Images/coin-1.png')} />
+                                    <img className="coin-size" src={require('../../components/Images/coin-2.png')} />
                                     <h3 className="d-flex justify-content-center">Player Two</h3>
                                     <hr className="gameHr" />
                                     <h3 className="d-flex justify-content-center">Dark Raven</h3>
@@ -527,14 +528,14 @@ class Game extends Component {
                             <h3 className="d-flex justify-content-center"></h3>
                             {this.state.myTurn && this.state.cardsToDraw == 0 && this.state.gameWinner === null ?
                                 <div>
-                                    <h3 className="d-flex justify-content-center">Turn: Play Cards</h3>
+                                    <h3 className="d-flex justify-content-center">Your turn: Play Cards</h3>
                                     <hr className="gameHr" />
                                     <p>Click Flight Cards from your hand to move</p>
                                 </div> : null}
 
                             {this.state.myTurn && this.state.cardsToDraw > 0 && this.state.gameWinner === null ?
                                 <div>
-                                    <h3 className="d-flex justify-content-center">Turn: Draw Cards </h3>
+                                    <h3 className="d-flex justify-content-center">Your turn: Draw Cards </h3>
 
                                     <hr className="gameHr"/>
                                     <p>Cards to draw: <span className="cardsToDrawNum">{this.state.cardsToDraw}</span></p>
@@ -551,7 +552,7 @@ class Game extends Component {
                                     <h3>World Generated</h3>
                                     <hr className="gameHr"/>
                                     <h3>Cards to draw: {this.state.cardsToDraw}</h3>
-                                </div : null}
+                                </div> : null}
 
                             {this.state.gameWinner === 'white' && this.state.isPlayer1 ? <h3 className="d-flex justify-content-center">Victorious</h3> : null}
                             {this.state.gameWinner === 'white' && this.state.isPlayer2 ? <h3 className="d-flex justify-content-center">Defeat</h3> : null}
@@ -564,7 +565,7 @@ class Game extends Component {
                         <div className="game-status-box d-flex justify-content-center text-center">
                             {this.state.isPlayer1 && this.state.myTurn && this.state.cardsToDraw == 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
                             {this.state.isPlayer2 && this.state.myTurn && this.state.cardsToDraw == 0 && this.state.gameWinner === null ? <EndTurnButton buttonClick={this.endTurnClick} /> : null}
-                            {this.state.gameWinner !== null ? <a type="btn" className="btn button pr-4 pl-4" href="/lobby/">Back to Lobby</a> : null}
+                            {this.state.gameWinner !== null ? <a type="btn" className="btn button" href="/lobby/">Back to Lobby</a> : null}
                         </div>
                     </Col>
 
