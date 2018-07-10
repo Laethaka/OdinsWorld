@@ -1,5 +1,5 @@
 body {
-  color: #1b1716;
+  color: #30211e;
   font-size: 16px;
   background-image: url("../../client/src/components/Images/table-backgrond-3.png");
   background-repeat: repeat-x;
@@ -36,12 +36,12 @@ h3, h4, h5, h6 {
 }
 
 p {
-  /* font-family: 'Averia Serif Libre', cursive; */
-  font-family: 'Caudex', serif;
+  font-family: 'Averia Serif Libre', cursive;
+  /* font-family: 'Caudex', serif; */
   font-size: 1.2rem;
   line-height: 1.5rem;
   letter-spacing: 0.02rem;
-  font-weight: bold;
+  /* font-weight: bold; */
 }
 
 .info-background {

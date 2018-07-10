@@ -10,28 +10,43 @@ const RuleBook = () => {
 		<div id="loading" className="loading">Loading pages...</div>
 		<div id="mybook" style={{"display":"none"}}>
 			<div className="b-load">
-				<div>
+				<div className="text-center">
 					<h2>Welcome to Odin's World</h2>
-					<p>This is a game about Odin's Ravens, who are sent to watch Odin's Lands:
+					<p><span className="firstcharacter">E</span>very morning Odin sends his ravens, <span className="bold-text">Huginn</span> & <span className="bold-text">Munian</span>, across the world to bring back news of life on Earth. Naturally, after many millennia, they've become competitive...</p>
 					
-					Raven Huginn - player 1 IMG - 
-					Raven Muninn - player 2 + IMG
-					
-					</p>
-					<p>They race each other around the world, heading through Land Cards in opposite directions, and the raven that reaches a full loop is the winner. + IMG OF THE LOOP!! </p>
+					<div className="table-width page-1">
+						<table>
+							<tr className="coins-ing-RB text-center">
+								<td><img src={require('../../components/Images/coin-1.png')} /></td>
+								<td><img src={require('../../components/Images/coin-2.png')} /></td> 
+							</tr>
+							<tr className="text-center">
+								<td><p className="bold-text">Raven Huginn</p><p>Player 1</p></td>
+								<td><p className="bold-text">Raven Muninn</p><p>Player 2</p></td>
+							</tr>
+						</table>
+					</div>
 				</div>
+				<div className="page-2 text-center">
+					<h2>Let the racing begin!</h2>
+					<p>The 1st Raven to fly across all the Lands Cards completing the loop is the winner.</p>
+					<img id="img-loop-1" src={require('../../components/Images/loop-1.png')} />
+					<br/>
+					<img id="img-loop-2" src={require('../../components/Images/loop-2.png')} />	
+				</div>
+
 				<div>
-					<h2>Goal</h2>
-					<p>Let the racing begin! The first player controlling their raven fly across all the lands cards completing the loop is the winner.</p>
-					<p>Each player can also ask for some trickery help 
-					from Loki that need to use wisely.</p>
 					<h2>Each player have</h2>
-					<ul>
-						<li>1 dark or lighter Raven Coin + IMG</li>
-						<li>X Fly Cards + IMG</li>
-						<li>X Loki Cards + IMG</li>
-					</ul>
+						<ul>
+							<li>1 dark or lighter Raven Coin + IMG</li>
+							<li>X Fly Cards + IMG</li>
+							<li>X Loki Cards + IMG</li>
+						</ul>
+
+					<p className="text-left">Each player can also ask for some trickery help from Loki that need to use wisely.</p>
+					<img src={require('../../components/Images/loki.png')} />
 				</div>
+
 				<div>
 					<h2>Flying</h2>
 					<p>To move a raven, the player must play a Flight Card from their hand, which 
