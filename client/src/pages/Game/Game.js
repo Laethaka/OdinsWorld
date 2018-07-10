@@ -38,6 +38,9 @@ class Game extends Component {
         oppLokiDeck: 8,
         showingHand: true,
         showingPush: false,
+        showingFlip: true,
+        showingSwap: false,
+        swapCards: [],
     };
 
     componentWillReceiveProps(props) {
@@ -216,8 +219,8 @@ class Game extends Component {
         firebase.database().ref(`games/Game${gameId}/decks`).set({
             player1Hand: [],
             player2Hand: [],
-            player1LokiDeck: [5, 5, 5, 5, 5, 5, 5, 5],
-            player2LokiDeck: [5, 5, 5, 5, 5, 5, 5, 5]
+            player1LokiDeck: [5, 5, 6, 6, 7, 7, 8, 8],
+            player2LokiDeck: [5, 5, 6, 6, 7, 7, 8, 8]
         }).then((snap) => {
             this.setState({ gameReady: true })
             console.log('game ready!')
@@ -359,6 +362,8 @@ class Game extends Component {
             }
         } else if (cardId === 5 && this.state.gameRunning && this.state.myTurn && this.state.cardsToDraw === 0) {//SHOWING PUSH OPTION
             this.setState({ showingHand: false, showingPush: true })
+        } else if (cardId === 7 && this.state.gameRunning && this.state.myTurn && this.state.cardsToDraw === 0) {//SHOWING FLIP OPTIONS
+            this.setState({ showingHand: false, showingFlip: true })
         }
     }
 
@@ -484,6 +489,20 @@ class Game extends Component {
         this.setState({ showingHand: true, showingPush: false })
     }
 
+    handleSwap = (landId) => {
+        if (this.state.showingSwap) {//swap IS ALLOWED
+            if (this.state.swapCards.length===0) {//STARTING swap PAIR
+                this.setState({swapCards: [landId]})
+            } else if (this.state.swapCards.length===1) {//PUSHING TO COMPLETE PAIR AND EXECUTING swap
+                let tempArr = this.state.swapCards
+                tempArr.push(landId)
+                this.setState({swapCards: tempArr})
+            } else if (this.state.swapCards.length===2) {//CLEARING ARRAY FROM OLD swap
+                this.setState({swapCards: []})
+            }
+        }
+    }
+
     render() {
 
         return (
@@ -576,6 +595,8 @@ class Game extends Component {
                                             image={landId}
                                             whiteRaven={this.state.whiteRaven}
                                             blackRaven={this.state.blackRaven}
+                                            flipClick={this.handleFlip}
+                                            // swapClick={this.handleSwap}
                                         />
                                     ))}
                                 </div>
@@ -588,6 +609,8 @@ class Game extends Component {
                                             image={landId}
                                             whiteRaven={this.state.whiteRaven}
                                             blackRaven={this.state.blackRaven}
+                                            flipClick={this.handleFlip}
+                                            // swapClick={this.handleSwap}
                                         />
                                     ))}
                                 </div>
@@ -628,6 +651,12 @@ class Game extends Component {
                                         <h4>Whom do you want to push?</h4>
                                         <button onClick={this.selfPush}>Myself</button>
                                         <button onClick={this.oppPush}>Opponent</button>
+                                    </div>
+                                    : null}
+
+                                {this.state.showingFlip ?
+                                    <div className="col-sm-8 border text-light">
+                                        <h4>Please click the two land columns you want to swap (may NOT contain Ravens)</h4>
                                     </div>
                                     : null}
 
