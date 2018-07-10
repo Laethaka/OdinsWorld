@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Col, Row, Container } from "../../components/Grid";
 import Jumbotron from "../../components/Jumbotron";
 import "./Game.css";
-import axios from 'axios';
+import ReactAudioPlayer from 'react-audio-player';
 
 // Firebase
 import firebase from '../../firebase'
@@ -500,8 +500,9 @@ class Game extends Component {
     render() {
 
         return (
+            
             <Container fluid>
-
+            <ReactAudioPlayer src="./vanaheim.mp3" autoPlay />
                 <div className="row info-background game-status-margin">
                     <Col size="md-4">
                         <div className="game-status-box text-center">
@@ -541,7 +542,15 @@ class Game extends Component {
                                     <p>Cards to draw: <span className="cardsToDrawNum">{this.state.cardsToDraw}</span></p>
                                 </div> : null}
 
-                            {!this.state.myTurn && this.state.gameWinner && this.state.gameRunning === null ? 
+                            {!this.state.gameRunning ?
+                                <div>
+                                    <h3 className="d-flex justify-content-center">Draw your cards and wait for game start</h3>
+                                    <hr className="gameHr" />
+                                </div>
+                                : null}
+
+                            {!this.state.myTurn && this.state.gameWinner === null && this.state.gameRunning ?
+
                                 <div>
                                     <h3 className="d-flex justify-content-center">Waiting: Opponent's Turn</h3>
                                     <hr className="gameHr" />
@@ -561,18 +570,24 @@ class Game extends Component {
                         </div>
                     </Col>
 
-                    <Col size="md-4">
+                    <Col size="md-3">
                         <div className="game-status-box d-flex justify-content-center text-center">
                             {this.state.isPlayer1 && this.state.myTurn && this.state.cardsToDraw == 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
-                            {this.state.isPlayer2 && this.state.myTurn && this.state.cardsToDraw == 0 && this.state.gameWinner === null ? <EndTurnButton buttonClick={this.endTurnClick} /> : null}
-                            {this.state.gameWinner !== null ? <a type="btn" className="btn button" href="/lobby/">Back to Lobby</a> : null}
+                            {this.state.isPlayer2 && this.state.myTurn && this.state.cardsToDraw == 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
+                            {this.state.gameWinner !== null ? <a type="btn" className="btn button button-back-lobby" href="/lobby/">Back to Lobby</a> : null}
                         </div>
                     </Col>
 
+                    <Col size="md-1">
+                        <div className="music-checkbox-button">
+                            <input type="checkbox" id="cbx"/>
+                            <label for="cbx" className="toggle"><span><i className="fas fa-music"></i></span></label>    
+                        </div>        
+                    </Col>
                 </div>
 
                 <div className="row">
-                    <div className="col-md-12 text-light mb-3">
+                    <div className="col-md-12 text-yellow mb-3">
                         <div className="d-flex justify-content-center">
                             <h4>Opponent Cards: {this.state.opponentHand}</h4>
                         </div>
@@ -615,19 +630,23 @@ class Game extends Component {
                     <Col size="md-12">
                         <div className="userBoard text-center border pt-5">
                             <Row>
-                                <div className="col-sm-1 border text-light">
+                                <div className="col-sm-1 border text-yellow">
                                     <h4>Flight</h4>
+                                    <p></p>
                                     <DrawFlight deckClick={this.drawFlight} />
                                 </div>
-                                <div className="col-sm-1 border text-light">
+                                <div className="col-sm-1 border text-yellow">
                                     <h4>Loki</h4>
-                                    <DrawLoki deckClick={this.drawLoki} />
+                                    <p>&#40;{this.state.myLokiDeck}/8&#41;</p>
+                                    {this.state.myLokiDeck === 0 ? <div></div> : null}
+                                    {this.state.myLokiDeck > 0 ? <DrawLoki deckClick={this.drawLoki} /> : null}
                                 </div>
 
                                 {this.state.showingHand ?
-                                    <div className="col-sm-8 border text-light">
+                                    <div className="col-sm-8 border text-yellow">
 
                                         <h4>Your Hand</h4>
+                                   
                                         {this.state.playerHand.map((landId, idx) => (
                                             <FlightCard
                                                 key={idx}
@@ -639,15 +658,19 @@ class Game extends Component {
                                     : null}
 
                                 {this.state.showingPush ?
-                                    <div className="col-sm-8 border text-light">
+                                    <div className="col-sm-8 border text-yellow">
                                         <h4>Whom do you want to push?</h4>
-                                        <button onClick={this.selfPush}>Myself</button>
-                                        <button onClick={this.oppPush}>Opponent</button>
+                                        <div>
+                                            <button type="button" className="button btn pt-5 pb-5 mr-3" onClick={this.oppPush}>Push Opponent Backwards</button>
+                                            <img width="75px" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530300322/cards-2-09.png" />
+                                            <button type="button" className="button btn pt-5 pb-5 ml-3" onClick={this.selfPush}>Push My Raven Forwards</button>
+                                       </div>
+                                        
+                                       
                                     </div>
                                     : null}
 
-                                <div className="col-sm-2 border text-light">
-                                    <h4>My Loki Deck Cards: {this.state.myLokiDeck}</h4>
+                                <div className="col-sm-2 border text-yellow">
                                     <h4>Opponent Loki Deck Cards: {this.state.oppLokiDeck}</h4>
                                 </div>
                             </Row>

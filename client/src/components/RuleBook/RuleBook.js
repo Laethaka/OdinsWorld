@@ -29,13 +29,19 @@ const RuleBook = () => {
 				</div>
 
 				<div>
-					<h2>Game components</h2>
-						<ul>
-							<li>1 dark or lighter Raven Coin + IMG</li>
-							<li>X Fly Cards + IMG</li>
-							<li>X Loki Cards + IMG</li>
-						</ul>
-
+					<h2>Game Cards</h2>
+					<table>
+							<tr className="text-center">
+								<td><p>Land Card</p></td>
+								<td><p>Fly Card</p></td>
+								<td><p>Loki Card</p></td>
+							</tr>
+							<tr className="coins-ing-RB text-center">
+								<td><img src={require('../../components/Images/land-cards.png')} /></td>
+								<td><img src={require('../../components/Images/fly-cards.png')} /></td>
+								<td><img src={require('../../components/Images//loki-cards.png')} /></td> 
+							</tr>
+						</table>
 					<p className="text-left">Each player can also ask for some trickery help from Loki that need to use wisely.</p>
 					<img src={require('../../components/Images/loki.png')} />
 				</div>

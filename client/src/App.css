@@ -25,10 +25,6 @@
 	width: 10em;
 }
 
-.Button-join {
-	box-shadow: none;
-}
-
 .navButton {
 	font-family: 'Caudex', serif;
 	background:linear-gradient(to bottom, #e9ad58 5%, #8a550b 100%);
