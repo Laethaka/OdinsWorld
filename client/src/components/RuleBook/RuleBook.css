@@ -8,6 +8,11 @@
 	-webkit-border-radius:10px;
 	border-radius:10px;
 }
+
+.booklet .b-wrap {
+	padding: 1.5rem !important;
+}
+
 .booklet .b-wrap-left  {
 	background:#fff url(../Images/left_bg.jpg) no-repeat top left;
 	-webkit-border-top-left-radius: 10px;
@@ -43,6 +48,7 @@
 	box-shadow:0px -1px 1px #fff;
 	opacity:0.8;
 }
+
 .book_wrapper{
 	margin:0 auto;
 	padding-top:50px;
@@ -51,50 +57,29 @@
 	position:relative;
 	background:transparent url(../Images/bg.png) no-repeat 9px 27px;
 }
-.book_wrapper h2{
+
+.book_wrapper h2 {
 	margin:5px 5px 5px 15px;
 	font-size:26px;
-	background:transparent url(../Images/h1.png) no-repeat bottom left;
-	padding-bottom:7px;
+	line-height: 2.7rem;
+	/* padding-bottom: 0.1rem; */
+	/* text-align: center; */
+	color: #462a1a;
+	margin: 1rem;
 }
-.book_wrapper p{
+
+.book_wrapper p {
+	line-height: 1.8rem;
+	font-size: 1.1rem !important;
+	color: #462a1a;
+}
+
+.book_wrapper p {
 	font-size:16px;
 	margin:5px 5px 5px 15px;
 }
-.book_wrapper a.article,
-.book_wrapper a.demo{
-	background:transparent url(../Images/circle.png) no-repeat 50% 0px;
-	display:block;
-	width:95px;
-	height:41px;
-	text-decoration:none;
-	outline:none;
-	font-size:16px;
-	color:#555;
-	float:left;
-	line-height:41px;
-	padding-left:47px;
-}
-.book_wrapper a.demo{
-	margin-left:50px;
-}
-.book_wrapper a.article:hover,
-.book_wrapper a.demo:hover{
-	background-position:50% -41px;
-	color:#13386a;
-}
-.book_wrapper img{
-	margin:10px 0px 5px 35px;
-	width:300px;
-	padding:4px;
-	border:1px solid #ddd;
-	-moz-box-shadow:1px 1px 1px #fff;
-	-webkit-box-shadow:1px 1px 1px #fff;
-	box-shadow:1px 1px 1px #fff;
-}
-.booklet .b-wrap-right img{
-	border:1px solid #E6E3C2;
-}
+
+
 a#next_page_button,
 a#prev_page_button{
 	display:none;
@@ -137,4 +122,50 @@ a#prev_page_button:hover{
 	-webkit-border-radius:20px;
 	border-radius:20px;
 	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=70);
+}
+
+
+/* .start-text {
+	font-size: 1.5rem;
+} */
+
+/* .p:first-child:first-letter {
+	color: #903; 
+	font-family: Georgia;
+	initial-letter: 2;
+  } */
+
+.firstcharacter {
+	/* color: #462a1a; */
+	/* float: left; */
+	/* font-family: Georgia; */
+	font-size: 1.8rem;
+	/* line-height: 45px; */
+	/* padding-top: 0px; */
+	/* padding-right: 8px; */
+	padding-left: 1rem;
+	font-weight: lighter;
+}
+
+.page-1 img {
+	margin-top: 1.1rem;
+	width: 4.1rem;
+}
+
+#img-loop-1 {
+	width: 9rem;
+}
+
+#img-loop-2 {
+	width: 23rem;
+}
+
+.table-width {
+	width: 100%;
+	margin-left: 2.37rem;
+
+}
+
+.bold-text {
+	font-weight: 700;
 }

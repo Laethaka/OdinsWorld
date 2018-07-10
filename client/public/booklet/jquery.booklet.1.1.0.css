@@ -30,7 +30,7 @@
 	.booklet .b-page-cover h3  {text-shadow:0px 1px 3px #261f1e;}
    
    	/* Page Numbers */
-	.booklet .b-counter {bottom:10px; position:absolute; display:block; width:25px; height:20px; text-align:center; font-size:12px; padding:5px 0 0;}
+	.booklet .b-counter {bottom:10px; position:absolute; display:block; width:25px; height:20px; text-align:center; padding:5px 0 0;}
 	.booklet .b-wrap-left  .b-counter  {left:10px;}
 	.booklet .b-wrap-right .b-counter {right:10px;}
    
@@ -47,7 +47,7 @@
 	.booklet .b-overlay-next {right:0;}
 	
    	/* Tab Controls */
-	.booklet .b-tab        {background:#261f1e; height:40px; width:100%; padding:10px 0 0; text-align:center; color:#ccc; position:absolute; font-size:11px;}
+	.booklet .b-tab        {background:#261f1e; height:40px; width:100%; padding:10px 0 0; text-align:center; color:#ccc; position:absolute;}
 	.booklet .b-tab-prev   {left:0;}
 	.booklet .b-tab-next   {right:0;}
 	.booklet .b-tab:hover  {background:#aaa; color:#261f1e;}	

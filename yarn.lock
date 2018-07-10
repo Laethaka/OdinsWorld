@@ -2589,7 +2589,7 @@ promise-polyfill@7.1.2:
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/promise-polyfill/-/promise-polyfill-7.1.2.tgz#ab05301d8c28536301622d69227632269a70ca3b"
 
-prop-types@^15.6.1:
+prop-types@^15.5.8, prop-types@^15.6.1:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
   dependencies:
@@ -2728,6 +2728,12 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     ini "~1.3.0"
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
+
+react-audio-player@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/react-audio-player/-/react-audio-player-0.10.0.tgz#f08f3572028a5a56663abba6a7e8ce60ba80ded3"
+  dependencies:
+    prop-types "^15.5.8"
 
 react-router-dom@^4.3.1:
   version "4.3.1"
