@@ -45,6 +45,7 @@ function LandCard(props) {
                     id={props.position}
                 // onClick={() => props.flipClick(props.position)}
                 />
+            default:
         }
     } else if (props.whiteRaven === props.position) {//WHITE RAVEN IS HERE
         switch (props.image) {//SELECTING TERRAIN TYPE TO DISPLAY
@@ -83,6 +84,7 @@ function LandCard(props) {
                     src={landcard[4].imageW}
                     id={props.position}
                 />
+            default:
         }
     } else if (props.blackRaven === props.position) {//BLACK RAVEN IS HERE
         switch (props.image) {//SELECTING TERRAIN TYPE TO DISPLAY
@@ -121,6 +123,7 @@ function LandCard(props) {
                     src={landcard[4].imageB}
                     id={props.position}
                 />
+            default:
         }
     } else {//NEITHER RAVEN IS HERE
         switch (props.image) {//SELECTING TERRAIN TYPE TO DISPLAY
@@ -164,6 +167,7 @@ function LandCard(props) {
                     id={props.position}
                     onClick={() => props.flipClick(props.position)}
                 />
+            default:
         }
     }
 };

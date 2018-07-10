@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Col, Row, Container } from "../../components/Grid";
 import Jumbotron from "../../components/Jumbotron";
 import "./Game.css";
-import axios from 'axios';
+import ReactAudioPlayer from 'react-audio-player';
 
 // Firebase
 import firebase from '../../firebase'
@@ -491,14 +491,14 @@ class Game extends Component {
 
     handleSwap = (landId) => {
         if (this.state.showingSwap) {//swap IS ALLOWED
-            if (this.state.swapCards.length===0) {//STARTING swap PAIR
-                this.setState({swapCards: [landId]})
-            } else if (this.state.swapCards.length===1) {//PUSHING TO COMPLETE PAIR AND EXECUTING swap
+            if (this.state.swapCards.length === 0) {//STARTING swap PAIR
+                this.setState({ swapCards: [landId] })
+            } else if (this.state.swapCards.length === 1) {//PUSHING TO COMPLETE PAIR AND EXECUTING swap
                 let tempArr = this.state.swapCards
                 tempArr.push(landId)
-                this.setState({swapCards: tempArr})
-            } else if (this.state.swapCards.length===2) {//CLEARING ARRAY FROM OLD swap
-                this.setState({swapCards: []})
+                this.setState({ swapCards: tempArr })
+            } else if (this.state.swapCards.length === 2) {//CLEARING ARRAY FROM OLD swap
+                this.setState({ swapCards: [] })
             }
         }
     }
@@ -506,21 +506,26 @@ class Game extends Component {
     render() {
 
         return (
-            <Container fluid>
 
+            <Container fluid>
+                <ReactAudioPlayer
+                    src={require("./vanaheim.mp3")}
+                    autoPlay
+                    controls
+                />
                 <div className="row info-background game-status-margin">
                     <Col size="md-4">
                         <div className="game-status-box text-center">
                             {this.state.isPlayer1 ?
                                 <div>
-                                    <img className="coin-size" src={require('../../components/Images/coin-2.png')} />
+                                    <img className="coin-size" alt="ravenCoin" src={require('../../components/Images/coin-2.png')} />
                                     <h3 className="d-flex justify-content-center">Player One</h3>
                                     <hr className="gameHr" />
                                     <h3 className="d-flex justify-content-center">Light Raven</h3>
                                 </div> : null}
                             {this.state.isPlayer2 ?
                                 <div>
-                                    <img className="coin-size" src={require('../../components/Images/coin-1.png')} />
+                                    <img className="coin-size" alt="ravenCoin" src={require('../../components/Images/coin-1.png')} />
                                     <h3 className="d-flex justify-content-center">Player Two</h3>
                                     <hr className="gameHr" />
                                     <h3 className="d-flex justify-content-center">Dark Raven</h3>
@@ -530,8 +535,8 @@ class Game extends Component {
 
                     <Col size="md-4">
                         <div className=" game-status-box d-flex justify-content-center text-center">
-                            <h3 className="d-flex justify-content-center"></h3>
-                            {this.state.myTurn && this.state.cardsToDraw == 0 && this.state.gameWinner === null ?
+
+                            {this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ?
                                 <div>
                                     <h3 className="d-flex justify-content-center">Turn: Play Cards</h3>
                                     <hr className="gameHr" />
@@ -541,22 +546,24 @@ class Game extends Component {
                             {this.state.myTurn && this.state.cardsToDraw > 0 && this.state.gameWinner === null ?
                                 <div>
                                     <h3 className="d-flex justify-content-center">Turn: Draw Cards </h3>
-                                    <hr className="gameHr" />
-                                    <p>Cards available to draw: <span className="cardsToDrawNum">{this.state.cardsToDraw}</span></p>
-                                </div> : null}
 
-                            {!this.state.gameRunning ?
-                                <div>
-                                    <h3 className="d-flex justify-content-center">Draw your cards and wait for game start</h3>
                                     <hr className="gameHr" />
-                                </div>
-                                : null}
+                                    <p>Cards to draw: <span className="cardsToDrawNum">&nbsp;{this.state.cardsToDraw}</span></p>
+                                </div> : null}
 
                             {!this.state.myTurn && this.state.gameWinner === null && this.state.gameRunning ?
                                 <div>
                                     <h3 className="d-flex justify-content-center">Waiting: Opponent's Turn</h3>
                                     <hr className="gameHr" />
                                 </div> : null}
+
+                            {!this.state.gameRunning ?
+                                <div>
+                                    <h3 className="d-flex justify-content-center">World Generated</h3>
+                                    <hr className="gameHr" />
+                                    <h3 className="d-flex justify-content-center">Cards to draw: <span className="cardsToDrawNum">&nbsp;{this.state.cardsToDraw}</span></h3>
+                                </div>
+                                : null}
 
                             {this.state.gameWinner === 'white' && this.state.isPlayer1 ? <h3 className="d-flex justify-content-center">Victorious</h3> : null}
                             {this.state.gameWinner === 'white' && this.state.isPlayer2 ? <h3 className="d-flex justify-content-center">Defeat</h3> : null}
@@ -567,20 +574,11 @@ class Game extends Component {
 
                     <Col size="md-4">
                         <div className="game-status-box d-flex justify-content-center text-center">
-                            {this.state.isPlayer1 && this.state.myTurn && this.state.cardsToDraw == 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
-                            {this.state.isPlayer2 && this.state.myTurn && this.state.cardsToDraw == 0 && this.state.gameWinner === null ? <EndTurnButton buttonClick={this.endTurnClick} /> : null}
-                            {this.state.gameWinner !== null ? <a type="btn" className="btn button pr-4 pl-4" href="/lobby/">Back to Lobby</a> : null}
+                            {this.state.isPlayer1 && this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
+                            {this.state.isPlayer2 && this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
+                            {this.state.gameWinner !== null ? <a type="btn" className="btn button pr-4 pl-4 returnLobbyButton" href="/lobby/">Back to Lobby</a> : null}
                         </div>
                     </Col>
-
-                </div>
-
-                <div className="row">
-                    <div className="col-md-12 text-light mb-3">
-                        <div className="d-flex justify-content-center">
-                            <h4>Opponent Cards: {this.state.opponentHand}</h4>
-                        </div>
-                    </div>
                 </div>
 
                 <Row>
@@ -595,8 +593,8 @@ class Game extends Component {
                                             image={landId}
                                             whiteRaven={this.state.whiteRaven}
                                             blackRaven={this.state.blackRaven}
-                                            flipClick={this.handleFlip}
-                                            // swapClick={this.handleSwap}
+                                            flipClick={this.handleSwap}
+                                        // swapClick={this.handleSwap}
                                         />
                                     ))}
                                 </div>
@@ -609,8 +607,8 @@ class Game extends Component {
                                             image={landId}
                                             whiteRaven={this.state.whiteRaven}
                                             blackRaven={this.state.blackRaven}
-                                            flipClick={this.handleFlip}
-                                            // swapClick={this.handleSwap}
+                                            flipClick={this.handleSwap}
+                                        // swapClick={this.handleSwap}
                                         />
                                     ))}
                                 </div>
@@ -625,17 +623,21 @@ class Game extends Component {
                             <Row>
                                 <div className="col-sm-1 border text-light">
                                     <h4>Flight</h4>
+                                    <p>&nbsp;</p>
                                     <DrawFlight deckClick={this.drawFlight} />
                                 </div>
                                 <div className="col-sm-1 border text-light">
                                     <h4>Loki</h4>
-                                    <DrawLoki deckClick={this.drawLoki} />
+                                    <p>&#40;{this.state.myLokiDeck}/8&#41;</p>
+                                    {this.state.myLokiDeck === 0 ? <div>&nbsp;</div> : null}
+                                    {this.state.myLokiDeck > 0 ? <DrawLoki deckClick={this.drawLoki} /> : null}
                                 </div>
 
                                 {this.state.showingHand ?
                                     <div className="col-sm-8 border text-light">
 
                                         <h4>Your Hand</h4>
+
                                         {this.state.playerHand.map((landId, idx) => (
                                             <FlightCard
                                                 key={idx}
@@ -649,20 +651,25 @@ class Game extends Component {
                                 {this.state.showingPush ?
                                     <div className="col-sm-8 border text-light">
                                         <h4>Whom do you want to push?</h4>
-                                        <button onClick={this.selfPush}>Myself</button>
-                                        <button onClick={this.oppPush}>Opponent</button>
+                                        <div>
+                                            <button type="button" className="button btn pt-5 pb-5 mr-3" onClick={this.oppPush}>Push Opponent Backwards</button>
+                                            <img alt="lokiPush" width="75px" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530300322/cards-2-09.png" />
+                                            <button type="button" className="button btn pt-5 pb-5 ml-3" onClick={this.selfPush}>Push My Raven Forwards</button>
+                                        </div>
                                     </div>
                                     : null}
 
-                                {this.state.showingFlip ?
+                                {this.state.showingSwap ?
                                     <div className="col-sm-8 border text-light">
                                         <h4>Please click the two land columns you want to swap (may NOT contain Ravens)</h4>
                                     </div>
                                     : null}
 
-                                <div className="col-sm-2 border text-light">
-                                    <h4>My Loki Deck Cards: {this.state.myLokiDeck}</h4>
-                                    <h4>Opponent Loki Deck Cards: {this.state.oppLokiDeck}</h4>
+                                <div className="col-sm-1 border text-light">
+                                    <p>Opponent Cards: {this.state.opponentHand}</p>
+                                </div>
+                                <div className="col-sm-1 border text-light">
+                                    <p>Opponent Loki Deck Cards: {this.state.oppLokiDeck}</p>
                                 </div>
                             </Row>
                         </div>
