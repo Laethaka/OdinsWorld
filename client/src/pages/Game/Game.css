@@ -99,10 +99,10 @@ i {
 .toggle span {
     content: "";
     position: absolute;
-    top: 5px;
+    top: 5.6px;
     left: 5.5px;
     width: 28px;
-    height: 28px;
+    height: 26px;
     display: block;
     background:linear-gradient(to bottom, #e9ad58 5%, #8a550b 100%);
     box-shadow: 0 3px 8px #5d3908;
@@ -153,6 +153,11 @@ i {
 
 
 .button-back-lobby {
-	box-shadow: none;
+    box-shadow: none;
+    
 }
+
+/* .returnLobbyButton {
+    box-shadow: 0px 0px 70px 4px rgba(248, 162, 3, 0.75);
+} */
 

@@ -3,7 +3,7 @@ import "./Nav.css";
 
 const Nav = (props) => (
   <nav className="navbar align-self-center navbar-expand-lg">
-    <a className="navbar-brand"><h1 className="game-name ">Odin's Ravens</h1></a>
+    <a className="navbar-brand" href={"/Landing"}><h1 className="game-name">Odin's Ravens</h1></a>
     <div className="navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
 
       {props.children}

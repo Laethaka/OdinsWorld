@@ -23,6 +23,7 @@ class Game extends Component {
         landcard,
         flightcard,
         gameId: 0,
+        completerow: [],
         toprow: [],
         bottomrow: [],
         cardsToDraw: 0,
@@ -34,10 +35,13 @@ class Game extends Component {
         blackRaven: 31,
         myTurn: false,
         gameWinner: null,
-        myLokiDeck: 8,
-        oppLokiDeck: 8,
+        myLokiDeck: 9,
+        oppLokiDeck: 9,
         showingHand: true,
         showingPush: false,
+        showingFlip: false,
+        showingSwap: false,
+        swapCards: [],
     };
 
     componentWillReceiveProps(props) {
@@ -70,6 +74,7 @@ class Game extends Component {
         //LISTENING FOR WORLD CHANGES AND UPDATING STATE
         database.ref(`/games/Game${props.gameId}/world`).on('value', snap => {
             this.setState({
+                completerow: snap.val().completerow,
                 toprow: snap.val().toprow,
                 bottomrow: snap.val().bottomrow,
                 whiteRaven: snap.val().whiteRaven,
@@ -85,6 +90,7 @@ class Game extends Component {
         //LISTENING FOR DECK CHANGES AND UPDATING STATE
         database.ref(`/games/Game${props.gameId}/decks`).on('value', snap => {
             if (this.state.isPlayer1) {//THIS WINDOW IS PLAYER 1
+                
                 let myHand = snap.val().player1Hand
                 let oppHand = snap.val().player2Hand
                 let myLoki = snap.val().player1LokiDeck
@@ -106,7 +112,6 @@ class Game extends Component {
                     this.setState({ oppLokiDeck: 0 })
                 }
                 if (myHand) {//DISPLAYING HAND CARDS IN DOM
-                    // console.log('i now have this many cards: ', Object.values(myHand).length)
                     if (Object.values(myHand).length > 7) {
                         database.ref(`/games/Game${props.gameId}/decks/`).update({ player1Hand: Object.values(myHand).slice(1, 8) })
                     } else {
@@ -122,15 +127,20 @@ class Game extends Component {
                 let oppLoki = snap.val().player1LokiDeck
                 if (oppHand) {//UPDATING OPPONENT CARD COUNT ON DOM
                     this.setState({ opponentHand: Object.values(oppHand).length })
+                } else {
+                    this.setState({ opponentHand: 0 })
                 }
                 if (myLoki) {//UPDATING MY LOKI DECK COUNT ON DOM
                     this.setState({ myLokiDeck: myLoki.length })
+                } else {
+                    this.setState({ myLokiDeck: 0 })
                 }
                 if (oppLoki) {//UPDATING OPPONENT LOKI DECK COUNT ON DOM
                     this.setState({ oppLokiDeck: oppLoki.length })
+                } else {
+                    this.setState({ oppLokiDeck: 0 })
                 }
                 if (myHand) {//DISPLAYING HAND CARDS IN DOM
-                    // console.log('i now have this many cards: ', Object.values(myHand).length)
                     if (Object.values(myHand).length > 7) {
                         database.ref(`/games/Game${props.gameId}/decks/`).update({ player2Hand: Object.values(myHand).slice(1, 8) })
                     } else {
@@ -216,8 +226,8 @@ class Game extends Component {
         firebase.database().ref(`games/Game${gameId}/decks`).set({
             player1Hand: [],
             player2Hand: [],
-            player1LokiDeck: [5, 5, 5, 5, 5, 5, 5, 5],
-            player2LokiDeck: [5, 5, 5, 5, 5, 5, 5, 5]
+            player1LokiDeck: [5, 5, 5, 8, 8, 8, 7, 7, 7],
+            player2LokiDeck: [5, 5, 5, 8, 8, 8, 7, 7, 7]
         }).then((snap) => {
             this.setState({ gameReady: true })
             console.log('game ready!')
@@ -359,7 +369,12 @@ class Game extends Component {
             }
         } else if (cardId === 5 && this.state.gameRunning && this.state.myTurn && this.state.cardsToDraw === 0) {//SHOWING PUSH OPTION
             this.setState({ showingHand: false, showingPush: true })
+        } else if (cardId === 7 && this.state.gameRunning && this.state.myTurn && this.state.cardsToDraw === 0) {//SHOWING FLIP OPTIONS
+            this.setState({ showingHand: false, showingFlip: true })
+        } else if (cardId === 8 && this.state.gameRunning && this.state.myTurn && this.state.cardsToDraw === 0) {//SHOWING FLIP OPTIONS
+            this.setState({ showingHand: false, showingSwap: true })
         }
+
     }
 
     drawFlight = () => {//USER REQUESTING TO DRAW FLIGHT
@@ -484,31 +499,98 @@ class Game extends Component {
         this.setState({ showingHand: true, showingPush: false })
     }
 
-    // opponentHandRender = () => {
-    //     let opponentHandCards = [];
-        
-    //     for (let i=0; i < this.state.opponentHand; i++) {
-    //         opponentHandCards.push(
-    //             <img
-    //             alt="Draw Land"
-    //             src="https://res.cloudinary.com/mosjoandy/image/upload/v1530297893/OdinsRavensLandCards/card-14.png"
-    //             />)
-    //     }
-    //     return
-    // }
+    handleFlipOrSwap = (landIdx) => {
+        if (landIdx > 15) {//SETTING INDEX VALUE FOR TOP ROW
+            landIdx = 31 - landIdx
+        }
+
+        if (this.state.showingFlip) {//FLIP IS ALLOWED
+            if (landIdx + this.state.whiteRaven !== 31 && landIdx + this.state.blackRaven !== 31 && landIdx !== this.state.whiteRaven && landIdx !==this.state.blackRaven) {//RAVENS ARE NOT ON THIS COLUMN
+                let landPair = [this.state.completerow[landIdx], this.state.completerow[31-landIdx]]//GATHERING LANDTYPES
+
+                let newWorld = this.state.completerow;//COPYING WORLD ARRAY FOR MODIFICATION
+                //INPUTTING NEW LAND VALUES
+                newWorld[landIdx] = landPair[1];
+                newWorld[31-landIdx] = landPair[0];
+
+                firebase.database().ref(`games/Game${this.state.gameId}/world`).update({
+                    completerow: newWorld,
+                    toprow: newWorld.slice(0, 16),
+                    bottomrow: newWorld.slice(16, 32).reverse(),
+                })
+
+                if (this.state.isPlayer1) {
+                    let myHand = this.state.playerHand
+                    let cutIdx = myHand.indexOf(7)
+                    myHand.splice(cutIdx, 1)
+                    firebase.database().ref(`games/Game${this.state.gameId}/decks`).update({ player1Hand: myHand })
+                } else if (this.state.isPlayer2) {
+                    let myHand = this.state.playerHand
+                    let cutIdx = myHand.indexOf(7)
+                    myHand.splice(cutIdx, 1)
+                    firebase.database().ref(`games/Game${this.state.gameId}/decks`).update({ player2Hand: myHand })
+                }
+            }
+            this.setState({ showingFlip: false, showingHand: true })//RESETTING DOM
+        }
+
+        if (this.state.showingSwap) {//SWAP IS ALLOWED
+            if (landIdx + this.state.whiteRaven !== 31 && landIdx + this.state.blackRaven !== 31 && landIdx !== this.state.whiteRaven && landIdx !==this.state.blackRaven) {//RAVENS ARE NOT ON THIS COLUMN
+                if (this.state.swapCards.length === 0 || this.state.swapCards.length === 2) {//STARTING SWAP PAIR
+                    this.setState({ swapCards: [landIdx] })
+                } else if (this.state.swapCards.length === 1 && landIdx !== this.state.swapCards[0]) {//PUSHING TO COMPLETE PAIR AND EXECUTING SWAP
+                    let tempArr = this.state.swapCards
+                    tempArr.push(landIdx)
+                    this.setState({ swapCards: tempArr, showingSwap: false, showingHand: true })//RESETTING DOM
+                    //GATHERING ALL INVOLVED LANDTYPES AND INDICES
+                    let landPairWithIndex1 = [this.state.completerow[this.state.swapCards[0]], this.state.completerow[31 - this.state.swapCards[0]], this.state.swapCards[0]]
+                    let landPairWithIndex2 = [this.state.completerow[this.state.swapCards[1]], this.state.completerow[31 - this.state.swapCards[1]], this.state.swapCards[1]]
+
+                    let newWorld = this.state.completerow;//COPYING WORLD ARRAY FOR MODIFICATION
+                    //INPUTTING NEW LAND VALUES
+                    newWorld[landPairWithIndex2[2]] = landPairWithIndex1[0];
+                    newWorld[31 - landPairWithIndex2[2]] = landPairWithIndex1[1];
+                    newWorld[landPairWithIndex1[2]] = landPairWithIndex2[0];
+                    newWorld[31 - landPairWithIndex1[2]] = landPairWithIndex2[1];
+
+                    firebase.database().ref(`games/Game${this.state.gameId}/world`).update({
+                        completerow: newWorld,
+                        toprow: newWorld.slice(0, 16),
+                        bottomrow: newWorld.slice(16, 32).reverse(),
+                    })
+
+                    if (this.state.isPlayer1) {
+                        let myHand = this.state.playerHand
+                        let cutIdx = myHand.indexOf(8)
+                        myHand.splice(cutIdx, 1)
+                        firebase.database().ref(`games/Game${this.state.gameId}/decks`).update({ player1Hand: myHand })
+                    } else if (this.state.isPlayer2) {
+                        let myHand = this.state.playerHand
+                        let cutIdx = myHand.indexOf(8)
+                        myHand.splice(cutIdx, 1)
+                        firebase.database().ref(`games/Game${this.state.gameId}/decks`).update({ player2Hand: myHand })
+                    }
+                }
+            }
+        }
+    }
 
     render() {
 
         return (
-            
+
             <Container fluid>
-            <ReactAudioPlayer src="./vanaheim.mp3" autoPlay />
+                <ReactAudioPlayer
+                    src={require("./vanaheim.mp3")}
+                    autoPlay
+                    controls
+                />
                 <div className="row info-background game-status-margin">
                     <Col size="md-4">
                         <div className="game-status-box text-center">
                             {this.state.isPlayer1 ?
                                 <div>
-                                    <img className="coin-size" src={require('../../components/Images/coin-1.png')} />
+                                    <img className="coin-size" alt="ravenCoin" src={require('../../components/Images/coin-1.png')} />
                                     <h3 className="d-flex justify-content-center">Player One</h3>
                                     <hr className="gameHr" />
                                     {/* <img src={require('../../components/Images/line-2.png')} /> */}
@@ -516,7 +598,7 @@ class Game extends Component {
                                 </div> : null}
                             {this.state.isPlayer2 ?
                                 <div>
-                                    <img className="coin-size" src={require('../../components/Images/coin-2.png')} />
+                                    <img className="coin-size" alt="ravenCoin" src={require('../../components/Images/coin-2.png')} />
                                     <h3 className="d-flex justify-content-center">Player Two</h3>
                                     <hr className="gameHr" />
                                     <h3 className="d-flex justify-content-center">Dark Raven</h3>
@@ -526,8 +608,8 @@ class Game extends Component {
 
                     <Col size="md-4">
                         <div className=" game-status-box d-flex justify-content-center text-center">
-                            <h3 className="d-flex justify-content-center"></h3>
-                            {this.state.myTurn && this.state.cardsToDraw == 0 && this.state.gameWinner === null ?
+
+                            {this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ?
                                 <div>
                                     <h3 className="d-flex justify-content-center">Your turn: Play Cards</h3>
                                     <hr className="gameHr" />
@@ -538,30 +620,23 @@ class Game extends Component {
                                 <div>
                                     <h3 className="d-flex justify-content-center">Your turn: Draw Cards </h3>
 
-                                    <hr className="gameHr"/>
-                                    <p>Cards to draw: <span className="cardsToDrawNum">{this.state.cardsToDraw}</span></p>
+                                    <hr className="gameHr" />
+                                    <p>Cards to draw: <span className="cardsToDrawNum">&nbsp;{this.state.cardsToDraw}</span></p>
                                 </div> : null}
 
-                            {!this.state.gameRunning ?
-                                <div>
-                                    <h3 className="d-flex justify-content-center">Draw your cards and wait for game start</h3>
-                                    <hr className="gameHr" />
-                                </div>
-                                : null}
-
                             {!this.state.myTurn && this.state.gameWinner === null && this.state.gameRunning ?
-
                                 <div>
                                     <h3 className="d-flex justify-content-center">Waiting: Opponent's Turn</h3>
                                     <hr className="gameHr" />
                                 </div> : null}
 
-                            {this.state.gameRunning === false ?
+                            {!this.state.gameRunning ?
                                 <div>
-                                    <h3>World Generated</h3>
-                                    <hr className="gameHr"/>
-                                    <h3>Cards to draw: {this.state.cardsToDraw}</h3>
-                                </div> : null}
+                                    <h3 className="d-flex justify-content-center">World Generated</h3>
+                                    <hr className="gameHr" />
+                                    <h3 className="d-flex justify-content-center">Cards to draw: <span className="cardsToDrawNum">&nbsp;{this.state.cardsToDraw}</span></h3>
+                                </div>
+                                : null}
 
                             {this.state.gameWinner === 'white' && this.state.isPlayer1 ? <h3 className="d-flex justify-content-center">Victorious</h3> : null}
                             {this.state.gameWinner === 'white' && this.state.isPlayer2 ? <h3 className="d-flex justify-content-center">Defeat</h3> : null}
@@ -572,26 +647,19 @@ class Game extends Component {
 
                     <Col size="md-3">
                         <div className="game-status-box d-flex justify-content-center text-center">
-                            {this.state.isPlayer1 && this.state.myTurn && this.state.cardsToDraw == 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
-                            {this.state.isPlayer2 && this.state.myTurn && this.state.cardsToDraw == 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
-                            {this.state.gameWinner !== null ? <a type="btn" className="btn button button-back-lobby" href="/lobby/">Back to Lobby</a> : null}
+                            {this.state.isPlayer1 && this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
+                            {this.state.isPlayer2 && this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
+                            {this.state.gameWinner !== null ? <a type="btn" className="btn button pr-4 pl-4 returnLobbyButton button-back-lobb" href="/lobby/">Back to Lobby</a> : null}
                         </div>
                     </Col>
 
                     <Col size="md-1">
-                        <div className="music-checkbox-button">
+                        <div class="music-checkbox-button">
                             <input type="checkbox" id="cbx"/>
-                            <label for="cbx" className="toggle"><span><i className="fas fa-music"></i></span></label>    
-                        </div>        
-                    </Col>
-                </div>
-
-                <div className="row">
-                    <div className="col-md-12 text-yellow mb-3">
-                        <div className="d-flex justify-content-center">
-                            <h4>Opponent Cards: {this.state.opponentHand}</h4>
+                            <label for="cbx" class="toggle"><span><i class="fas fa-music"></i></span></label>    
                         </div>
-                    </div>
+                    </Col>
+
                 </div>
 
                 <Row>
@@ -606,6 +674,7 @@ class Game extends Component {
                                             image={landId}
                                             whiteRaven={this.state.whiteRaven}
                                             blackRaven={this.state.blackRaven}
+                                            flipOrSwapClick={this.handleFlipOrSwap}
                                         />
                                     ))}
                                 </div>
@@ -618,6 +687,7 @@ class Game extends Component {
                                             image={landId}
                                             whiteRaven={this.state.whiteRaven}
                                             blackRaven={this.state.blackRaven}
+                                            flipOrSwapClick={this.handleFlipOrSwap}
                                         />
                                     ))}
                                 </div>
@@ -632,13 +702,13 @@ class Game extends Component {
                             <Row>
                                 <div className="col-sm-1 border text-yellow">
                                     <h4>Flight</h4>
-                                    <p></p>
+                                    <p>&nbsp;</p>
                                     <DrawFlight deckClick={this.drawFlight} />
                                 </div>
                                 <div className="col-sm-1 border text-yellow">
                                     <h4>Loki</h4>
-                                    <p>&#40;{this.state.myLokiDeck}/8&#41;</p>
-                                    {this.state.myLokiDeck === 0 ? <div></div> : null}
+                                    <p>&#40;{this.state.myLokiDeck}/9&#41;</p>
+                                    {this.state.myLokiDeck === 0 ? <div>&nbsp;</div> : null}
                                     {this.state.myLokiDeck > 0 ? <DrawLoki deckClick={this.drawLoki} /> : null}
                                 </div>
 
@@ -646,7 +716,7 @@ class Game extends Component {
                                     <div className="col-sm-8 border text-yellow">
 
                                         <h4>Your Hand</h4>
-                                   
+
                                         {this.state.playerHand.map((landId, idx) => (
                                             <FlightCard
                                                 key={idx}
@@ -662,16 +732,29 @@ class Game extends Component {
                                         <h4>Whom do you want to push?</h4>
                                         <div>
                                             <button type="button" className="button btn pt-5 pb-5 mr-3" onClick={this.oppPush}>Push Opponent Backwards</button>
-                                            <img width="75px" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530300322/cards-2-09.png" />
+                                            <img alt="lokiPush" width="75px" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530300322/cards-2-09.png" />
                                             <button type="button" className="button btn pt-5 pb-5 ml-3" onClick={this.selfPush}>Push My Raven Forwards</button>
-                                       </div>
-                                        
-                                       
+                                        </div>
                                     </div>
                                     : null}
 
-                                <div className="col-sm-2 border text-yellow">
-                                    <h4>Opponent Loki Deck Cards: {this.state.oppLokiDeck}</h4>
+                                {this.state.showingSwap ?
+                                    <div className="col-sm-8 border text-light">
+                                        <h4>Please click the two land columns you want to swap (may NOT contain Ravens)</h4>
+                                    </div>
+                                    : null}
+
+                                {this.state.showingFlip ?
+                                    <div className="col-sm-8 border text-light">
+                                        <h4>Please click the land column you want to flip (may NOT contain Ravens)</h4>
+                                    </div>
+                                    : null}
+
+                                <div className="col-sm-1 border text-light">
+                                    <p>Opponent Cards: {this.state.opponentHand}</p>
+                                </div>
+                                <div className="col-sm-1 border text-light">
+                                    <p>Opponent Loki Deck Cards: {this.state.oppLokiDeck}</p>
                                 </div>
                             </Row>
                         </div>
