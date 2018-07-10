@@ -161,3 +161,15 @@ i {
     box-shadow: 0px 0px 70px 4px rgba(248, 162, 3, 0.75);
 } */
 
+#youPlay {
+    /* animation: glowing 4000ms infinite; */
+    text-shadow: 0px 0px 0px black, 0 0 50px rgba(248, 3, 3, 0.75), 0 0 25px rgba(248, 162, 3, 0.75);
+}
+/* 
+@keyframes glowing {
+    0% { box-shadow: 0 0 0px rgba(248, 162, 3, 0.75); }
+    40% { box-shadow: 0 0 80px rgba(248, 162, 3, 0.75); }
+    60% { box-shadow: 0 0 80px rgba(248, 162, 3, 0.75); }
+    100% { box-shadow: 0 0 0px rgba(248, 162, 3, 0.75); }
+} */
+

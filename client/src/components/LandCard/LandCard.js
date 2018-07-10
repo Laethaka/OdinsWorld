@@ -7,7 +7,7 @@ function LandCard(props) {
         switch (props.image) {//SELECTING TERRAIN TYPE TO DISPLAY
             case 0:
                 return <img
-                    className="landCardWorld"
+                    className="landCardWorld glowLand"
                     alt={landcard[0].imageName}
                     src={landcard[0].imageBW}
                     id={props.position}
@@ -15,7 +15,7 @@ function LandCard(props) {
                 />
             case 1:
                 return <img
-                    className="landCardWorld"
+                    className="landCardWorld glowLand"
                     alt={landcard[1].imageName}
                     src={landcard[1].imageBW}
                     id={props.position}
@@ -23,7 +23,7 @@ function LandCard(props) {
                 />
             case 2:
                 return <img
-                    className="landCardWorld"
+                    className="landCardWorld glowLand"
                     alt={landcard[2].imageName}
                     src={landcard[2].imageBW}
                     id={props.position}
@@ -31,7 +31,7 @@ function LandCard(props) {
                 />
             case 3:
                 return <img
-                    className="landCardWorld"
+                    className="landCardWorld glowLand"
                     alt={landcard[3].imageName}
                     src={landcard[3].imageBW}
                     id={props.position}
@@ -39,7 +39,7 @@ function LandCard(props) {
                 />
             case 4:
                 return <img
-                    className="landCardWorld"
+                    className="landCardWorld glowLand"
                     alt={landcard[4].imageName}
                     src={landcard[4].imageBW}
                     id={props.position}
@@ -51,35 +51,35 @@ function LandCard(props) {
         switch (props.image) {//SELECTING TERRAIN TYPE TO DISPLAY
             case 0:
                 return <img
-                    className="landCardWorld"
+                    className="landCardWorld glowLand"
                     alt={landcard[0].imageName}
                     src={landcard[0].imageW}
                     id={props.position}
                 />
             case 1:
                 return <img
-                    className="landCardWorld"
+                    className="landCardWorld glowLand"
                     alt={landcard[1].imageName}
                     src={landcard[1].imageW}
                     id={props.position}
                 />
             case 2:
                 return <img
-                    className="landCardWorld"
+                    className="landCardWorld glowLand"
                     alt={landcard[2].imageName}
                     src={landcard[2].imageW}
                     id={props.position}
                 />
             case 3:
                 return <img
-                    className="landCardWorld"
+                    className="landCardWorld glowLand"
                     alt={landcard[3].imageName}
                     src={landcard[3].imageW}
                     id={props.position}
                 />
             case 4:
                 return <img
-                    className="landCardWorld"
+                    className="landCardWorld glowLand"
                     alt={landcard[4].imageName}
                     src={landcard[4].imageW}
                     id={props.position}
@@ -90,35 +90,35 @@ function LandCard(props) {
         switch (props.image) {//SELECTING TERRAIN TYPE TO DISPLAY
             case 0:
                 return <img
-                    className="landCardWorld"
+                    className="landCardWorld glowLand"
                     alt={landcard[0].imageName}
                     src={landcard[0].imageB}
                     id={props.position}
                 />
             case 1:
                 return <img
-                    className="landCardWorld"
+                    className="landCardWorld glowLand"
                     alt={landcard[1].imageName}
                     src={landcard[1].imageB}
                     id={props.position}
                 />
             case 2:
                 return <img
-                    className="landCardWorld"
+                    className="landCardWorld glowLand"
                     alt={landcard[2].imageName}
                     src={landcard[2].imageB}
                     id={props.position}
                 />
             case 3:
                 return <img
-                    className="landCardWorld"
+                    className="landCardWorld glowLand"
                     alt={landcard[3].imageName}
                     src={landcard[3].imageB}
                     id={props.position}
                 />
             case 4:
                 return <img
-                    className="landCardWorld"
+                    className="landCardWorld glowLand"
                     alt={landcard[4].imageName}
                     src={landcard[4].imageB}
                     id={props.position}

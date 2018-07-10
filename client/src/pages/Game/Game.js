@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Col, Row, Container } from "../../components/Grid";
 import Jumbotron from "../../components/Jumbotron";
 import "./Game.css";
-import ReactAudioPlayer from 'react-audio-player';
 
 // Firebase
 import firebase from '../../firebase'
@@ -12,8 +11,6 @@ import LandCard from "../../components/LandCard";
 import landcard from "../../components/LandCard/landcard.json";
 import FlightCard from "../../components/FlightCard";
 import flightcard from "../../components/FlightCard/flightcard.json";
-// import LokiCard from "../../components/LokiCard";
-// import lokicard from "../../LokiCard/lokicard.json";
 import DrawFlight from "../../components/DrawFlight";
 import DrawLoki from "../../components/DrawLoki";
 import EndTurnButton from "../../components/EndTurnButton";
@@ -580,11 +577,7 @@ class Game extends Component {
         return (
 
             <Container fluid>
-                <ReactAudioPlayer
-                    src={require("./vanaheim.mp3")}
-                    autoPlay
-                    controls
-                />
+            
                 <div className="row info-background game-status-margin">
                     <Col size="md-4">
                         <div className="game-status-box text-center">
@@ -607,18 +600,18 @@ class Game extends Component {
                     </Col>
 
                     <Col size="md-4">
-                        <div className=" game-status-box d-flex justify-content-center text-center">
+                        <div className="game-status-box d-flex justify-content-center text-center">
 
                             {this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ?
-                                <div>
-                                    <h3 className="d-flex justify-content-center">Your turn: Play Cards</h3>
+                                <div id="youPlay">
+                                    <h3 className="d-flex justify-content-center rounded">Your turn: Play Cards</h3>
                                     <hr className="gameHr" />
                                     <p>Click Flight Cards from your hand to move</p>
                                 </div> : null}
 
                             {this.state.myTurn && this.state.cardsToDraw > 0 && this.state.gameWinner === null ?
-                                <div>
-                                    <h3 className="d-flex justify-content-center">Your turn: Draw Cards </h3>
+                                <div id="youPlay">
+                                    <h3 className="d-flex justify-content-center rounded">Your turn: Draw Cards </h3>
 
                                     <hr className="gameHr" />
                                     <p>Cards to draw: <span className="cardsToDrawNum">&nbsp;{this.state.cardsToDraw}</span></p>
@@ -630,11 +623,11 @@ class Game extends Component {
                                     <hr className="gameHr" />
                                 </div> : null}
 
-                            {!this.state.gameRunning ?
-                                <div>
+                            {!this.state.gameRunning && !this.state.gameWinner ?
+                                <div id="youPlay">
                                     <h3 className="d-flex justify-content-center">World Generated</h3>
                                     <hr className="gameHr" />
-                                    <h3 className="d-flex justify-content-center">Cards to draw: <span className="cardsToDrawNum">&nbsp;{this.state.cardsToDraw}</span></h3>
+                                    <h3 className="d-flex justify-content-center rounded">Cards to draw: <span className="cardsToDrawNum">&nbsp;{this.state.cardsToDraw}</span></h3>
                                 </div>
                                 : null}
 
@@ -646,7 +639,7 @@ class Game extends Component {
                     </Col>
 
                     <Col size="md-3">
-                        <div className="game-status-box d-flex justify-content-center text-center">
+                        <div className="game-status-box d-flex justify-content-right text-center">
                             {this.state.isPlayer1 && this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
                             {this.state.isPlayer2 && this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
                             {this.state.gameWinner !== null ? <a type="btn" className="btn button pr-4 pl-4 returnLobbyButton button-back-lobb" href="/lobby/">Back to Lobby</a> : null}
@@ -654,10 +647,16 @@ class Game extends Component {
                     </Col>
 
                     <Col size="md-1">
-                        <div class="music-checkbox-button">
-                            <input type="checkbox" id="cbx"/>
-                            <label for="cbx" class="toggle"><span><i class="fas fa-music"></i></span></label>    
-                        </div>
+                            <audio
+                                src={require("./vanaheim.mp3")}
+                                type="audio/mp3"
+                                autoPlay="autoplay"
+                                loop="true"
+                                />
+                            <div class="music-checkbox-button">
+                                <input type="checkbox" id="cbx"/>
+                                <label for="cbx" class="toggle"><span><i class="fas fa-music"></i></span></label>    
+                            </div>
                     </Col>
 
                 </div>
@@ -666,7 +665,7 @@ class Game extends Component {
                     <Col size="md-12">
                         <Jumbotron>
                             <div className="landBoard text-center">
-                                <div className="border border-warning">
+                                <div className="">
                                     {this.state.toprow.map((landId, idx) => (
                                         <LandCard
                                             position={idx}
@@ -679,7 +678,7 @@ class Game extends Component {
                                     ))}
                                 </div>
 
-                                <div className="border border-warning img-vert">
+                                <div className="img-vert">
                                     {this.state.bottomrow.map((landId, idx) => (
                                         <LandCard
                                             position={31 - idx}
@@ -698,6 +697,7 @@ class Game extends Component {
 
                 <Row>
                     <Col size="md-12">
+                    
                         <div className="userBoard text-center border pt-5">
                             <Row>
                                 <div className="col-sm-1 border text-yellow">
