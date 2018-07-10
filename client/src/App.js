@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch, Link} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import './App.css';
 import { auth, provider } from './firebase.js'
 
@@ -10,10 +10,10 @@ import Landing from "./pages/Landing";
 import NoMatch from "./pages/NoMatch";
 import Nav from "./components/Nav";
 
-// // BACK GROUND POOP BREAK EVERYTHING
-import LandingBG from "./components/Images/landing-page.png";
-import GameBG from "./components/Images/table-backgrond-3.png";
-import LobbyBG from "./components/Images/paper.jpg";
+// // BACK GROUND 
+// import LandingBG from "./components/Images/landing-page.png";
+// import GameBG from "./components/Images/table-backgrond-3.png";
+// import LobbyBG from "./components/Images/paper.jpg";
 
 class App extends Component {
 
@@ -82,12 +82,12 @@ class App extends Component {
               <div className="wrapper">
                 {this.state.user ?
                 <div>
-                  <a type="button" className="mr-3 btn button" href={"/Lobby"}>Lobby</a>
-                  <a type="button" className="mr-3 btn button" onClick={this.logout} href={"/Landing"}>Log Out</a>
+                  <a type="btn" className="mr-3 btn button" href={"/Lobby"}>Lobby</a>
+                  <a type="btn" className="mr-3 btn button" onClick={this.logout} href={"/Landing"}>Log Out</a>
                 </div>
                   :
                 <div>
-                  <button type="button" className="mr-3 btn button" onClick={this.login}>Log In</button>
+                  <button type="btn" className="mr-3 btn button" onClick={this.login}>Log In</button>
                 </div>
                 }
               </div>
@@ -109,7 +109,7 @@ class App extends Component {
   }
 };
 
-// BACK GROUND POOP BREAK EVERYTHING
+// BACK GROUND 
 // const styles = {
 //   landingBackground: {
 //     backgroundImage: `url(${LandingBG})`

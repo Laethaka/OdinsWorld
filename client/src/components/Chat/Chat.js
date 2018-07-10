@@ -48,7 +48,7 @@ class Chat extends Component {
                         </div>
                     </div>
 
-                    <img className="h1-img-top" src={require('../../components/Images/h1.png')} />
+                    <img className="h1-img-top" alt="breakline" src={require('../../components/Images/h1.png')} />
                    
                    <div>
                     <form className="form-padding" onSubmit={this.addMessage.bind(this)}>

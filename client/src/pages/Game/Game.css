@@ -58,3 +58,8 @@
 .cardsToDrawNum {
     font-weight: bold;
 }
+
+.returnLobbyButton {
+    box-shadow: 0px 0px 70px 4px rgba(248, 162, 3, 0.75);
+}
+
