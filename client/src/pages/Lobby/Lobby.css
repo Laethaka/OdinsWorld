@@ -11,6 +11,10 @@
     
 }
 
+.box p {
+    color: #462a1a;
+}
+
 
 .h1-img-top {
     box-shadow: 0px 0px 1px 1px #765c37;
@@ -25,11 +29,6 @@
 
 .lobby-subtitle {
     padding-left: 2rem;
-    /* posi */
-    /* font-weight: bolder; */
-    /* font-family: 'Eagle Lake', cursive; */
-    font-family: 'Meddon', cursive;
-    /* font-family: 'Quintessential', cursive; */
 }
 
 

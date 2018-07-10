@@ -1,5 +1,5 @@
 body {
-  color: #1b1716;
+  color: #30211e;
   font-size: 16px;
   background-image: url("../../client/src/components/Images/table-backgrond-3.png");
   background-repeat: repeat-x;
@@ -21,7 +21,8 @@ h1 {
 }
 
 h2 {
-  font-family: 'Lustria', serif;
+  /* font-family: 'Lustria', serif; */
+  font-family: 'Meddon', serif;
   letter-spacing: 0.06rem;
   margin-bottom: 0rem;
 }
@@ -36,8 +37,9 @@ h3, h4, h5, h6 {
 
 p {
   font-family: 'Averia Serif Libre', cursive;
+  /* font-family: 'Caudex', serif; */
   font-size: 1.2rem;
-  line-height: 1.2rem;
+  line-height: 1.5rem;
   letter-spacing: 0.02rem;
   /* font-weight: bold; */
 }
@@ -48,6 +50,7 @@ p {
   border: 10px solid rgba(77, 54, 32, 0.127);
   border-radius: 0.4rem;
   box-shadow: 0px 0px 29px 6px rgba(0,0,0,0.75);
+  position: relative;
 }
 
 

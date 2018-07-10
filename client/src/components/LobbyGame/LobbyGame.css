@@ -7,10 +7,6 @@
     margin-right: 0;
 }
 
-/* .game-container {
-    box-shadow: inset 0px 0px 26px -1px rgba(118,92,55,1);
-} */
-
 .join-game-rectangle {
     background-image: url("../../components/Images/paper-info-background.jpg");
     box-shadow: inset 0px 0px 13px -1px rgba(69, 53, 30, 0.6);
@@ -21,5 +17,9 @@
 .join-game-rectangle h3 {
     padding-bottom: 0.5rem;
     font-weight: bolder;
+}
+
+.Button-join {
+	box-shadow: none;
 }
 
