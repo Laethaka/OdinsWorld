@@ -505,7 +505,7 @@ class Game extends Component {
         }
 
         if (this.state.showingFlip) {//FLIP IS ALLOWED
-            if (landIdx + this.state.whiteRaven !== 31 && landIdx + this.state.blackRaven !== 31) {//RAVENS ARE NOT ON THIS COLUMN
+            if (landIdx + this.state.whiteRaven !== 31 && landIdx + this.state.blackRaven !== 31 && landIdx !== this.state.whiteRaven && landIdx !==this.state.blackRaven) {//RAVENS ARE NOT ON THIS COLUMN
                 let landPair = [this.state.completerow[landIdx], this.state.completerow[31-landIdx]]//GATHERING LANDTYPES
 
                 let newWorld = this.state.completerow;//COPYING WORLD ARRAY FOR MODIFICATION
@@ -535,7 +535,7 @@ class Game extends Component {
         }
 
         if (this.state.showingSwap) {//SWAP IS ALLOWED
-            if (landIdx + this.state.whiteRaven !== 31 && landIdx + this.state.blackRaven !== 31) {//RAVENS ARE NOT ON THIS COLUMN
+            if (landIdx + this.state.whiteRaven !== 31 && landIdx + this.state.blackRaven !== 31 && landIdx !== this.state.whiteRaven && landIdx !==this.state.blackRaven) {//RAVENS ARE NOT ON THIS COLUMN
                 if (this.state.swapCards.length === 0 || this.state.swapCards.length === 2) {//STARTING SWAP PAIR
                     this.setState({ swapCards: [landIdx] })
                 } else if (this.state.swapCards.length === 1 && landIdx !== this.state.swapCards[0]) {//PUSHING TO COMPLETE PAIR AND EXECUTING SWAP
