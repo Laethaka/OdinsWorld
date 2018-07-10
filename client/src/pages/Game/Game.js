@@ -526,7 +526,14 @@ class Game extends Component {
                                     <p>Cards available to draw: <span className="cardsToDrawNum">{this.state.cardsToDraw}</span></p>
                                 </div> : null}
 
-                            {!this.state.myTurn && this.state.gameWinner === null ?
+                            {!this.state.gameRunning ?
+                                <div>
+                                    <h3 className="d-flex justify-content-center">Draw your cards and wait for game start</h3>
+                                    <hr className="gameHr" />
+                                </div>
+                                : null}
+
+                            {!this.state.myTurn && this.state.gameWinner === null && this.state.gameRunning ?
                                 <div>
                                     <h3 className="d-flex justify-content-center">Waiting: Opponent's Turn</h3>
                                     <hr className="gameHr" />
