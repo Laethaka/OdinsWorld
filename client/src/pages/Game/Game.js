@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Col, Row, Container } from "../../components/Grid";
 import Jumbotron from "../../components/Jumbotron";
 import "./Game.css";
-import ReactAudioPlayer from 'react-audio-player';
 
 // Firebase
 import firebase from '../../firebase'
@@ -12,8 +11,6 @@ import LandCard from "../../components/LandCard";
 import landcard from "../../components/LandCard/landcard.json";
 import FlightCard from "../../components/FlightCard";
 import flightcard from "../../components/FlightCard/flightcard.json";
-// import LokiCard from "../../components/LokiCard";
-// import lokicard from "../../LokiCard/lokicard.json";
 import DrawFlight from "../../components/DrawFlight";
 import DrawLoki from "../../components/DrawLoki";
 import EndTurnButton from "../../components/EndTurnButton";
@@ -502,11 +499,7 @@ class Game extends Component {
         return (
             
             <Container fluid>
-            <ReactAudioPlayer
-                    src={require("./vanaheim.mp3")}
-                    autoPlay
-                    controls
-                    />
+            
                 <div className="row info-background game-status-margin">
                     <Col size="md-4">
                         <div className="game-status-box text-center">
@@ -566,13 +559,28 @@ class Game extends Component {
                         </div>
                     </Col>
 
-                    <Col size="md-4">
-                        <div className="game-status-box d-flex justify-content-center text-center">
+                    <Col size="md-3">
+                        <div className="game-status-box d-flex justify-content-right text-center">
                             {this.state.isPlayer1 && this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
                             {this.state.isPlayer2 && this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
                             {this.state.gameWinner !== null ? <a type="btn" className="btn button pr-4 pl-4 returnLobbyButton" href="/lobby/">Back to Lobby</a> : null}
                         </div>
                     </Col>
+
+                     <Col size="md-1">
+                        <div className="game-status-box d-flex justify-content-center text-center">
+                            {/* <audio
+                                src={require("./vanaheim.mp3")}
+                                type="audio/mp3"
+                                autoPlay="autoplay"
+                                loop="true"
+                                /> */}
+                            <div id="audioplayer">
+                                <button id="muteButton" className="mute"></button>
+                            </div>
+                        </div>
+                    </Col>
+
                 </div>
 
                 <Row>
@@ -633,6 +641,11 @@ class Game extends Component {
                                                 key={idx}
                                                 image={landId}
                                                 cardClick={this.handleCardPlay}
+                                                onHover={<audio 
+                                                        src={require("./se_Turn_Page02.wav")}
+                                                        type="audio/wav"
+                                                        autoPlay="autoplay"
+                                                        preload="true" />}
                                             />
                                         ))}
                                     </div>

@@ -63,3 +63,17 @@
     box-shadow: 0px 0px 70px 4px rgba(248, 162, 3, 0.75);
 }
 
+.returnLobbyButton:hover {
+    box-shadow: 0px 0px 70px 4px rgba(248, 162, 3, 0.75);
+}
+
+
+#audioplayer{
+    width: 60px;
+    height: 60px;
+    border: solid 1px yellow;
+}
+
+.mute {
+    padding: 10px 10px;
+}
