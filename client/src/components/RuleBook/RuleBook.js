@@ -34,17 +34,17 @@ const RuleBook = () => {
 					by players and match Land Cards. Loki Cards are limited and special cards that are played to manipulate
 					the world.</p>
 					<table>
-							<tr>
-								<td><p>Land</p></td>
-								<td><p>Flight</p></td>
-								<td><p>Loki</p></td>
-							</tr>
-							<tr>
-								<td><img src={require('../../components/Images/RB-card-1.png')} /></td>
-								<td><img src={require('../../components/Images/RB-card-2.png')} /></td>
-								<td><img src={require('../../components/Images/RB-card-3.png')} /></td> 
-							</tr>
-						</table>
+						<tr>
+							<td><p>Land</p></td>
+							<td><p>Flight</p></td>
+							<td><p>Loki</p></td>
+						</tr>
+						<tr>
+							<td><img src={require('../../components/Images/RB-card-1.png')} /></td>
+							<td><img src={require('../../components/Images/RB-card-2.png')} /></td>
+							<td><img src={require('../../components/Images/RB-card-3.png')} /></td> 
+						</tr>
+					</table>
 						
 				</div>
 
@@ -68,25 +68,24 @@ const RuleBook = () => {
 				<div className="page-4 text-center">
 					<h2>Trickery</h2>
 					
-					<p>Players may also draw <span className="bold-text">Loki Cards</span> during the Draw Phase. They can be played to manipulate the world or move ravens forwards or backwards. Once a Loki Card is played*, it is removed from the game.</p>
+					<p>Players may also draw <span className="bold-text">Loki Cards</span> during the Draw Phase. Loki Cards may not be played on any land that has a raven on it. When used, Loki Cards are removed from the game.</p>
 					{/* <img src={require('../../components/Images/loki.png')} /> */}
 					
+					<table>
+						<tr>
+							<td><img className="loki-card-size" src={require('../../components/Images/loki-cards-19.png')} /></td>
+							<td><img className="loki-card-size" src={require('../../components/Images/loki-cards-16.png')} /></td>
+							<td><img className="loki-card-size" src={require('../../components/Images/loki-cards-17.png')} /></td> 
+						</tr>
+						<tr className="loki-card-text">
+							<td><span>1. Move your raven forward.</span>
+							<br/>
+							<span>2. Move opponent's raven backwards.</span></td>
+							<td><span>Rotate a Land Card 180°</span></td>
+							<td><span>Swap any two Land Cards without rotating them</span></td>
+						</tr>
+					</table>
 					
-					<div className="row row-margin">
-						<div className="col-4">
-							<img className="loki-card-size" src={require('../../components/Images/loki-cards-19.png')} />
-							<p>Move your raven forward in the world OR Move your opponent's raven backwards in the world</p>
-						</div>
-						<div className="col-4">
-							<img src={require('../../components/Images/loki-cards-16.png')} />
-							<p>Rotate a Land Card 180°</p>
-						</div>
-						<div className="col-4">
-							<img src={require('../../components/Images/loki-cards-17.png')} />
-							<p>Swap any two Land Cards without rotating them</p>
-						</div>
-					</div>
-					<p>* - Loki Cards cannot be played on a Land Card that is occupied by a raven.</p>
 				</div>
 
 
