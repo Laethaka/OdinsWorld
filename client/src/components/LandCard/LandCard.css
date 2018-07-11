@@ -4,14 +4,15 @@
 
 .landCardWorld {
     box-shadow: 17px 0px 36px -4px rgba(0,0,0,0.75);
-    transition: all 0.3s ;
+    transition: all 0.1s ;
 }
 
 .landCardWorld:hover {
-    transform: scale(1.25)translateY(-0.5em);
+    transform: scale(1.05)translateY(-0.1em);
     box-shadow: 0px 0px 100px -8px rgba(0,0,0,0.75);
 }
 .landCardWorld:active {
+    transform: scale(1.15)translateY(-0.3em);
     box-shadow: 0px 0px 100px -8px rgba(248, 162, 3, 0.884);
 }
 
