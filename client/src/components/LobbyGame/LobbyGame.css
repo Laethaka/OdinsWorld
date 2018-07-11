@@ -23,3 +23,7 @@
 	box-shadow: none;
 }
 
+.join-game-name {
+    font-size: 1.3em;
+    font-weight: bolder;
+}
