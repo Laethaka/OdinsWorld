@@ -39,6 +39,7 @@ class Game extends Component {
         showingFlip: false,
         showingSwap: false,
         swapCards: [],
+        audioToggle: true,
     };
 
     componentWillReceiveProps(props) {
@@ -169,9 +170,6 @@ class Game extends Component {
             }
         })
     }
-
-    //MUSIC PLAYER FUNCTION
-
 
     //PLAYER ONE SETUP AND DISCONNECT LISTENING
     becomePlayerOne = () => {
@@ -575,6 +573,20 @@ class Game extends Component {
         }
     }
 
+     //Julien https://github.com/jerauld/ was here for the BGM
+     handleAudioToggle = () => {
+        var bgm = document.getElementById('bgm');
+        this.setState(prevState => ({
+            audioToggle: !prevState.audioToggle
+        }));
+        if (this.state.audioToggle) {
+            bgm.pause();
+        } else {
+            bgm.play();
+        }
+        // alert(this.state.audioToggle);
+    }
+
     render() {
 
         return (
@@ -655,9 +667,10 @@ class Game extends Component {
                             type="audio/mp3"
                             autoPlay="autoplay"
                             loop="true"
+                            id="bgm"
                         />
                         <div class="music-checkbox-button">
-                            <input type="checkbox" id="cbx" />
+                            <input type="checkbox" id="cbx" onChange={this.handleAudioToggle}/>
                             <label for="cbx" class="toggle"><span><i class="fas fa-music"></i></span></label>
                         </div>
                     </Col>
