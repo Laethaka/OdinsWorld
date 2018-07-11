@@ -150,10 +150,15 @@ class Game extends Component {
             }
         })
 
-        //LISTENING FOR PLAYER READY DURING SETUP AND STARTING GAME
+        //LISTENING FOR PLAYER READY DURING SETUP AND STARTING GAME - ALSO LISTENING FOR PLAYER RAGEQUIT
         database.ref(`/games/Game${props.gameId}/`).on('value', snap => {
             if (this.state.gameReady && !snap.val().world.gameRunning && snap.val().playerOne.ready && snap.val().playerTwo.ready) {
                 this.gameStart()
+            }
+            if (this.state.gameRunning && !snap.val().playerTwo.active && this.state.isPlayer1) {//AWARDING PLAYER 1 VICTORY BY DEFAULT
+                this.setState({ gameWinner: 'white' })
+            } else if (this.state.gameRunning && !snap.val().playerOne.active && this.state.isPlayer2) {//AWARDING PLAYER 2 VICTORY BY DEFAULT
+                this.setState({ gameWinner: 'black' })
             }
         });
 
@@ -536,6 +541,8 @@ class Game extends Component {
             if (landIdx + this.state.whiteRaven !== 31 && landIdx + this.state.blackRaven !== 31 && landIdx !== this.state.whiteRaven && landIdx !== this.state.blackRaven) {//RAVENS ARE NOT ON THIS COLUMN
                 if (this.state.swapCards.length === 0 || this.state.swapCards.length === 2) {//STARTING SWAP PAIR
                     this.setState({ swapCards: [landIdx] })
+                } else if (this.state.swapCards.length === 1 && landIdx === this.state.swapCards[0]) {//USER CHOOSING TO CANCEL ORIGINAL PICK
+                    this.setState({ swapCards: [] })
                 } else if (this.state.swapCards.length === 1 && landIdx !== this.state.swapCards[0]) {//PUSHING TO COMPLETE PAIR AND EXECUTING SWAP
                     let tempArr = this.state.swapCards
                     tempArr.push(landIdx)
