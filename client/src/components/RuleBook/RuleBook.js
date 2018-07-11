@@ -48,7 +48,7 @@ const RuleBook = () => {
 						
 				</div>
 
-				<div className="page-2 text-center">
+				<div className="page-3 text-center">
 					<h2>Goal</h2>
 					<p>Let the racing begin!</p>
 					<p>The first Raven to fly across all the Lands Cards completing the loop is the winner.</p>
@@ -59,38 +59,38 @@ const RuleBook = () => {
 
 				<div className="text-center">
 					<h2>Flying</h2>
-					<p>Clicking on the appropriate Flight Card will move the raven as many Lands that match in a row. 
+					<p>Clicking on the appropriate <span className="bold-text">Flight Card</span> will move the Raven as many Lands that match in a row. 
 					</p>
 					<img id="img-loop-1" src={require('../../components/Images/ex-1.png')} />
 					<p>If a player clicks on a Flight Card while having two matching Flight Cards their hand, they will move.</p>
 					<img id="img-loop-1" src={require('../../components/Images/ex-2.png')} />
 				</div>
-				<div>
+				<div className="page-4 text-center">
 					<h2>Trickery</h2>
 					
-					<p>Players may also draw Loki Cards during the Draw Phase. They can be played to manipulate the world or 
-					move ravens forwards or backwards. Once a Loki Card is played*, it is removed from the game.
-					</p>
-					<img src={require('../../components/Images/loki.png')} />
-					<div className="row">
-								<img src="https://res.cloudinary.com/mosjoandy/image/upload/v1531008011/OdinsRavensDesignGarbage/odinravenLokiRule1.png" />
-							<ul>
-								<li>Move your raven forward in the world</li>
-								<hr />
-								<li>Move your opponent's raven backwards in the world</li>
-							</ul>
-								<img src="https://res.cloudinary.com/mosjoandy/image/upload/v1531008011/OdinsRavensDesignGarbage/odinravenLokiRule2.png" />
-							<ul>
-								<li>Rotate a Land Card 180°</li>
-							</ul>
-								<img src="https://res.cloudinary.com/mosjoandy/image/upload/v1531008012/OdinsRavensDesignGarbage/odinravenLokiRule3.png" />
-							<ul>
-								<li>Swap any two Land Cards without rotating them</li>
-							</ul>
+					<p>Players may also draw <span className="bold-text">Loki Cards</span> during the Draw Phase. They can be played to manipulate the world or move ravens forwards or backwards. Once a Loki Card is played*, it is removed from the game.</p>
+					{/* <img src={require('../../components/Images/loki.png')} /> */}
+					
+					
+					<div className="row row-margin">
+						<div className="col-4">
+							<img className="loki-card-size" src={require('../../components/Images/loki-cards-19.png')} />
+							<p>Move your raven forward in the world OR Move your opponent's raven backwards in the world</p>
+						</div>
+						<div className="col-4">
+							<img src={require('../../components/Images/loki-cards-16.png')} />
+							<p>Rotate a Land Card 180°</p>
+						</div>
+						<div className="col-4">
+							<img src={require('../../components/Images/loki-cards-17.png')} />
+							<p>Swap any two Land Cards without rotating them</p>
+						</div>
 					</div>
 					<p>* - Loki Cards cannot be played on a Land Card that is occupied by a raven.</p>
 				</div>
-				<div>
+
+
+				<div className="page-5 text-center">
 					<h2>Play Begins!</h2>
 					<p>When both players have connected to the game, each player will draw 5 
 					cards either Flight or Loki. Once both players have 5 cards in their hands, the game 
@@ -105,7 +105,8 @@ const RuleBook = () => {
 					</ul>
 					<p>* - A player will automatically discard the left-most card in their hand if drawing <b>OVER</b> 7 cards</p>
 				</div>
-				<div>
+
+				<div className="page-6 text-center">
 					<h2>Ending The Game</h2>
 					<p>Any raven that traverses the entire world and completes the loop will 
 					be declared the winner.</p>

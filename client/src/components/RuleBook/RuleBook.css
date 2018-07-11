@@ -178,3 +178,7 @@ td > p {
 .bold-text {
 	font-weight: 700;
 }
+
+.loki-card-size {
+	height: 20px;
+}
