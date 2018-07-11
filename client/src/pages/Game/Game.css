@@ -29,6 +29,7 @@
     border-radius: 50%;
     transition: all .8s ease-in-out;
 }
+
 .coin-size:hover {
     transform: rotate(-360deg);
 }
@@ -161,15 +162,63 @@ i {
     box-shadow: 0px 0px 70px 4px rgba(248, 162, 3, 0.75);
 } */
 
-#youPlay {
-    /* animation: glowing 4000ms infinite; */
-    text-shadow: 0px 0px 0px black, 0 0 50px rgba(248, 3, 3, 0.75), 0 0 25px rgba(248, 162, 3, 0.75);
+.emptyLokiDeck {
+    width: 80px;
+    height: 160px;
 }
-/* 
-@keyframes glowing {
-    0% { box-shadow: 0 0 0px rgba(248, 162, 3, 0.75); }
-    40% { box-shadow: 0 0 80px rgba(248, 162, 3, 0.75); }
-    60% { box-shadow: 0 0 80px rgba(248, 162, 3, 0.75); }
-    100% { box-shadow: 0 0 0px rgba(248, 162, 3, 0.75); }
-} */
 
+.ravenPush, .swapCard {
+    animation: glowing 2000ms infinite;
+}
+
+@keyframes glowing {
+    0% { box-shadow: 0 0 10px rgba(248, 162, 3, 0.884); }
+    40% { box-shadow: 0 0 40px rgba(248, 162, 3, 0.884); }
+    60% { box-shadow: 0 0 40px rgba(248, 162, 3, 0.884); }
+    100% { box-shadow: 0 0 10px rgba(248, 162, 3, 0.884); }
+}
+
+.opponentCardDeck, .opponentLokiDeck {
+    width: 80px;
+    height: 160px;
+
+}
+
+.shakeCard:active {
+    /* Start the shake animation and make the animation last for 0.5 seconds */
+    animation: shake 0.2s; 
+    /* When the animation is finished, start again */
+    animation-iteration-count: 1; 
+}
+
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+.lokiSwapGif {
+    border: 2px rgba(248, 162, 3, 0.884) solid;
+    transition: all 0.2s ease;
+}
+
+.lokiSwapGif:hover {
+    transform: scale(2)
+}
+
+.lokiFlipGif {
+    border: 2px rgba(248, 162, 3, 0.884) solid;
+    transition: all 0.2s ease;
+}
+
+.lokiFlipGif:hover {
+    transform: scale(2)
+}
