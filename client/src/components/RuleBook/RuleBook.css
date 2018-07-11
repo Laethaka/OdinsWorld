@@ -188,3 +188,11 @@ td > p {
 	font-size: 0.8rem;
 	font-family: 'Averia Serif Libre', cursive;
 }
+
+.enter-draw-phase {
+	width: 400px;
+}
+
+.win-phase {
+	width: 230px;
+}
