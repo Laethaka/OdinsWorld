@@ -30,7 +30,7 @@ const RuleBook = () => {
 
 				<div className="text-center">
 					<h2>Game Cards</h2>
-					<p>Land Cards have 5 types; mountain, river, plain, forest, and desert. Flight Cards are played
+					<p>Land Cards have 5 types: Mountain, River, Plain, Forest & Desert. Flight Cards are played
 					by players and match Land Cards. Loki Cards are limited and special cards that are played to manipulate
 					the world.</p>
 					<table>
@@ -68,7 +68,7 @@ const RuleBook = () => {
 				<div className="page-4 text-center">
 					<h2>Trickery</h2>
 					
-					<p>Players may also draw <span className="bold-text">Loki Cards</span> during the Draw Phase. Loki Cards may not be played on any land that has a raven on it. When used, Loki Cards are removed from the game.</p>
+					<p>Players may draw <span className="bold-text">Loki Cards</span> during Draw Phase. Loki Cards cannot be used on a land with a raven on it. When used, they are removed from the game.</p>
 					{/* <img src={require('../../components/Images/loki.png')} /> */}
 					
 					<table>
@@ -92,40 +92,56 @@ const RuleBook = () => {
 				<div className="page-5 text-center">
 					<h2>Play Begins!</h2>
 					<p>When both players have connected to the game, each player will draw 5 
-					cards either Flight or Loki. Once both players have 5 cards in their hands, the game 
+					cards either Flight or Loki.</p>
+					<img className="loki-card-size" src={require('../../components/Images/5-cards.png')} />
+					<p>Once both players have 5 cards in their hands, the game 
 					will begin.</p>
-					<img src="https://res.cloudinary.com/mosjoandy/image/upload/v1531006858/OdinsRavensDesignGarbage/Thing.png" />
-					<p>Turn:</p>
-					<ul>
-						<li>Play in any order either Flight or Loki Cards to move their raven, 
-						or manipulate the world.</li>
-						<li>When the player is satisfied, or has no more cards to play, the player 
-						can click the "Enter Draw Phase" button and draw 3 new cards from either Flight or Loki Decks.*</li>
-					</ul>
-					<p>* - A player will automatically discard the left-most card in their hand if drawing <b>OVER</b> 7 cards</p>
+				</div>
+				
+				<div className="page-6 text-center">
+					<h2>Turn One</h2>
+
+						<p>Play in any order either Flight or Loki Cards to move their raven, 
+						or manipulate the world.</p>
+						<img className="enter-draw-phase" src={require('../../components/Images/enter-draw-phase.png')} />
 				</div>
 
-				<div className="page-6 text-center">
+				<div className="page-7 text-center">
+					<h2>Turn Two</h2>
+					<p>When the player is satisfied, or has no more cards to play, the player 
+					can click the "Enter Draw Phase" button and draw 3 new cards from either Flight or Loki Decks.</p>
+					<p>A player will automatically discard the left-most card in their hand if drawing <b>OVER</b> 7 cards</p>
+					<img className="enter-draw-phase" src={require('../../components/Images/actual-draw-phase.png')} />
+				
+				</div>
+
+				<div className="page-7 text-center">
 					<h2>Ending The Game</h2>
 					<p>Any raven that traverses the entire world and completes the loop will 
 					be declared the winner.</p>
+					<img className="win-phase" src={require('../../components/Images/loop-3.png')} />	
 				</div>
 				<div>
-					<h2>Orginal Credits: </h2>
-					<ul>
-						<li>Game Design by Thornsten Gimmler</li>
-						<li>Cover and Card Art by Johan Egerkrans</li>
-						<li>Osprey Publishing, part of Bloomsbury Publishing Plc</li>
-						<li>PO Box 883, Oxford, OX1 9PL, UK</li>
-						<li>2015 Thorsten Gimmler & Osprey Publishing Ltd.</li>
+					<h2>Orginal Credits:</h2>
+					<ul className="margin-left">
+						<li><p>Game Design by Thornsten Gimmler</p></li>
+						<li><p>Cover and Card Art by Johan Egerkrans</p></li>
+						<li><p>Osprey Publishing, part of Bloomsbury Publishing Plc</p></li>
+						<li><p>PO Box 883, Oxford, OX1 9PL, UK</p></li>
+						<li><p>2015 Thorsten Gimmler & Osprey Publishing Ltd.</p></li>
 					</ul>
+				</div>
+				<div>
 					<h2>Digital Credits: </h2>
-					<ul>
-						<li>Jesse Lofland</li>
-						<li>Maria Ortero</li>
-						<li>Nicholas Chan</li>
-						<li>Berkeley Coding Bootcamp</li>
-						<li>2018</li>
+					<ul className="margin-left">
+						<li><p>Jesse Lofland</p></li>
+						<li><p>Maria Ortero</p></li>
+						<li><p>Nicholas Chan</p></li>
+						<p>Special Thanks:</p>
+						<li><p>Julien </p></li>
+						<li><p>Mel </p></li>
+						<li><p>Berkeley Coding Bootcamp</p></li>
+						<li><p>2018</p></li>
 					</ul>
 				</div>
 			</div>

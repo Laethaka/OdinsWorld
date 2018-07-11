@@ -693,7 +693,7 @@ class Game extends Component {
                 <Row>
                     <Col size="md-12">
                         <Jumbotron>
-                            <div className="landBoard text-center pb-4">
+                            <div className="landBoard text-center">
                                 <div className="">
                                     {this.state.toprow.map((landId, idx) => (
                                         <LandCard
@@ -728,36 +728,34 @@ class Game extends Component {
                         <div className="userBoard text-center">
                             <Row>
                                 <div className="col-sm-1 text-yellow ">
-                                    <h4 className="mb-2">Loki</h4>
-                                    {this.state.myLokiDeck > 0 ? <DrawLoki deckClick={this.drawLoki} /> : null}
-
-                                    {this.state.myLokiDeck === 0 ?
-                                        <img
-                                            className="emptyLokiDeck shakeCard"
-                                            alt="Draw Loki"
-                                            src="https://res.cloudinary.com/mosjoandy/image/upload/v1530297890/OdinsRavensLandCards/card-15.png" />
-                                        : null}
-                                    <p className="mt-2">&#40;{this.state.myLokiDeck}/9&#41;</p>
-                                </div>
-                                <div className="col-sm-1 text-yellow ">
-                                    <h4 className="mb-2">Flight</h4>
-
-                                    <DrawFlight deckClick={this.drawFlight} />
-                                </div>
-
-                                {this.state.showingHand ?
-                                    <div className="col-sm-8 text-yellow">
-
-                                        <h4 className="pb-2">Your Hand</h4>
-
-                                        {this.state.playerHand.map((landId, idx) => (
-                                            <FlightCard
-                                                key={idx}
-                                                image={landId}
-                                                cardClick={this.handleCardPlay}
-                                            />
-                                        ))}
-                                    </div>
+                                    <h3 className="text-yellow mb-2">Your Deck</h3>
+                                        <div className="col-md-6 text-yellow float-left">
+                                            
+                                            {this.state.myLokiDeck > 0 ? <DrawLoki deckClick={this.drawLoki} /> : null}
+                                            {this.state.myLokiDeck === 0 ?
+                                                <img
+                                                    className="emptyLokiDeck shakeCard"
+                                                    alt="Draw Loki"
+                                                    src="https://res.cloudinary.com/mosjoandy/image/upload/v1530297890/OdinsRavensLandCards/card-15.png" />
+                                                : null}
+                                            <p className="mt-2">Loki &#40;{this.state.myLokiDeck}/9&#41;</p></div>
+                                        </div>
+                                        <div className="col-sm-1 text-yellow ">
+                                            <DrawFlight deckClick={this.drawFlight} />
+                                            <p className="m-2">Flight</p>
+                                        </div>
+                                        {this.state.showingHand ?
+                                            <div className="col-sm-8 text-yellow">
+                                                <h3 className="pb-2">Your Hand</h3>
+                                                {this.state.playerHand.map((landId, idx) => (
+                                                    <FlightCard
+                                                        key={idx}
+                                                        image={landId}
+                                                        cardClick={this.handleCardPlay}
+                                                    />
+                                                ))}
+                                        </div>
+                                    
                                     : null}
 
                                 {this.state.showingPush ?
@@ -789,16 +787,16 @@ class Game extends Component {
                                     </div>
                                     : null}
                                 <div className="col-md-2 text-yellow">
-                                    <h3 className="text-yellow mb-2">Opponent's Hand</h3>
+                                    <h3 className="text-yellow mb-2">Opponent's hand</h3>
 
                                     <div className="col-md-6 text-yellow float-left">
                                         <img className="opponentCardDeck shakeCard" alt="rivalDeckCard" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530297893/OdinsRavensLandCards/card-13.png" />
-                                        <div className="mt-2">Flight: {this.state.opponentHand}</div>
+                                        <p className="mt-2">Cards {this.state.opponentHand}</p>
                                     </div>
 
                                     <div className="col-md-6 text-yellow float-right">
                                         <img className="opponentLokiDeck shakeCard" alt="rivalDeckLoki" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530297890/OdinsRavensLandCards/card-12.png" />
-                                        <div className="mt-2">Loki &#40;{this.state.oppLokiDeck}/9&#41;</div>
+                                        <p className="mt-2">Loki &#40;{this.state.oppLokiDeck}/9&#41;</p>
                                     </div>
                                 </div>
                             </Row>

@@ -71,7 +71,7 @@ class Modal extends Component {
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-slide-description">
-                        {this.props.playerNum === this.props.gameResult ? <h1>{this.state.winner}</h1> : <h1>{this.state.loser}</h1>}
+                        {this.props.playerNum === this.props.gameResult ? <h1 className="modal-content">{this.state.winner}</h1> : <h1 className="modal-content">{this.state.loser}</h1>}
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>

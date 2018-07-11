@@ -221,3 +221,12 @@ i {
 .lokiFlipGif:hover {
     transform: scale(2)
 }
+
+.no-uppercase {
+    text-transform: none;
+}
+
+.landBoard {
+    margin-top: 2.5rem;
+    margin-bottom: 5rem;
+}
