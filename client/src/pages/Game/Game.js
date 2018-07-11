@@ -15,6 +15,8 @@ import DrawFlight from "../../components/DrawFlight";
 import DrawLoki from "../../components/DrawLoki";
 import EndTurnButton from "../../components/EndTurnButton";
 
+import Modal from "../../components/Modal";
+
 class Game extends Component {
     state = {
         landcard,
@@ -79,6 +81,7 @@ class Game extends Component {
             })
             if (snap.val().whiteRaven === 31) {//WHITE WINS
                 this.setState({ gameRunning: false, gameWinner: 'white' })
+
             } else if (snap.val().blackRaven === 0) {//BLACK WINS
                 this.setState({ gameRunning: false, gameWinner: 'black' })
             }
@@ -219,8 +222,8 @@ class Game extends Component {
             completerow: landsArr,
             toprow: landsArr.slice(0, 16),
             bottomrow: landsArr.slice(16, 32).reverse(),
-            whiteRaven: 0,
-            blackRaven: 31,
+            whiteRaven: 28,
+            blackRaven: 3,
             gameRunning: false
         })
         firebase.database().ref(`games/Game${gameId}/decks`).set({
@@ -634,10 +637,10 @@ class Game extends Component {
                                 </div>
                                 : null}
 
-                            {this.state.gameWinner === 'white' && this.state.isPlayer1 ? <h3 className="d-flex justify-content-center">Victorious</h3> : null}
-                            {this.state.gameWinner === 'white' && this.state.isPlayer2 ? <h3 className="d-flex justify-content-center">Defeat</h3> : null}
-                            {this.state.gameWinner === 'black' && this.state.isPlayer1 ? <h3 className="d-flex justify-content-center">Defeat</h3> : null}
-                            {this.state.gameWinner === 'black' && this.state.isPlayer2 ? <h3 className="d-flex justify-content-center">Victorious</h3> : null}
+                            {this.state.gameWinner === 'white' && this.state.isPlayer1 ? <Modal result="winner" /> : null}
+                            {this.state.gameWinner === 'white' && this.state.isPlayer2 ? <Modal result="loser" /> : null}
+                            {this.state.gameWinner === 'black' && this.state.isPlayer1 ? <Modal result="loser" /> : null}
+                            {this.state.gameWinner === 'black' && this.state.isPlayer2 ? <Modal result="winner" /> : null}
                         </div>
                     </Col>
 
@@ -645,7 +648,7 @@ class Game extends Component {
                         <div className="game-status-box d-flex justify-content-right text-center">
                             {this.state.isPlayer1 && this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
                             {this.state.isPlayer2 && this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
-                            {this.state.gameWinner !== null ? <a type="btn" className="btn button pr-4 pl-4 returnLobbyButton button-back-lobb" href="/lobby/">Back to Lobby</a> : null}
+                            {this.state.gameWinner !== null ? <a type="btn" className="btn button button-no-shadow" href="/lobby/">Back to Lobby</a> : null}
                         </div>
                     </Col>
 
