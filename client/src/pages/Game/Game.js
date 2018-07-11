@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Col, Row, Container } from "../../components/Grid";
 import Jumbotron from "../../components/Jumbotron";
 import "./Game.css";
+import ReactAudioPlayer from 'react-audio-player';
 
 // Firebase
 import firebase from '../../firebase'
@@ -11,9 +12,13 @@ import LandCard from "../../components/LandCard";
 import landcard from "../../components/LandCard/landcard.json";
 import FlightCard from "../../components/FlightCard";
 import flightcard from "../../components/FlightCard/flightcard.json";
+// import LokiCard from "../../components/LokiCard";
+// import lokicard from "../../LokiCard/lokicard.json";
 import DrawFlight from "../../components/DrawFlight";
 import DrawLoki from "../../components/DrawLoki";
 import EndTurnButton from "../../components/EndTurnButton";
+
+import Modal from "../../components/Modal"
 
 class Game extends Component {
     state = {
@@ -88,7 +93,7 @@ class Game extends Component {
         //LISTENING FOR DECK CHANGES AND UPDATING STATE
         database.ref(`/games/Game${props.gameId}/decks`).on('value', snap => {
             if (this.state.isPlayer1) {//THIS WINDOW IS PLAYER 1
-
+                
                 let myHand = snap.val().player1Hand
                 let oppHand = snap.val().player2Hand
                 let myLoki = snap.val().player1LokiDeck
@@ -503,13 +508,13 @@ class Game extends Component {
         }
 
         if (this.state.showingFlip) {//FLIP IS ALLOWED
-            if (landIdx + this.state.whiteRaven !== 31 && landIdx + this.state.blackRaven !== 31 && landIdx !== this.state.whiteRaven && landIdx !== this.state.blackRaven) {//RAVENS ARE NOT ON THIS COLUMN
-                let landPair = [this.state.completerow[landIdx], this.state.completerow[31 - landIdx]]//GATHERING LANDTYPES
+            if (landIdx + this.state.whiteRaven !== 31 && landIdx + this.state.blackRaven !== 31 && landIdx !== this.state.whiteRaven && landIdx !==this.state.blackRaven) {//RAVENS ARE NOT ON THIS COLUMN
+                let landPair = [this.state.completerow[landIdx], this.state.completerow[31-landIdx]]//GATHERING LANDTYPES
 
                 let newWorld = this.state.completerow;//COPYING WORLD ARRAY FOR MODIFICATION
                 //INPUTTING NEW LAND VALUES
                 newWorld[landIdx] = landPair[1];
-                newWorld[31 - landIdx] = landPair[0];
+                newWorld[31-landIdx] = landPair[0];
 
                 firebase.database().ref(`games/Game${this.state.gameId}/world`).update({
                     completerow: newWorld,
@@ -533,7 +538,7 @@ class Game extends Component {
         }
 
         if (this.state.showingSwap) {//SWAP IS ALLOWED
-            if (landIdx + this.state.whiteRaven !== 31 && landIdx + this.state.blackRaven !== 31 && landIdx !== this.state.whiteRaven && landIdx !== this.state.blackRaven) {//RAVENS ARE NOT ON THIS COLUMN
+            if (landIdx + this.state.whiteRaven !== 31 && landIdx + this.state.blackRaven !== 31 && landIdx !== this.state.whiteRaven && landIdx !==this.state.blackRaven) {//RAVENS ARE NOT ON THIS COLUMN
                 if (this.state.swapCards.length === 0 || this.state.swapCards.length === 2) {//STARTING SWAP PAIR
                     this.setState({ swapCards: [landIdx] })
                 } else if (this.state.swapCards.length === 1 && landIdx !== this.state.swapCards[0]) {//PUSHING TO COMPLETE PAIR AND EXECUTING SWAP
@@ -592,7 +597,11 @@ class Game extends Component {
         return (
 
             <Container fluid>
-
+                <ReactAudioPlayer
+                    src={require("./vanaheim.mp3")}
+                    autoPlay
+                    controls
+                />
                 <div className="row info-background game-status-margin">
                     <Col size="md-4">
                         <div className="game-status-box text-center">
@@ -615,18 +624,18 @@ class Game extends Component {
                     </Col>
 
                     <Col size="md-4">
-                        <div className="game-status-box d-flex justify-content-center text-center">
+                        <div className=" game-status-box d-flex justify-content-center text-center">
 
                             {this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ?
-                                <div id="youPlay">
-                                    <h3 className="d-flex justify-content-center rounded">Your turn: Play Cards</h3>
+                                <div>
+                                    <h3 className="d-flex justify-content-center">Your turn: Play Cards</h3>
                                     <hr className="gameHr" />
                                     <p>Click Flight Cards from your hand to move</p>
                                 </div> : null}
 
                             {this.state.myTurn && this.state.cardsToDraw > 0 && this.state.gameWinner === null ?
-                                <div id="youPlay">
-                                    <h3 className="d-flex justify-content-center rounded">Your turn: Draw Cards </h3>
+                                <div>
+                                    <h3 className="d-flex justify-content-center">Your turn: Draw Cards </h3>
 
                                     <hr className="gameHr" />
                                     <p>Cards to draw: <span className="cardsToDrawNum">&nbsp;{this.state.cardsToDraw}</span></p>
@@ -638,26 +647,26 @@ class Game extends Component {
                                     <hr className="gameHr" />
                                 </div> : null}
 
-                            {!this.state.gameRunning && !this.state.gameWinner ?
-                                <div id="youPlay">
+                            {!this.state.gameRunning ?
+                                <div>
                                     <h3 className="d-flex justify-content-center">World Generated</h3>
                                     <hr className="gameHr" />
-                                    <h3 className="d-flex justify-content-center rounded">Cards to draw: <span className="cardsToDrawNum">&nbsp;{this.state.cardsToDraw}</span></h3>
+                                    <h3 className="d-flex justify-content-center">Cards to draw: <span className="cardsToDrawNum">&nbsp;{this.state.cardsToDraw}</span></h3>
                                 </div>
                                 : null}
 
-                            {this.state.gameWinner === 'white' && this.state.isPlayer1 ? <h3 className="d-flex justify-content-center">Victorious</h3> : null}
-                            {this.state.gameWinner === 'white' && this.state.isPlayer2 ? <h3 className="d-flex justify-content-center">Defeat</h3> : null}
-                            {this.state.gameWinner === 'black' && this.state.isPlayer1 ? <h3 className="d-flex justify-content-center">Defeat</h3> : null}
-                            {this.state.gameWinner === 'black' && this.state.isPlayer2 ? <h3 className="d-flex justify-content-center">Victorious</h3> : null}
+                            {this.state.gameWinner === 'white' && this.state.isPlayer1 ? <Modal result="winner" /> : null}
+                            {this.state.gameWinner === 'white' && this.state.isPlayer2 ? <Modal result="loser" /> : null}
+                            {this.state.gameWinner === 'black' && this.state.isPlayer1 ? <Modal result="loser" /> : null}
+                            {this.state.gameWinner === 'black' && this.state.isPlayer2 ? <Modal result="winner" /> : null}
                         </div>
                     </Col>
 
                     <Col size="md-3">
-                        <div className="game-status-box d-flex justify-content-right text-center">
+                        <div className="game-status-box d-flex justify-content-center text-center">
                             {this.state.isPlayer1 && this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
                             {this.state.isPlayer2 && this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
-                            {this.state.gameWinner !== null ? <a type="btn" className="btn button pr-4 pl-4 returnLobbyButton button-back-lobb" href="/lobby/">Back to Lobby</a> : null}
+                            {this.state.gameWinner !== null ? <a type="btn" className="btn button button-no-shadow" href="/lobby/">Back to Lobby</a> : null}
                         </div>
                     </Col>
 
@@ -680,8 +689,8 @@ class Game extends Component {
                 <Row>
                     <Col size="md-12">
                         <Jumbotron>
-                            <div className="landBoard text-center pb-4">
-                                <div className="">
+                            <div className="landBoard text-center">
+                                <div className="border border-warning">
                                     {this.state.toprow.map((landId, idx) => (
                                         <LandCard
                                             position={idx}
@@ -694,7 +703,7 @@ class Game extends Component {
                                     ))}
                                 </div>
 
-                                <div className="img-vert">
+                                <div className="border border-warning img-vert">
                                     {this.state.bottomrow.map((landId, idx) => (
                                         <LandCard
                                             position={31 - idx}
@@ -713,33 +722,24 @@ class Game extends Component {
 
                 <Row>
                     <Col size="md-12">
-
-                        <div className="userBoard text-center">
+                        <div className="userBoard text-center border pt-5">
                             <Row>
-                                <div className="col-sm-1 text-yellow ">
-                                    <h4 className="mb-2">Loki</h4>
-
-                                    {this.state.myLokiDeck > 0 ? <DrawLoki deckClick={this.drawLoki} /> : null}
-
-                                    {this.state.myLokiDeck === 0 ?
-                                        <img
-                                            className="emptyLokiDeck shakeCard"
-                                            alt="Draw Loki"
-                                            src="https://res.cloudinary.com/mosjoandy/image/upload/v1530297890/OdinsRavensLandCards/card-15.png" />
-                                        : null}
-                                    <p className="mt-2">&#40;{this.state.myLokiDeck}/9&#41;</p>
-                                </div>
-                                <div className="col-sm-1 text-yellow ">
-
-                                    <h4 className="mb-2">Flight</h4>
-
+                                <div className="col-sm-1 border text-yellow">
+                                    <h4>Flight</h4>
+                                    <p>&nbsp;</p>
                                     <DrawFlight deckClick={this.drawFlight} />
+                                </div>
+                                <div className="col-sm-1 border text-yellow">
+                                    <h4>Loki</h4>
+                                    <p>&#40;{this.state.myLokiDeck}/9&#41;</p>
+                                    {this.state.myLokiDeck === 0 ? <div>&nbsp;</div> : null}
+                                    {this.state.myLokiDeck > 0 ? <DrawLoki deckClick={this.drawLoki} /> : null}
                                 </div>
 
                                 {this.state.showingHand ?
-                                    <div className="col-sm-8 text-yellow">
+                                    <div className="col-sm-8 border text-yellow">
 
-                                        <h4 className="pb-2">Your Hand</h4>
+                                        <h4>Your Hand</h4>
 
                                         {this.state.playerHand.map((landId, idx) => (
                                             <FlightCard
@@ -752,46 +752,33 @@ class Game extends Component {
                                     : null}
 
                                 {this.state.showingPush ?
-                                    <div className="col-sm-8 text-yellow">
-                                        <h4 className="mb-2 mt-4">Whom do you want to push?</h4>
+                                    <div className="col-sm-8 border text-yellow">
+                                        <h4>Whom do you want to push?</h4>
                                         <div>
-                                            <button type="button" className="button btn pt-4 pb-4 mr-3 ravenPush" onClick={this.oppPush}>Push Opponent Backwards</button>
+                                            <button type="button" className="button btn pt-5 pb-5 mr-3" onClick={this.oppPush}>Push Opponent Backwards</button>
                                             <img alt="lokiPush" width="75px" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530300322/cards-2-09.png" />
-                                            <button type="button" className="button btn pt-4 pb-4 ml-3 ravenPush" onClick={this.selfPush}>Push My Raven Forwards</button>
+                                            <button type="button" className="button btn pt-5 pb-5 ml-3" onClick={this.selfPush}>Push My Raven Forwards</button>
                                         </div>
                                     </div>
                                     : null}
 
                                 {this.state.showingSwap ?
-                                    <div className="col-sm-8 text-yellow">
-                                        <h4 className="mt-2">Please click the two Land Cards you want to <span className="swapCard rounded">swap</span></h4>
-                                        <h4 className="mb-2">(may NOT contain Ravens)</h4>
-                                        <img alt="lokiSwap" width="75px" className="mr-3" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531275974/card-16C.png" />
-                                        <img alt="lokiSwap" width="200px" className="lokiSwapGif rounded" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531276049/LokiSwapGIF.gif" />
+                                    <div className="col-sm-8 border text-light">
+                                        <h4>Please click the two land columns you want to swap (may NOT contain Ravens)</h4>
                                     </div>
                                     : null}
 
                                 {this.state.showingFlip ?
-                                    <div className="col-sm-8 text-yellow">
-                                        <h4 className="mt-2">Please click the Land Card you want to <span className="swapCard rounded">flip</span></h4>
-                                        <h4 className="mb-2">(may NOT contain Ravens)</h4>
-                                        <img alt="lokiFlip" width="75px" className="mr-3" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531275974/card-17C.png" />
-                                        <img alt="lokiFlip" width="200px" className="lokiFlipGif rounded" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531280104/LokiFlipGifB.gif" />
+                                    <div className="col-sm-8 border text-light">
+                                        <h4>Please click the land column you want to flip (may NOT contain Ravens)</h4>
                                     </div>
                                     : null}
 
-                                <div className="col-md-2 text-yellow">
-                                    <h3 className="text-yellow mb-2">Opponent's Hand</h3>
-
-                                    <div className="col-md-6 text-yellow float-left">
-                                        <img className="opponentCardDeck shakeCard" alt="rivalDeckCard" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530297893/OdinsRavensLandCards/card-13.png" />
-                                        <div className="mt-2">Flight: {this.state.opponentHand}</div>
-                                    </div>
-
-                                    <div className="col-md-6 text-yellow float-right">
-                                        <img className="opponentLokiDeck shakeCard" alt="rivalDeckLoki" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530297890/OdinsRavensLandCards/card-12.png" />
-                                        <div className="mt-2">Loki &#40;{this.state.oppLokiDeck}/9&#41;</div>
-                                    </div>
+                                <div className="col-sm-1 border text-light">
+                                    <p>Opponent Cards: {this.state.opponentHand}</p>
+                                </div>
+                                <div className="col-sm-1 border text-light">
+                                    <p>Opponent Loki Deck Cards: {this.state.oppLokiDeck}</p>
                                 </div>
                             </Row>
                         </div>
