@@ -8,6 +8,17 @@
 }
 
 .landCardWorld:hover {
-    transform: scale(1.5)translateY(-0.8em);
+    transform: scale(1.25)translateY(-0.5em);
     box-shadow: 21px 0px 40px -8px rgba(0,0,0,0.75);
+}
+
+@keyframes glowing {
+    0% { box-shadow: 0 0 10px rgba(248, 162, 3, 0.884); }
+    40% { box-shadow: 0 0 40px rgba(248, 162, 3, 0.884); }
+    60% { box-shadow: 0 0 40px rgba(248, 162, 3, 0.884); }
+    100% { box-shadow: 0 0 10px rgba(248, 162, 3, 0.884); }
+}
+  
+.glowLand {
+    animation: glowing 4000ms infinite;
 }
