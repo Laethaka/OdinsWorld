@@ -16,6 +16,7 @@ import DrawLoki from "../../components/DrawLoki";
 import EndTurnButton from "../../components/EndTurnButton";
 import Modal from "../../components/Modal";
 
+
 class Game extends Component {
     state = {
         landcard,
@@ -654,14 +655,14 @@ class Game extends Component {
                                     <h3 className="d-flex justify-content-center rounded">Cards to draw: <span className="cardsToDrawNum">&nbsp;{this.state.cardsToDraw}</span></h3>
                                 </div>
                                 : null}
-
+                             
                             {this.state.gameWinner !== null ? <Modal playerNum={player} gameResult={this.state.gameWinner}/> : null}
                             {/* {this.state.gameWinner === 'white' && this.state.isPlayer2 ? <h3 className="d-flex justify-content-center">Defeat</h3> : null}
                             {this.state.gameWinner === 'black' && this.state.isPlayer1 ? <h3 className="d-flex justify-content-center">Defeat</h3> : null}
                             {this.state.gameWinner === 'black' && this.state.isPlayer2 ? <h3 className="d-flex justify-content-center">Victorious</h3> : null} */}
+
                         </div>
                     </Col>
-
                     <Col size="md-3">
                         <div className="game-status-box d-flex justify-content-right text-center">
                             {this.state.isPlayer1 && this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
@@ -669,7 +670,6 @@ class Game extends Component {
                             {this.state.gameWinner !== null ? <a type="btn" className="btn button pr-4 pl-4 returnLobbyButton button-back-lobb" href="/lobby/">Back to Lobby</a> : null}
                         </div>
                     </Col>
-
                     <Col size="md-1">
                         <audio
                             id="bgm"
@@ -683,9 +683,7 @@ class Game extends Component {
                             <label for="cbx" class="toggle"><span><i class="fas fa-music"></i></span></label>
                         </div>
                     </Col>
-
                 </div>
-
                 <Row>
                     <Col size="md-12">
                         <Jumbotron>
@@ -719,7 +717,6 @@ class Game extends Component {
                         </Jumbotron>
                     </Col>
                 </Row>
-
                 <Row>
                     <Col size="md-12">
 
@@ -729,7 +726,6 @@ class Game extends Component {
                                     <h4 className="mb-2">Loki</h4>
 
                                     {this.state.myLokiDeck > 0 ? <DrawLoki deckClick={this.drawLoki} /> : null}
-
                                     {this.state.myLokiDeck === 0 ?
                                         <img
                                             className="emptyLokiDeck shakeCard"
@@ -741,15 +737,11 @@ class Game extends Component {
                                 <div className="col-sm-1 text-yellow ">
 
                                     <h4 className="mb-2">Flight</h4>
-
                                     <DrawFlight deckClick={this.drawFlight} />
                                 </div>
-
                                 {this.state.showingHand ?
                                     <div className="col-sm-8 text-yellow">
-
                                         <h4 className="pb-2">Your Hand</h4>
-
                                         {this.state.playerHand.map((landId, idx) => (
                                             <FlightCard
                                                 key={idx}
@@ -759,7 +751,6 @@ class Game extends Component {
                                         ))}
                                     </div>
                                     : null}
-
                                 {this.state.showingPush ?
                                     <div className="col-sm-8 text-yellow">
                                         <h4 className="mb-2 mt-4">Whom do you want to push?</h4>
@@ -770,7 +761,6 @@ class Game extends Component {
                                         </div>
                                     </div>
                                     : null}
-
                                 {this.state.showingSwap ?
                                     <div className="col-sm-8 text-yellow">
                                         <h4 className="mt-2">Please click the two Land Cards you want to <span className="swapCard rounded">swap</span></h4>
@@ -779,7 +769,6 @@ class Game extends Component {
                                         <img alt="lokiSwap" width="200px" className="lokiSwapGif rounded" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531276049/LokiSwapGIF.gif" />
                                     </div>
                                     : null}
-
                                 {this.state.showingFlip ?
                                     <div className="col-sm-8 text-yellow">
                                         <h4 className="mt-2">Please click the Land Card you want to <span className="swapCard rounded">flip</span></h4>
@@ -788,6 +777,9 @@ class Game extends Component {
                                         <img alt="lokiFlip" width="200px" className="lokiFlipGif rounded" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531280104/LokiFlipGifB.gif" />
                                     </div>
                                     : null}
+                                <div className="col-md-2 text-yellow">
+                                    <h3 className="text-yellow mb-2">Opponent's Hand</h3>
+
 
                                 <div className="col-md-2 text-yellow">
                                     <h3 className="text-yellow mb-2">Opponent's Hand</h3>
