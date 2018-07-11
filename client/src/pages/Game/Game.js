@@ -18,7 +18,7 @@ import DrawFlight from "../../components/DrawFlight";
 import DrawLoki from "../../components/DrawLoki";
 import EndTurnButton from "../../components/EndTurnButton";
 
-import Modal from "../../components"
+import Modal from "../../components/Modal"
 
 class Game extends Component {
     state = {
