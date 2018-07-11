@@ -741,7 +741,9 @@ class Game extends Component {
                                             <p className="mt-2">Loki &#40;{this.state.myLokiDeck}/9&#41;</p></div>
                                         </div>
                                         <div className="col-sm-1 text-yellow ">
+                                        <p className="pb-3"/>
                                             <DrawFlight deckClick={this.drawFlight} />
+                                            
                                             <p className="m-2">Flight</p>
                                         </div>
                                         {this.state.showingHand ?
@@ -790,8 +792,8 @@ class Game extends Component {
                                     <h3 className="text-yellow mb-2">Opponent's hand</h3>
 
                                     <div className="col-md-6 text-yellow float-left">
-                                        <img className="opponentCardDeck shakeCard" alt="rivalDeckCard" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530297893/OdinsRavensLandCards/card-13.png" />
-                                        <p className="mt-2">Cards {this.state.opponentHand}</p>
+                                        <img className="opponentCardDeck shakeCard" alt="rivalDeckCard" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531349867/opponent-hand.png" />
+                                        <p className="mt-2">Cards: {this.state.opponentHand}</p>
                                     </div>
 
                                     <div className="col-md-6 text-yellow float-right">
