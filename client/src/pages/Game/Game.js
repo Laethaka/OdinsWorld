@@ -6,6 +6,9 @@ import "./Game.css";
 // Firebase
 import firebase from '../../firebase'
 
+// jQuery
+import $ from 'jquery';
+
 // Card components
 import LandCard from "../../components/LandCard";
 import landcard from "../../components/LandCard/landcard.json";
@@ -14,8 +17,6 @@ import flightcard from "../../components/FlightCard/flightcard.json";
 import DrawFlight from "../../components/DrawFlight";
 import DrawLoki from "../../components/DrawLoki";
 import EndTurnButton from "../../components/EndTurnButton";
-import Modal from "../../components/Modal";
-
 
 class Game extends Component {
     state = {
@@ -41,7 +42,7 @@ class Game extends Component {
         showingFlip: false,
         showingSwap: false,
         swapCards: [],
-        audioToggle: false
+        audioToggle: true,
     };
 
     componentWillReceiveProps(props) {
@@ -152,10 +153,15 @@ class Game extends Component {
             }
         })
 
-        //LISTENING FOR PLAYER READY DURING SETUP AND STARTING GAME
+        //LISTENING FOR PLAYER READY DURING SETUP AND STARTING GAME - ALSO LISTENING FOR PLAYER RAGEQUIT
         database.ref(`/games/Game${props.gameId}/`).on('value', snap => {
             if (this.state.gameReady && !snap.val().world.gameRunning && snap.val().playerOne.ready && snap.val().playerTwo.ready) {
                 this.gameStart()
+            }
+            if (this.state.gameRunning && !snap.val().playerTwo.active && this.state.isPlayer1) {//AWARDING PLAYER 1 VICTORY BY DEFAULT
+                this.setState({ gameWinner: 'white' })
+            } else if (this.state.gameRunning && !snap.val().playerOne.active && this.state.isPlayer2) {//AWARDING PLAYER 2 VICTORY BY DEFAULT
+                this.setState({ gameWinner: 'black' })
             }
         });
 
@@ -172,9 +178,6 @@ class Game extends Component {
             }
         })
     }
-
-    //MUSIC PLAYER FUNCTION
-
 
     //PLAYER ONE SETUP AND DISCONNECT LISTENING
     becomePlayerOne = () => {
@@ -295,7 +298,7 @@ class Game extends Component {
                                 firebase.database().ref(`/games/Game${this.state.gameId}/world/`).update({//UPDATING RAVEN POSITION IN FIREBASE
                                     whiteRaven: this.state.whiteRaven + 1
                                 })
-                            }   
+                            }
                             firebase.database().ref(`/games/Game${this.state.gameId}/decks/player1Hand`).once('value', snap => {//REMOVING PLAYED CARD
                                 let handCards = Object.values(snap.val());
                                 handCards.sort();
@@ -541,6 +544,8 @@ class Game extends Component {
             if (landIdx + this.state.whiteRaven !== 31 && landIdx + this.state.blackRaven !== 31 && landIdx !== this.state.whiteRaven && landIdx !== this.state.blackRaven) {//RAVENS ARE NOT ON THIS COLUMN
                 if (this.state.swapCards.length === 0 || this.state.swapCards.length === 2) {//STARTING SWAP PAIR
                     this.setState({ swapCards: [landIdx] })
+                } else if (this.state.swapCards.length === 1 && landIdx === this.state.swapCards[0]) {//USER CHOOSING TO CANCEL ORIGINAL PICK
+                    this.setState({ swapCards: [] })
                 } else if (this.state.swapCards.length === 1 && landIdx !== this.state.swapCards[0]) {//PUSHING TO COMPLETE PAIR AND EXECUTING SWAP
                     let tempArr = this.state.swapCards
                     tempArr.push(landIdx)
@@ -578,8 +583,8 @@ class Game extends Component {
         }
     }
 
-    //Julien https://github.com/jerauld/ was here for the BGM
-    handleAudioToggle = () => {
+     //Julien https://github.com/jerauld/ was here for the BGM
+     handleAudioToggle = () => {
         var bgm = document.getElementById('bgm');
         this.setState(prevState => ({
             audioToggle: !prevState.audioToggle
@@ -593,12 +598,7 @@ class Game extends Component {
     }
 
     render() {
-        let player;
-        if (this.state.isPlayer1) {
-            player = "white"
-        } else {
-            player = "black"
-        }
+
         return (
 
             <Container fluid>
@@ -647,7 +647,6 @@ class Game extends Component {
                                     <h3 className="d-flex justify-content-center">Waiting: Opponent's Turn</h3>
                                     <hr className="gameHr" />
                                 </div> : null}
-
                             {!this.state.gameRunning && !this.state.gameWinner ?
                                 <div id="youPlay">
                                     <h3 className="d-flex justify-content-center">World Generated</h3>
@@ -671,11 +670,11 @@ class Game extends Component {
                     </Col>
                     <Col size="md-1">
                         <audio
-                            id="bgm"
                             src={require("./vanaheim.mp3")}
                             type="audio/mp3"
-                            // autoPlay="autoplay"
+                            autoPlay="autoplay"
                             loop="true"
+                            id="bgm"
                         />
                         <div class="music-checkbox-button">
                             <input type="checkbox" id="cbx" onChange={this.handleAudioToggle}/>
@@ -701,7 +700,6 @@ class Game extends Component {
                                         />
                                     ))}
                                 </div>
-
                                 <div className="img-vert">
                                     {this.state.bottomrow.map((landId, idx) => (
                                         <LandCard
@@ -721,12 +719,10 @@ class Game extends Component {
 
                 <Row>
                     <Col size="md-12">
-
                         <div className="userBoard text-center">
                             <Row>
                                 <div className="col-sm-1 text-yellow ">
                                     <h4 className="mb-2">Loki</h4>
-
                                     {this.state.myLokiDeck > 0 ? <DrawLoki deckClick={this.drawLoki} /> : null}
 
                                     {this.state.myLokiDeck === 0 ?
@@ -738,7 +734,6 @@ class Game extends Component {
                                     <p className="mt-2">&#40;{this.state.myLokiDeck}/9&#41;</p>
                                 </div>
                                 <div className="col-sm-1 text-yellow ">
-
                                     <h4 className="mb-2">Flight</h4>
 
                                     <DrawFlight deckClick={this.drawFlight} />
@@ -787,7 +782,6 @@ class Game extends Component {
                                         <img alt="lokiFlip" width="200px" className="lokiFlipGif rounded" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531280104/LokiFlipGifB.gif" />
                                     </div>
                                     : null}
-
                                 <div className="col-md-2 text-yellow">
                                     <h3 className="text-yellow mb-2">Opponent's Hand</h3>
 
