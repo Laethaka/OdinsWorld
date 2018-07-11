@@ -87,7 +87,7 @@ class Game extends Component {
         //LISTENING FOR DECK CHANGES AND UPDATING STATE
         database.ref(`/games/Game${props.gameId}/decks`).on('value', snap => {
             if (this.state.isPlayer1) {//THIS WINDOW IS PLAYER 1
-                
+
                 let myHand = snap.val().player1Hand
                 let oppHand = snap.val().player2Hand
                 let myLoki = snap.val().player1LokiDeck
@@ -169,6 +169,9 @@ class Game extends Component {
             }
         })
     }
+
+    //MUSIC PLAYER FUNCTION
+
 
     //PLAYER ONE SETUP AND DISCONNECT LISTENING
     becomePlayerOne = () => {
@@ -502,13 +505,13 @@ class Game extends Component {
         }
 
         if (this.state.showingFlip) {//FLIP IS ALLOWED
-            if (landIdx + this.state.whiteRaven !== 31 && landIdx + this.state.blackRaven !== 31 && landIdx !== this.state.whiteRaven && landIdx !==this.state.blackRaven) {//RAVENS ARE NOT ON THIS COLUMN
-                let landPair = [this.state.completerow[landIdx], this.state.completerow[31-landIdx]]//GATHERING LANDTYPES
+            if (landIdx + this.state.whiteRaven !== 31 && landIdx + this.state.blackRaven !== 31 && landIdx !== this.state.whiteRaven && landIdx !== this.state.blackRaven) {//RAVENS ARE NOT ON THIS COLUMN
+                let landPair = [this.state.completerow[landIdx], this.state.completerow[31 - landIdx]]//GATHERING LANDTYPES
 
                 let newWorld = this.state.completerow;//COPYING WORLD ARRAY FOR MODIFICATION
                 //INPUTTING NEW LAND VALUES
                 newWorld[landIdx] = landPair[1];
-                newWorld[31-landIdx] = landPair[0];
+                newWorld[31 - landIdx] = landPair[0];
 
                 firebase.database().ref(`games/Game${this.state.gameId}/world`).update({
                     completerow: newWorld,
@@ -532,7 +535,7 @@ class Game extends Component {
         }
 
         if (this.state.showingSwap) {//SWAP IS ALLOWED
-            if (landIdx + this.state.whiteRaven !== 31 && landIdx + this.state.blackRaven !== 31 && landIdx !== this.state.whiteRaven && landIdx !==this.state.blackRaven) {//RAVENS ARE NOT ON THIS COLUMN
+            if (landIdx + this.state.whiteRaven !== 31 && landIdx + this.state.blackRaven !== 31 && landIdx !== this.state.whiteRaven && landIdx !== this.state.blackRaven) {//RAVENS ARE NOT ON THIS COLUMN
                 if (this.state.swapCards.length === 0 || this.state.swapCards.length === 2) {//STARTING SWAP PAIR
                     this.setState({ swapCards: [landIdx] })
                 } else if (this.state.swapCards.length === 1 && landIdx !== this.state.swapCards[0]) {//PUSHING TO COMPLETE PAIR AND EXECUTING SWAP
@@ -577,7 +580,7 @@ class Game extends Component {
         return (
 
             <Container fluid>
-            
+
                 <div className="row info-background game-status-margin">
                     <Col size="md-4">
                         <div className="game-status-box text-center">
@@ -647,16 +650,16 @@ class Game extends Component {
                     </Col>
 
                     <Col size="md-1">
-                            <audio
-                                src={require("./vanaheim.mp3")}
-                                type="audio/mp3"
-                                autoPlay="autoplay"
-                                loop="true"
-                                />
-                            <div class="music-checkbox-button">
-                                <input type="checkbox" id="cbx"/>
-                                <label for="cbx" class="toggle"><span><i class="fas fa-music"></i></span></label>    
-                            </div>
+                        <audio
+                            src={require("./vanaheim.mp3")}
+                            type="audio/mp3"
+                            autoPlay="autoplay"
+                            loop="true"
+                        />
+                        <div class="music-checkbox-button">
+                            <input type="checkbox" id="cbx" />
+                            <label for="cbx" class="toggle"><span><i class="fas fa-music"></i></span></label>
+                        </div>
                     </Col>
 
                 </div>
@@ -664,7 +667,7 @@ class Game extends Component {
                 <Row>
                     <Col size="md-12">
                         <Jumbotron>
-                            <div className="landBoard text-center">
+                            <div className="landBoard text-center pb-4">
                                 <div className="">
                                     {this.state.toprow.map((landId, idx) => (
                                         <LandCard
@@ -697,25 +700,33 @@ class Game extends Component {
 
                 <Row>
                     <Col size="md-12">
-                    
-                        <div className="userBoard text-center border pt-5">
+
+                        <div className="userBoard text-center">
                             <Row>
-                                <div className="col-sm-1 border text-yellow">
-                                    <h4>Flight</h4>
-                                    <p>&nbsp;</p>
-                                    <DrawFlight deckClick={this.drawFlight} />
-                                </div>
-                                <div className="col-sm-1 border text-yellow">
-                                    <h4>Loki</h4>
-                                    <p>&#40;{this.state.myLokiDeck}/9&#41;</p>
-                                    {this.state.myLokiDeck === 0 ? <div>&nbsp;</div> : null}
+                                <div className="col-sm-1 text-yellow ">
+                                    <h4 className="mb-2">Loki</h4>
+
                                     {this.state.myLokiDeck > 0 ? <DrawLoki deckClick={this.drawLoki} /> : null}
+
+                                    {this.state.myLokiDeck === 0 ?
+                                        <img
+                                            className="emptyLokiDeck shakeCard"
+                                            alt="Draw Loki"
+                                            src="https://res.cloudinary.com/mosjoandy/image/upload/v1530297890/OdinsRavensLandCards/card-15.png" />
+                                        : null}
+                                    <p className="mt-2">&#40;{this.state.myLokiDeck}/9&#41;</p>
+                                </div>
+                                <div className="col-sm-1 text-yellow ">
+
+                                    <h4 className="mb-2">Flight</h4>
+
+                                    <DrawFlight deckClick={this.drawFlight} />
                                 </div>
 
                                 {this.state.showingHand ?
-                                    <div className="col-sm-8 border text-yellow">
+                                    <div className="col-sm-8 text-yellow">
 
-                                        <h4>Your Hand</h4>
+                                        <h4 className="pb-2">Your Hand</h4>
 
                                         {this.state.playerHand.map((landId, idx) => (
                                             <FlightCard
@@ -728,33 +739,46 @@ class Game extends Component {
                                     : null}
 
                                 {this.state.showingPush ?
-                                    <div className="col-sm-8 border text-yellow">
-                                        <h4>Whom do you want to push?</h4>
+                                    <div className="col-sm-8 text-yellow">
+                                        <h4 className="mb-2 mt-4">Whom do you want to push?</h4>
                                         <div>
-                                            <button type="button" className="button btn pt-5 pb-5 mr-3" onClick={this.oppPush}>Push Opponent Backwards</button>
+                                            <button type="button" className="button btn pt-4 pb-4 mr-3 ravenPush" onClick={this.oppPush}>Push Opponent Backwards</button>
                                             <img alt="lokiPush" width="75px" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530300322/cards-2-09.png" />
-                                            <button type="button" className="button btn pt-5 pb-5 ml-3" onClick={this.selfPush}>Push My Raven Forwards</button>
+                                            <button type="button" className="button btn pt-4 pb-4 ml-3 ravenPush" onClick={this.selfPush}>Push My Raven Forwards</button>
                                         </div>
                                     </div>
                                     : null}
 
                                 {this.state.showingSwap ?
-                                    <div className="col-sm-8 border text-light">
-                                        <h4>Please click the two land columns you want to swap (may NOT contain Ravens)</h4>
+                                    <div className="col-sm-8 text-yellow">
+                                        <h4 className="mt-2">Please click the two Land Cards you want to <span className="swapCard rounded">swap</span></h4>
+                                        <h4 className="mb-2">(may NOT contain Ravens)</h4>
+                                        <img alt="lokiSwap" width="75px" className="mr-3" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531275974/card-16C.png" />
+                                        <img alt="lokiSwap" width="200px" className="lokiSwapGif rounded" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531276049/LokiSwapGIF.gif" />
                                     </div>
                                     : null}
 
                                 {this.state.showingFlip ?
-                                    <div className="col-sm-8 border text-light">
-                                        <h4>Please click the land column you want to flip (may NOT contain Ravens)</h4>
+                                    <div className="col-sm-8 text-yellow">
+                                        <h4 className="mt-2">Please click the Land Card you want to <span className="swapCard rounded">flip</span></h4>
+                                        <h4 className="mb-2">(may NOT contain Ravens)</h4>
+                                        <img alt="lokiFlip" width="75px" className="mr-3" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531275974/card-17C.png" />
+                                        <img alt="lokiFlip" width="200px" className="lokiFlipGif rounded" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531280104/LokiFlipGifB.gif" />
                                     </div>
                                     : null}
 
-                                <div className="col-sm-1 border text-light">
-                                    <p>Opponent Cards: {this.state.opponentHand}</p>
-                                </div>
-                                <div className="col-sm-1 border text-light">
-                                    <p>Opponent Loki Deck Cards: {this.state.oppLokiDeck}</p>
+                                <div className="col-md-2 text-yellow">
+                                    <h3 className="text-yellow mb-2">Opponent's Hand</h3>
+
+                                    <div className="col-md-6 text-yellow float-left">
+                                        <img className="opponentCardDeck shakeCard" alt="rivalDeckCard" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530297893/OdinsRavensLandCards/card-13.png" />
+                                        <div className="mt-2">Flight: {this.state.opponentHand}</div>
+                                    </div>
+
+                                    <div className="col-md-6 text-yellow float-right">
+                                        <img className="opponentLokiDeck shakeCard" alt="rivalDeckLoki" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530297890/OdinsRavensLandCards/card-12.png" />
+                                        <div className="mt-2">Loki &#40;{this.state.oppLokiDeck}/9&#41;</div>
+                                    </div>
                                 </div>
                             </Row>
                         </div>
