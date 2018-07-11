@@ -17,6 +17,7 @@ import flightcard from "../../components/FlightCard/flightcard.json";
 import DrawFlight from "../../components/DrawFlight";
 import DrawLoki from "../../components/DrawLoki";
 import EndTurnButton from "../../components/EndTurnButton";
+import Modal from "../../components/Modal";
 
 class Game extends Component {
     state = {
@@ -598,7 +599,12 @@ class Game extends Component {
     }
 
     render() {
-
+        let player;
+        if (this.state.isPlayer1) {
+            player = "white"
+        } else {
+            player = "black"
+        }
         return (
 
             <Container fluid>
