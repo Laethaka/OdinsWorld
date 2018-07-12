@@ -4,19 +4,23 @@
 
 .landCardWorld {
     box-shadow: 17px 0px 36px -4px rgba(0,0,0,0.75);
-    transition: all 0.3s ease-in-out;
+    transition: all 0.1s ;
 }
 
 .landCardWorld:hover {
-    transform: scale(1.25)translateY(-0.5em);
-    box-shadow: 21px 0px 40px -8px rgba(0,0,0,0.75);
+    transform: scale(1.05)translateY(-0.1em);
+    box-shadow: 0px 0px 100px -8px rgba(0,0,0,0.75);
+}
+.landCardWorld:active {
+    transform: scale(1.15)translateY(-0.3em);
+    box-shadow: 0px 0px 100px -8px rgba(248, 162, 3, 0.884);
 }
 
 @keyframes glowing {
-    0% { box-shadow: 0 0 10px rgba(248, 162, 3, 0.884); }
-    40% { box-shadow: 0 0 40px rgba(248, 162, 3, 0.884); }
-    60% { box-shadow: 0 0 40px rgba(248, 162, 3, 0.884); }
-    100% { box-shadow: 0 0 10px rgba(248, 162, 3, 0.884); }
+    0% { box-shadow: 0 0 20px rgba(248, 162, 3, 0.884); }
+    40% { box-shadow: 0 0 60px rgba(248, 162, 3, 0.884); }
+    60% { box-shadow: 0 0 60px rgba(248, 162, 3, 0.884); }
+    100% { box-shadow: 0 0 20px rgba(248, 162, 3, 0.884); }
 }
   
 .glowLand {

@@ -63,7 +63,6 @@ class Lobby extends Component {
                             <img className="h1-img-top" alt="breakLine" src={require('../../components/Images/h1.png')} />
                                 <LobbyUsers
                                     users={this.state.usersInLobby} />
-                            
                             <img className="h1-img-bottom" alt="breakLine" src={require('../../components/Images/h1.png')} />
                             
                         </div>

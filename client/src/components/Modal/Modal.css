@@ -1,0 +1,16 @@
+.modalPop {
+    animation: rowing 4000ms infinite;
+}
+
+.modal-content {
+    color: #30211e;
+    background: transparent !important;
+    border: none;
+}
+
+@keyframes rowing {
+    0% { box-shadow: 0 0 10px rgba(248, 162, 3, 0.884); }
+    40% { box-shadow: 0 0 40px rgba(248, 162, 3, 0.884); }
+    60% { box-shadow: 0 0 480px rgba(248, 162, 3, 0.884); }
+    100% { box-shadow: 0 0 10px rgba(248, 162, 3, 0.884); }
+}
