@@ -4,6 +4,8 @@
 
 .modal-content {
     color: #30211e;
+    background: transparent !important;
+    border: none;
 }
 
 @keyframes rowing {
