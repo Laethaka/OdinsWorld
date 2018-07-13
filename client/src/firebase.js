@@ -1,6 +1,6 @@
 import firebase from 'firebase'
 const config = {
-  apiKey: "AIzaSyDpiMBX08UvfF3AbcqR0Dc9vmp747c4-rw",
+  apiKey: process.env.API_KEY,
   authDomain: "odinsworld-99dca.firebaseapp.com",
   databaseURL: "https://odinsworld-99dca.firebaseio.com",
   projectId: "odinsworld-99dca",
