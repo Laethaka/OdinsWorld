@@ -6,9 +6,6 @@ import "./Game.css";
 // Firebase
 import firebase from '../../firebase'
 
-// jQuery
-import $ from 'jquery';
-
 // Card components
 import LandCard from "../../components/LandCard";
 import landcard from "../../components/LandCard/landcard.json";
@@ -584,8 +581,8 @@ class Game extends Component {
         }
     }
 
-     //Julien https://github.com/jerauld/ was here for the BGM
-     handleAudioToggle = () => {
+    //Julien https://github.com/jerauld/ was here for the BGM
+    handleAudioToggle = () => {
         var bgm = document.getElementById('bgm');
         this.setState(prevState => ({
             audioToggle: !prevState.audioToggle
@@ -635,29 +632,29 @@ class Game extends Component {
 
                             {this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ?
                                 <div id="youPlay">
-                                    <h3 className="d-flex justify-content-center rounded">Your turn: Play Cards</h3>
+                                    <h3 className="d-flex justify-content-center rounded yourTurn">Your turn: Play Cards</h3>
                                     <hr className="gameHr" />
-                                    <p>Click Flight Cards from your hand to move</p>
+                                    <p className="yourTurn">Click Flight Cards from your hand to move</p>
                                 </div> : null}
 
                             {this.state.myTurn && this.state.cardsToDraw > 0 && this.state.gameWinner === null ?
                                 <div id="youPlay">
-                                    <h3 className="d-flex justify-content-center rounded">Your turn: Draw Cards </h3>
+                                    <h3 className="d-flex justify-content-center rounded yourTurn">Your turn: Draw Cards </h3>
 
                                     <hr className="gameHr" />
-                                    <p>Cards to draw: <span className="cardsToDrawNum">&nbsp;{this.state.cardsToDraw}</span></p>
+                                    <p className="yourTurn">Cards to draw: <span className="cardsToDrawNum">&nbsp;{this.state.cardsToDraw}</span></p>
                                 </div> : null}
 
                             {!this.state.myTurn && this.state.gameWinner === null && this.state.gameRunning ?
                                 <div>
-                                    <h3 className="d-flex justify-content-center">Waiting: Opponent's Turn</h3>
+                                    <h3 className="d-flex justify-content-center waitTurn">Waiting: Opponent's Turn</h3>
                                     <hr className="gameHr" />
                                 </div> : null}
                             {!this.state.gameRunning && !this.state.gameWinner ?
                                 <div id="youPlay">
                                     <h3 className="d-flex justify-content-center">World Generated</h3>
                                     <hr className="gameHr" />
-                                    <h3 className="d-flex justify-content-center rounded">Cards to draw: <span className="cardsToDrawNum">&nbsp;{this.state.cardsToDraw}</span></h3>
+                                    <h3 className="d-flex justify-content-center rounded yourTurn">Cards to draw: <span className="cardsToDrawNum">&nbsp;{this.state.cardsToDraw}</span></h3>
                                 </div>
                                 : null}
 
@@ -683,7 +680,7 @@ class Game extends Component {
                             id="bgm"
                         />
                         <div class="music-checkbox-button">
-                            <input type="checkbox" id="cbx" onChange={this.handleAudioToggle}/>
+                            <input type="checkbox" id="cbx" onChange={this.handleAudioToggle} />
                             <label for="cbx" class="toggle"><span><i class="fas fa-music"></i></span></label>
                         </div>
                     </Col>
@@ -727,37 +724,38 @@ class Game extends Component {
                     <Col size="md-12">
                         <div className="userBoard text-center">
                             <Row>
-                                <div className="col-sm-1 text-yellow ">
+                                <div className="col-md-2 text-yellow">
+
                                     <h3 className="text-yellow mb-2">Your Deck</h3>
-                                        <div className="col-md-6 text-yellow float-left">
-                                            
-                                            {this.state.myLokiDeck > 0 ? <DrawLoki deckClick={this.drawLoki} /> : null}
-                                            {this.state.myLokiDeck === 0 ?
-                                                <img
-                                                    className="emptyLokiDeck shakeCard"
-                                                    alt="Draw Loki"
-                                                    src="https://res.cloudinary.com/mosjoandy/image/upload/v1530297890/OdinsRavensLandCards/card-15.png" />
-                                                : null}
-                                            <p className="mt-2">Loki &#40;{this.state.myLokiDeck}/9&#41;</p></div>
-                                        </div>
-                                        <div className="col-sm-1 text-yellow ">
-                                        <p className="pb-3"/>
-                                            <DrawFlight deckClick={this.drawFlight} />
-                                            
-                                            <p className="m-2">Flight</p>
-                                        </div>
-                                        {this.state.showingHand ?
-                                            <div className="col-sm-8 text-yellow">
-                                                <h3 className="pb-2">Your Hand</h3>
-                                                {this.state.playerHand.map((landId, idx) => (
-                                                    <FlightCard
-                                                        key={idx}
-                                                        image={landId}
-                                                        cardClick={this.handleCardPlay}
-                                                    />
-                                                ))}
-                                        </div>
-                                    
+                                    <div className="col-sm-6 text-yellow float-left">
+
+                                        {this.state.myLokiDeck > 0 ? <DrawLoki deckClick={this.drawLoki} /> : null}
+                                        {this.state.myLokiDeck === 0 ?
+                                            <img
+                                                className="emptyLokiDeck shakeCard"
+                                                alt="Draw Loki"
+                                                src="https://res.cloudinary.com/mosjoandy/image/upload/v1530297890/OdinsRavensLandCards/card-15.png" />
+                                            : null}
+                                        <p className="mt-2">Loki &#40;{this.state.myLokiDeck}/9&#41;</p></div>
+
+                                    <div className="col-sm-6 text-yellow float-right">
+                                        <DrawFlight deckClick={this.drawFlight} />
+                                        <p className="m-2">Flight</p>
+                                    </div>
+                                </div>
+
+                                {this.state.showingHand ?
+                                    <div className="col-sm-8 text-yellow">
+                                        <h3 className="pb-2">Your Hand</h3>
+                                        {this.state.playerHand.map((landId, idx) => (
+                                            <FlightCard
+                                                key={idx}
+                                                image={landId}
+                                                cardClick={this.handleCardPlay}
+                                            />
+                                        ))}
+                                    </div>
+
                                     : null}
 
                                 {this.state.showingPush ?
@@ -773,7 +771,7 @@ class Game extends Component {
 
                                 {this.state.showingSwap ?
                                     <div className="col-sm-8 text-yellow">
-                                        <h4 className="mt-2">Please click the two Land Cards you want to <span className="swapCard rounded">swap</span></h4>
+                                        <h4 className="mt-2 yourTurn">Please click the two Land Cards you want to <span className="swapCard rounded">swap</span></h4>
                                         <h4 className="mb-2">(may NOT contain Ravens)</h4>
                                         <img alt="lokiSwap" width="75px" className="mr-3" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531275974/card-16C.png" />
                                         <img alt="lokiSwap" width="200px" className="lokiSwapGif rounded" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531276049/LokiSwapGIF.gif" />
@@ -782,7 +780,7 @@ class Game extends Component {
 
                                 {this.state.showingFlip ?
                                     <div className="col-sm-8 text-yellow">
-                                        <h4 className="mt-2">Please click the Land Card you want to <span className="swapCard rounded">flip</span></h4>
+                                        <h4 className="mt-2 yourTurn">Please click the Land Card you want to <span className="swapCard rounded">flip</span></h4>
                                         <h4 className="mb-2">(may NOT contain Ravens)</h4>
                                         <img alt="lokiFlip" width="75px" className="mr-3" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531275974/card-17C.png" />
                                         <img alt="lokiFlip" width="200px" className="lokiFlipGif rounded" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531280104/LokiFlipGifB.gif" />
