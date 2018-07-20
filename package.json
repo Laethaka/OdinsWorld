@@ -1,14 +1,20 @@
 {
   "name": "mern",
   "version": "1.0.0",
+  "engines": {
+    "node": "8.9.4",
+    "yarn": "1.7.0",
+    "npm": "5.6.0"
+  },
   "description": "Mern Demo",
   "main": "server.js",
   "scripts": {
     "server": "node server.js",
-    "client": "cd client && npm run start",
+    "client": "cd client && yarn start",
     "start": "./node_modules/.bin/concurrently \"./node_modules/.bin/nodemon\" \"npm run client\"",
     "build": "cd client && npm run build",
     "deploy": "yarn build && git add . && git commit -m \"Building for production\" && git push heroku master",
+    "heroku-postbuild": "cd client && npm install && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "installDeps": "yarn && cd client && yarn",
     "install": "cd client && yarn install"
@@ -17,10 +23,11 @@
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^3.5.0",
-    "firebase": "^5.2.0",
+    "firebase": "^4.13.1",
     "nodemon": "^1.11.0"
   },
   "dependencies": {
+    "@firebase/app-types": "^0.3.2",
     "@material-ui/core": "^1.3.1",
     "axios": "^0.18.0",
     "bcrypt-nodejs": "0.0.3",
@@ -30,7 +37,9 @@
     "mongoose": "^5.1.7",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
+    "react": "^16.4.1",
     "react-audio-player": "^0.10.0",
+    "react-dom": "^16.4.1",
     "react-router-dom": "^4.3.1",
     "webpack": "^4.14.0"
   }

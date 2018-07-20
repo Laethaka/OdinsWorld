@@ -43,6 +43,21 @@
         "id": 8,
         "imageName": "swap",
         "image": "https://res.cloudinary.com/mosjoandy/image/upload/v1531275974/card-16C.png"
+    },
+    {
+        "id": 9,
+        "imageName": "ogdoubletrouble",
+        "image": "https://res.cloudinary.com/mosjoandy/image/upload/v1530300322/cards-2-08.png"
+    },
+    {
+        "id": 10,
+        "imageName": "ogflip",
+        "image": "https://res.cloudinary.com/mosjoandy/image/upload/v1530300322/cards-2-07.png"
+    },
+    {
+        "id": 11,
+        "imageName": "ogswap",
+        "image": "https://res.cloudinary.com/mosjoandy/image/upload/v1530300321/cards-2-06.png"
     }
 ]
   
