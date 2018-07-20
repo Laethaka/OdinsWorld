@@ -268,6 +268,7 @@ class Game extends Component {
                             let handCards = Object.values(snap.val())
                             let cutIdx = handCards.indexOf(cardId)
                             handCards.splice(cutIdx, 1)
+                            console.log('1 CARD ANIMATION'); // ༼ つ ͠° ͟ ͟ʖ ͡° ༽つ P1 Remove Animate Here
                             firebase.database().ref(`/games/Game${this.state.gameId}/decks/`).update({
                                 player1Hand: handCards
                             })
@@ -302,6 +303,7 @@ class Game extends Component {
                                 handCards.sort();
                                 let cutIdx = handCards.indexOf(cardId);
                                 handCards.splice(cutIdx, 2);
+                                console.log('2 CARD ANIMATION?'); // ༼ つ ͠° ͟ ͟ʖ ͡° ༽つ P1 Remove Animate Here
                                 firebase.database().ref(`/games/Game${this.state.gameId}/decks/`).update({
                                     player1Hand: handCards
                                 })
@@ -329,6 +331,7 @@ class Game extends Component {
                             let handCards = Object.values(snap.val())
                             let cutIdx = handCards.indexOf(cardId)
                             handCards.splice(cutIdx, 1)
+                            console.log('1 CARD ANIMATION'); // ༼ つ ͠° ͟ ͟ʖ ͡° ༽つ P2 Remove Animate Here
                             firebase.database().ref(`/games/Game${this.state.gameId}/decks/`).update({
                                 player2Hand: handCards
                             })
@@ -363,6 +366,7 @@ class Game extends Component {
                                 handCards.sort();
                                 let cutIdx = handCards.indexOf(cardId);
                                 handCards.splice(cutIdx, 2);
+                                alert('2 CARD ANIMATION'); // ༼ つ ͠° ͟ ͟ʖ ͡° ༽つ P2 Remove Animate Here
                                 firebase.database().ref(`/games/Game${this.state.gameId}/decks/`).update({
                                     player2Hand: handCards
                                 })
@@ -386,8 +390,10 @@ class Game extends Component {
         if (this.state.cardsToDraw > 1) {//PLAYER CAN KEEP DRAWING
 
             if (this.state.isPlayer1) {//ROUTING TO PLAYER 1 HAND
+                console.log('clicked!'); // ༼ つ ͠° ͟ ͟ʖ ͡° ༽つ P1 Flight Animate Here
                 firebase.database().ref(`games/Game${this.state.gameId}/decks/player1Hand`).push(newCard)
             } else {//ROUTING TO PLAYER 2 HAND
+                console.log('clicked!'); // ༼ つ ͠° ͟ ͟ʖ ͡° ༽つ P1 Flight Animate Here
                 firebase.database().ref(`games/Game${this.state.gameId}/decks/player2Hand`).push(newCard)
             }
             this.setState({ cardsToDraw: this.state.cardsToDraw - 1 });
@@ -436,8 +442,10 @@ class Game extends Component {
             if (this.state.cardsToDraw > 1) {//PLAYER CAN KEEP DRAWING
 
                 if (this.state.isPlayer1) {//ROUTING TO PLAYER 1 HAND
+                    console.log('clicked!'); // ༼ つ ͠° ͟ ͟ʖ ͡° ༽つ P1 Loki Animate Here
                     firebase.database().ref(`games/Game${this.state.gameId}/decks/player1Hand`).push(newCard)
                 } else {//ROUTING TO PLAYER 2 HAND
+                    console.log('clicked!'); // ༼ つ ͠° ͟ ͟ʖ ͡° ༽つ P2 Loki Animate Here
                     firebase.database().ref(`games/Game${this.state.gameId}/decks/player2Hand`).push(newCard)
                 }
                 this.setState({ cardsToDraw: this.state.cardsToDraw - 1 });
