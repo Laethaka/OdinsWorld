@@ -227,8 +227,24 @@ i {
 }
 
 .landBoard {
-    margin-top: 2.5rem;
-    margin-bottom: 5rem;
+    margin-top: 2rem;
+    margin-bottom: 4rem;
+    width: 100%;
+    height: 11.8rem;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 1rem 1rem;
+}
+
+.yourHandBoard {
+    overflow-x:auto;
+    white-space: nowrap;
+    height: 15rem;
+    width: 100%;
+}
+
+.userBoard {
+    height: 5rem;
 }
 
 .waitTurn  {
