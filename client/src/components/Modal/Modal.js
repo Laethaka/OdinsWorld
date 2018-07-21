@@ -75,7 +75,7 @@ class Modal extends Component {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <a type="btn" className="btn button pr-4 pl-4 returnLobbyButton button-back-lobb mx-auto" href="/lobby/">Back to Lobby</a>
+                        <a type="btn" className="btn button pr-4 pl-4 returnLobbyButton button-back-lobb mx-auto" href={"/Lobby"}>Back to Lobby</a>
                     </DialogActions>
                     {this.soundRender()}
                 </Dialog>

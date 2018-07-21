@@ -366,7 +366,7 @@ class Game extends Component {
                                 handCards.sort();
                                 let cutIdx = handCards.indexOf(cardId);
                                 handCards.splice(cutIdx, 2);
-                                alert('2 CARD ANIMATION'); // ༼ つ ͠° ͟ ͟ʖ ͡° ༽つ P2 Remove Animate Here
+                                console.log('2 CARD ANIMATION'); // ༼ つ ͠° ͟ ͟ʖ ͡° ༽つ P2 Remove Animate Here
                                 firebase.database().ref(`/games/Game${this.state.gameId}/decks/`).update({
                                     player2Hand: handCards
                                 })
@@ -676,7 +676,7 @@ class Game extends Component {
                         <div className="game-status-box d-flex justify-content-right text-center">
                             {this.state.isPlayer1 && this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
                             {this.state.isPlayer2 && this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
-                            {this.state.gameWinner !== null ? <a type="btn" className="btn button pr-4 pl-4 returnLobbyButton button-back-lobb" href="/lobby/">Back to Lobby</a> : null}
+                            {this.state.gameWinner !== null ? <a type="btn" className="btn button pr-4 pl-4 returnLobbyButton button-back-lobb" href={"/Lobby"}>Back to Lobby</a> : null}
                         </div>
                     </Col>
                     <Col size="md-1">
