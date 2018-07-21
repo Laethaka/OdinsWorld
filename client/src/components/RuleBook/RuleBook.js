@@ -66,7 +66,7 @@ const RuleBook = () => {
 						<p>Clicking on the appropriate <span className="bold-text">Flight Card</span> will move the Raven as many Lands that match in a row.
 					</p>
 						<img alt="rb-loop1" id="img-loop-1" src={require('../../components/Images/ex-1.png')} />
-						<p>If a player clicks on a Flight Card while having two matching Flight Cards their hand, they will move.</p>
+						<p>If a player clicks on a Flight Card while having two matching Flight Cards in their hand, they will move.</p>
 						<img alt="rb-loop2" id="img-loop-1" src={require('../../components/Images/ex-2.png')} />
 					</div>
 					<div className="page-4 text-center">
@@ -107,8 +107,7 @@ const RuleBook = () => {
 					<div className="page-6 text-center">
 						<h2>Play Phase</h2>
 
-						<p>Play in any order either Flight or Loki Cards to move their raven,
-						or manipulate the world.</p>
+						<p>Play either Flight or Loki Cards in any order to move your raven, or manipulate the world</p>
 						<img alt="yourturn"  className="page6 mb-2" src={require('../../components/Images/enter-draw-phase.png')} />
 						
 						<p>When the player is satisfied, or has no more cards to play, the player
