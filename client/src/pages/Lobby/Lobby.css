@@ -46,3 +46,37 @@
     overflow-y: auto;
     overflow-x: auto;
 }
+
+@media screen and (max-width: 415px) {
+
+    .lobby-row{
+        width: 100%;
+        margin: 0 auto;
+        /* clear: both; */
+    }
+    .container-fluid {
+        width: 100%;
+        margin: 0 auto;
+        /* clear: both; */
+    }
+    .users-box {
+        height: 300px;
+    }
+    a#joinButton {
+        display: block;
+        /* margin: 0 auto; */
+        width: 100%;
+    }
+    .join-game-name {
+        text-align: center;
+    }
+}
+
+  /* @media screen and (max-width: 640px) {
+    .col {
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      clear: both;
+    }
+  } */

@@ -15,7 +15,7 @@ const Nav = (props) => (
         </div>
         :
         <div className='wrapper'>
-          <img className="rounded-circle mx-auto" src="http://mikecavaliere.com/wp-content/uploads/2015/05/Question-300x300.png" alt="Login" />
+          <img className="rounded-circle mx-auto" src="question-mark.png" alt="Login" />
         </div>
       }
     </div>

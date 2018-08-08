@@ -19,7 +19,7 @@ const LobbyGame = (props) => (
                     <p className="margin-left">– {props.players[1]}</p>
                 </div>
             
-                <div className="col-2 align-self-center d-flex justify-content-end">
+                <div className=" col-sm-12 col-md-2 align-self-center d-flex justify-content-end">
                     <a type="btn" className="btn button button-join" id="joinButton" href={"/game/" + (props.id + 1) }>Join</a>
                 </div>  
             </div>

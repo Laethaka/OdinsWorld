@@ -55,10 +55,10 @@ class Lobby extends Component {
     render() {
         return (
             <Container fluid>
-                <div className="row row-margin d-flex justify-content-between">
+                <div className="lobby-row row row-margin d-flex justify-content-between">
                     <Col size="md-2">
                         {/* Users Online Component */}
-                        <div className="box info-background">
+                        <div className="box info-background users-box">
                             <h2 className="lobby-subtitle">Users</h2>
                             <img className="h1-img-top" alt="breakLine" src={require('../../components/Images/h1.png')} />
                                 <LobbyUsers
@@ -68,7 +68,7 @@ class Lobby extends Component {
                         </div>
                     </Col>
 
-                    <Col size="xl-5">
+                    <Col size="xl-5 md-5">
                         {/* Lobby Chat Component */}
                         <div className="box info-background">           
                             <h2 className="lobby-subtitle">Chat</h2>
@@ -78,7 +78,7 @@ class Lobby extends Component {
                         </div>
                     </Col>
     
-                    <Col size="xl-4">
+                    <Col size="xl-4 md-4">
                         {/* Game Join Component */}
                         <div className="box info-background">
                             <h2 className="lobby-subtitle">Games</h2>

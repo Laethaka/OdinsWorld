@@ -2,8 +2,11 @@ body {
   color: #30211e;
   font-size: 16px;
   background-image: url("../../client/src/components/Images/table-backgrond-3.png");
+  /* background-repeat: repeat-x; */
+  background-position: center;
   background-repeat: repeat-x;
-  height: 600px;
+  background-size: cover;
+  height: 100%;
  }
 
 a {
@@ -59,10 +62,12 @@ p {
   padding-right: 0rem;
   padding-left: 0rem;
 }
-
+/* 
 .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
 
   padding-right: 0px;
   padding-left: 0px;
 
-}
+} */
+
+
