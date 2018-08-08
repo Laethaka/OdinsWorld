@@ -166,7 +166,7 @@ i {
     height: 160px;
 }
 
-.ravenPush, .swapCard {
+.ravenPush, .swapCard, .doubleTrouble{
     animation: glowLoki 2000ms infinite;
 }
 
