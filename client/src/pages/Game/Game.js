@@ -816,28 +816,6 @@ class Game extends Component {
                                     </div>
                                     : null}
 
-                                {/* {this.state.showingDoubleTrouble ?
-                                    <div className="col-sm-8 text-yellow">
-                                        <h4 className="mb-2 mt-4">What do you want to do?</h4>
-                                        <div>
-                                            <button type="button" className="button btn pt-4 pb-4 mr-3 ravenPush" onClick={this.doubleDraw}>Draw Two Cards</button>
-                                            <img alt="lokiDoubleTrouble" width="75px" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530300322/cards-2-08.png" />
-                                            <button type="button" className="button btn pt-4 pb-4 ml-3 ravenPush" onClick={this.addLand}>Add Two Lands</button>
-                                        </div>
-                                    </div>
-                                    : null} */}
-
-                                {/* {this.state.showingLandAdd ?
-                                    <div className="col-sm-8 text-yellow">
-                                        <h4 className="mb-2 mt-4">Please click the land that you want to add two lands after</h4>
-                                        <div>
-                                            <button type="button" className="button btn pt-4 pb-4 mr-3 ravenPush" onClick={this.doubleDraw}>Draw Two Cards</button>
-                                            <img alt="lokiDoubleTrouble" width="75px" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530300322/cards-2-08.png" />
-                                            <button type="button" className="button btn pt-4 pb-4 ml-3 ravenPush" onClick={this.addLand}>Add Two Lands</button>
-                                        </div>
-                                    </div>
-                                    : null} */}
-
                                 {this.state.showingSwap ?
                                     <div className="col-sm-8 text-yellow">
                                         <h4 className="mt-2 yourTurn">Please click the two Land Cards you want to <span className="swapCard rounded">swap</span></h4>
