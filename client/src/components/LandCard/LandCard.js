@@ -133,7 +133,7 @@ function LandCard(props) {
                     alt={landcard[0].imageName}
                     src={landcard[0].image}
                     id={props.position}
-                    onClick={() => props.flipOrSwapClick(props.position)}
+                    onClick={() => props.landClick(props.position)}
                 />
             case 1:
                 return <img
@@ -141,7 +141,7 @@ function LandCard(props) {
                     alt={landcard[1].imageName}
                     src={landcard[1].image}
                     id={props.position}
-                    onClick={() => props.flipOrSwapClick(props.position)}
+                    onClick={() => props.landClick(props.position)}
                 />
             case 2:
                 return <img
@@ -149,7 +149,7 @@ function LandCard(props) {
                     alt={landcard[2].imageName}
                     src={landcard[2].image}
                     id={props.position}
-                    onClick={() => props.flipOrSwapClick(props.position)}
+                    onClick={() => props.landClick(props.position)}
                 />
             case 3:
                 return <img
@@ -157,7 +157,7 @@ function LandCard(props) {
                     alt={landcard[3].imageName}
                     src={landcard[3].image}
                     id={props.position}
-                    onClick={() => props.flipOrSwapClick(props.position)}
+                    onClick={() => props.landClick(props.position)}
                 />
             case 4:
                 return <img
@@ -165,7 +165,7 @@ function LandCard(props) {
                     alt={landcard[4].imageName}
                     src={landcard[4].image}
                     id={props.position}
-                    onClick={() => props.flipOrSwapClick(props.position)}
+                    onClick={() => props.landClick(props.position)}
                 />
             default:
         }

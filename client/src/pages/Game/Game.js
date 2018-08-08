@@ -33,12 +33,15 @@ class Game extends Component {
         blackRaven: 31,
         myTurn: false,
         gameWinner: null,
-        myLokiDeck: 9,
-        oppLokiDeck: 9,
+        myLokiDeck: 8,
+        oppLokiDeck: 8,
         showingHand: true,
         showingPush: false,
         showingFlip: false,
         showingSwap: false,
+        showingDoubleTrouble: false,
+        showingLandAdd: false,
+        instaDrawing: false,
         swapCards: [],
         audioToggle: true,
     };
@@ -57,6 +60,7 @@ class Game extends Component {
                 var con = connectionsRef.push(username);
                 con.onDisconnect().remove();
             }
+            console.log(connectionsRef)
         });
 
         connectionsRef.once("value", snap => {//PAGE LOAD AND ANY PLAYER JOIN/LEAVE
@@ -79,7 +83,7 @@ class Game extends Component {
                 whiteRaven: snap.val().whiteRaven,
                 blackRaven: snap.val().blackRaven
             })
-            if (snap.val().whiteRaven === 31) {//WHITE WINS
+            if (snap.val().whiteRaven === this.state.completerow.length - 1 ) {//WHITE WINS
                 this.setState({ gameRunning: false, gameWinner: 'white' })
             } else if (snap.val().blackRaven === 0) {//BLACK WINS
                 this.setState({ gameRunning: false, gameWinner: 'black' })
@@ -230,8 +234,8 @@ class Game extends Component {
         firebase.database().ref(`games/Game${gameId}/decks`).set({
             player1Hand: [],
             player2Hand: [],
-            player1LokiDeck: [5, 5, 5, 8, 8, 8, 7, 7, 7],
-            player2LokiDeck: [5, 5, 5, 8, 8, 8, 7, 7, 7]
+            player1LokiDeck: [5, 5, 8, 8, 7, 7, 6, 6],
+            player2LokiDeck: [5, 5, 8, 8, 7, 7, 6, 6]
         }).then((snap) => {
             this.setState({ gameReady: true })
             console.log('game ready!')
@@ -252,9 +256,9 @@ class Game extends Component {
                 firebase.database().ref(`/games/Game${this.state.gameId}/world/completerow`).once('value', snap => {
                     if (cardId === snap.val()[this.state.whiteRaven + 1]) {//EXECUTING FAST MOVE
                         for (let idx = this.state.whiteRaven + 1; idx < 33; idx++) {//LOOPING TO END OF MATCHING TERRAIN
-                            if (idx === 32) {//WHITE RAVEN REACHED THE END
+                            if (idx === this.state.completerow.length) {//WHITE RAVEN REACHED THE END
                                 firebase.database().ref(`/games/Game${this.state.gameId}/world/`).update({//UPDATING RAVEN POSITION IN FIREBASE
-                                    whiteRaven: 31
+                                    whiteRaven: this.state.completerow.length-1
                                 })
                                 break;
                             } else if (snap.val()[idx] !== cardId) {//MATCHING TERRAIN ENDS
@@ -268,7 +272,6 @@ class Game extends Component {
                             let handCards = Object.values(snap.val())
                             let cutIdx = handCards.indexOf(cardId)
                             handCards.splice(cutIdx, 1)
-                            console.log('1 CARD ANIMATION'); // ༼ つ ͠° ͟ ͟ʖ ͡° ༽つ P1 Remove Animate Here
                             firebase.database().ref(`/games/Game${this.state.gameId}/decks/`).update({
                                 player1Hand: handCards
                             })
@@ -281,9 +284,9 @@ class Game extends Component {
                         if (counter > 1) {//EXECUTING SLOW MOVE
                             if (snap.val()[this.state.whiteRaven + 1] === snap.val()[this.state.whiteRaven + 2]) {//STRETCH OF SIMILAR TERRAIN AHEAD
                                 for (let idx = this.state.whiteRaven + 2; idx < 33; idx++) {//LOOPING TO END OF MATCHING TERRAIN
-                                    if (idx === 32) {//WHITE RAVEN REACHED THE END
+                                    if (idx === this.state.completerow.length) {//WHITE RAVEN REACHED THE END
                                         firebase.database().ref(`/games/Game${this.state.gameId}/world/`).update({//UPDATING RAVEN POSITION IN FIREBASE
-                                            whiteRaven: 31
+                                            whiteRaven: this.state.completerow-1
                                         })
                                         break;
                                     } else if (snap.val()[idx] !== snap.val()[idx - 1]) {//MATCHING TERRAIN ENDS
@@ -303,7 +306,6 @@ class Game extends Component {
                                 handCards.sort();
                                 let cutIdx = handCards.indexOf(cardId);
                                 handCards.splice(cutIdx, 2);
-                                console.log('2 CARD ANIMATION?'); // ༼ つ ͠° ͟ ͟ʖ ͡° ༽つ P1 Remove Animate Here
                                 firebase.database().ref(`/games/Game${this.state.gameId}/decks/`).update({
                                     player1Hand: handCards
                                 })
@@ -331,7 +333,6 @@ class Game extends Component {
                             let handCards = Object.values(snap.val())
                             let cutIdx = handCards.indexOf(cardId)
                             handCards.splice(cutIdx, 1)
-                            console.log('1 CARD ANIMATION'); // ༼ つ ͠° ͟ ͟ʖ ͡° ༽つ P2 Remove Animate Here
                             firebase.database().ref(`/games/Game${this.state.gameId}/decks/`).update({
                                 player2Hand: handCards
                             })
@@ -366,7 +367,6 @@ class Game extends Component {
                                 handCards.sort();
                                 let cutIdx = handCards.indexOf(cardId);
                                 handCards.splice(cutIdx, 2);
-                                console.log('2 CARD ANIMATION'); // ༼ つ ͠° ͟ ͟ʖ ͡° ༽つ P2 Remove Animate Here
                                 firebase.database().ref(`/games/Game${this.state.gameId}/decks/`).update({
                                     player2Hand: handCards
                                 })
@@ -377,9 +377,11 @@ class Game extends Component {
             }
         } else if (cardId === 5 && this.state.gameRunning && this.state.myTurn && this.state.cardsToDraw === 0) {//SHOWING PUSH OPTION
             this.setState({ showingHand: false, showingPush: true })
+        } else if (cardId === 6 && this.state.gameRunning && this.state.myTurn && this.state.cardsToDraw === 0) {//SHOWING DOUBLETROUBLE OPTION
+            this.setState({ showingHand: false, showingDoubleTrouble: true })
         } else if (cardId === 7 && this.state.gameRunning && this.state.myTurn && this.state.cardsToDraw === 0) {//SHOWING FLIP OPTIONS
             this.setState({ showingHand: false, showingFlip: true })
-        } else if (cardId === 8 && this.state.gameRunning && this.state.myTurn && this.state.cardsToDraw === 0) {//SHOWING FLIP OPTIONS
+        } else if (cardId === 8 && this.state.gameRunning && this.state.myTurn && this.state.cardsToDraw === 0) {//SHOWING SWAP OPTIONS
             this.setState({ showingHand: false, showingSwap: true })
         }
 
@@ -390,28 +392,30 @@ class Game extends Component {
         if (this.state.cardsToDraw > 1) {//PLAYER CAN KEEP DRAWING
 
             if (this.state.isPlayer1) {//ROUTING TO PLAYER 1 HAND
-                console.log('clicked!'); // ༼ つ ͠° ͟ ͟ʖ ͡° ༽つ P1 Flight Animate Here
                 firebase.database().ref(`games/Game${this.state.gameId}/decks/player1Hand`).push(newCard)
             } else {//ROUTING TO PLAYER 2 HAND
-                console.log('clicked!'); // ༼ つ ͠° ͟ ͟ʖ ͡° ༽つ P1 Flight Animate Here
                 firebase.database().ref(`games/Game${this.state.gameId}/decks/player2Hand`).push(newCard)
             }
             this.setState({ cardsToDraw: this.state.cardsToDraw - 1 });
-        } else if (this.state.cardsToDraw === 1) {//PLAYER DONE DRAWING
+        } else if (this.state.cardsToDraw === 1) {//PLAYER DONE DRAWING, SWITCHING GAME TURN
             if (this.state.isPlayer1) {//ROUTING TO PLAYER 1 HAND
                 firebase.database().ref(`games/Game${this.state.gameId}/decks/player1Hand`).push(newCard)
             } else {//ROUTING TO PLAYER 2 HAND
                 firebase.database().ref(`games/Game${this.state.gameId}/decks/player2Hand`).push(newCard)
             }
             this.setState({ cardsToDraw: 0 });
-            if (this.state.isPlayer1 && !this.state.gameRunning) {//FLAGGING PLAYER 1 READY TO START
-                firebase.database().ref(`games/Game${this.state.gameId}/playerOne/`).update({ ready: true })
-            } else if (this.state.isPlayer2 && !this.state.gameRunning) {//FLAGGING PLAYER 2 READY TO START
-                firebase.database().ref(`games/Game${this.state.gameId}/playerTwo/`).update({ ready: true })
-            } else if (this.state.isPlayer1 && this.state.gameRunning) {//HANDING ACTIVE TURN TO PLAYER 2
-                firebase.database().ref(`games/Game${this.state.gameId}/world/`).update({ playerTurn: '2' })
-            } else if (this.state.isPlayer2 && this.state.gameRunning) {//HANDING ACTIVE TURN TO PLAYER 2
-                firebase.database().ref(`games/Game${this.state.gameId}/world/`).update({ playerTurn: '1' })
+            if (!this.state.instaDrawing) { //NORMAL DRAW OVER, SWITCHING TURN
+                if (this.state.isPlayer1 && !this.state.gameRunning) {//FLAGGING PLAYER 1 READY TO START
+                    firebase.database().ref(`games/Game${this.state.gameId}/playerOne/`).update({ ready: true })
+                } else if (this.state.isPlayer2 && !this.state.gameRunning) {//FLAGGING PLAYER 2 READY TO START
+                    firebase.database().ref(`games/Game${this.state.gameId}/playerTwo/`).update({ ready: true })
+                } else if (this.state.isPlayer1 && this.state.gameRunning) {//HANDING ACTIVE TURN TO PLAYER 2
+                    firebase.database().ref(`games/Game${this.state.gameId}/world/`).update({ playerTurn: '2' })
+                } else if (this.state.isPlayer2 && this.state.gameRunning) {//HANDING ACTIVE TURN TO PLAYER 2
+                    firebase.database().ref(`games/Game${this.state.gameId}/world/`).update({ playerTurn: '1' })
+                }
+            } else if (this.state.instaDrawing) {
+                this.setState({ instaDrawing: false })
             }
         }
     };
@@ -442,10 +446,8 @@ class Game extends Component {
             if (this.state.cardsToDraw > 1) {//PLAYER CAN KEEP DRAWING
 
                 if (this.state.isPlayer1) {//ROUTING TO PLAYER 1 HAND
-                    console.log('clicked!'); // ༼ つ ͠° ͟ ͟ʖ ͡° ༽つ P1 Loki Animate Here
                     firebase.database().ref(`games/Game${this.state.gameId}/decks/player1Hand`).push(newCard)
                 } else {//ROUTING TO PLAYER 2 HAND
-                    console.log('clicked!'); // ༼ つ ͠° ͟ ͟ʖ ͡° ༽つ P2 Loki Animate Here
                     firebase.database().ref(`games/Game${this.state.gameId}/decks/player2Hand`).push(newCard)
                 }
                 this.setState({ cardsToDraw: this.state.cardsToDraw - 1 });
@@ -456,14 +458,18 @@ class Game extends Component {
                     firebase.database().ref(`games/Game${this.state.gameId}/decks/player2Hand`).push(newCard)
                 }
                 this.setState({ cardsToDraw: 0 });
-                if (this.state.isPlayer1 && !this.state.gameRunning) {//FLAGGING PLAYER 1 READY TO START
-                    firebase.database().ref(`games/Game${this.state.gameId}/playerOne/`).update({ ready: true })
-                } else if (this.state.isPlayer2 && !this.state.gameRunning) {//FLAGGING PLAYER 2 READY TO START
-                    firebase.database().ref(`games/Game${this.state.gameId}/playerTwo/`).update({ ready: true })
-                } else if (this.state.isPlayer1 && this.state.gameRunning) {//HANDING ACTIVE TURN TO PLAYER 2
-                    firebase.database().ref(`games/Game${this.state.gameId}/world/`).update({ playerTurn: '2' })
-                } else if (this.state.isPlayer2 && this.state.gameRunning) {//HANDING ACTIVE TURN TO PLAYER 2
-                    firebase.database().ref(`games/Game${this.state.gameId}/world/`).update({ playerTurn: '1' })
+                if (!this.state.instaDrawing) { //NORMAL DRAW OVER, SWITCHING TURN
+                    if (this.state.isPlayer1 && !this.state.gameRunning) {//FLAGGING PLAYER 1 READY TO START
+                        firebase.database().ref(`games/Game${this.state.gameId}/playerOne/`).update({ ready: true })
+                    } else if (this.state.isPlayer2 && !this.state.gameRunning) {//FLAGGING PLAYER 2 READY TO START
+                        firebase.database().ref(`games/Game${this.state.gameId}/playerTwo/`).update({ ready: true })
+                    } else if (this.state.isPlayer1 && this.state.gameRunning) {//HANDING ACTIVE TURN TO PLAYER 2
+                        firebase.database().ref(`games/Game${this.state.gameId}/world/`).update({ playerTurn: '2' })
+                    } else if (this.state.isPlayer2 && this.state.gameRunning) {//HANDING ACTIVE TURN TO PLAYER 2
+                        firebase.database().ref(`games/Game${this.state.gameId}/world/`).update({ playerTurn: '1' })
+                    }
+                } else if (this.state.instaDrawing) {
+                    this.setState({ instaDrawing: false })
                 }
             }
         }
@@ -511,7 +517,23 @@ class Game extends Component {
         this.setState({ showingHand: true, showingPush: false })
     }
 
-    handleFlipOrSwap = (landIdx) => {
+    doubleDraw = () => {
+        let myHand = this.state.playerHand
+        let cutIdx = myHand.indexOf(6)
+        myHand.splice(cutIdx, 1)
+        if (this.state.isPlayer1) {
+            firebase.database().ref(`games/Game${this.state.gameId}/decks`).update({ player1Hand: myHand })
+        } else if (this.state.isPlayer2) {
+            firebase.database().ref(`games/Game${this.state.gameId}/decks`).update({ player2Hand: myHand })
+        }
+        this.setState({ showingDoubleTrouble: false, showingHand: true, instaDrawing: true, cardsToDraw: this.state.cardsToDraw + 2 })
+    }
+
+    addLand = () => {
+        this.setState({ showingDoubleTrouble: false, showingLandAdd: true })
+    }
+
+    handleLandClick = (landIdx) => {
         if (landIdx > 15) {//SETTING INDEX VALUE FOR TOP ROW
             landIdx = 31 - landIdx
         }
@@ -544,9 +566,7 @@ class Game extends Component {
                 }
             }
             this.setState({ showingFlip: false, showingHand: true })//RESETTING DOM
-        }
-
-        if (this.state.showingSwap) {//SWAP IS ALLOWED
+        } else if (this.state.showingSwap) {//SWAP IS ALLOWED
             if (landIdx + this.state.whiteRaven !== 31 && landIdx + this.state.blackRaven !== 31 && landIdx !== this.state.whiteRaven && landIdx !== this.state.blackRaven) {//RAVENS ARE NOT ON THIS COLUMN
                 if (this.state.swapCards.length === 0 || this.state.swapCards.length === 2) {//STARTING SWAP PAIR
                     this.setState({ swapCards: [landIdx] })
@@ -586,6 +606,8 @@ class Game extends Component {
                     }
                 }
             }
+        } else if (this.state.showingLandAdd) {
+
         }
     }
 
@@ -676,7 +698,7 @@ class Game extends Component {
                         <div className="game-status-box d-flex justify-content-right text-center">
                             {this.state.isPlayer1 && this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
                             {this.state.isPlayer2 && this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
-                            {this.state.gameWinner !== null ? <a type="btn" className="btn button pr-4 pl-4 returnLobbyButton button-back-lobb" href={"/Lobby"}>Back to Lobby</a> : null}
+                            {this.state.gameWinner !== null ? <a type="btn" className="btn button pr-4 pl-4 returnLobbyButton button-back-lobb" href="/lobby/">Back to Lobby</a> : null}
                         </div>
                     </Col>
                     <Col size="md-1">
@@ -687,9 +709,9 @@ class Game extends Component {
                             loop="true"
                             id="bgm"
                         />
-                        <div className="music-checkbox-button">
+                        <div class="music-checkbox-button">
                             <input type="checkbox" id="cbx" onChange={this.handleAudioToggle} />
-                            <label htmlFor="cbx" className="toggle"><span><i className="fas fa-music"></i></span></label>
+                            <label for="cbx" class="toggle"><span><i class="fas fa-music"></i></span></label>
                         </div>
                     </Col>
 
@@ -699,7 +721,7 @@ class Game extends Component {
                     <Col size="md-12">
                         <Jumbotron>
                             <div className="landBoard text-center">
-                                <div>
+                                <div className="">
                                     {this.state.toprow.map((landId, idx) => (
                                         <LandCard
                                             position={idx}
@@ -707,7 +729,7 @@ class Game extends Component {
                                             image={landId}
                                             whiteRaven={this.state.whiteRaven}
                                             blackRaven={this.state.blackRaven}
-                                            flipOrSwapClick={this.handleFlipOrSwap}
+                                            landClick={this.handleLandClick}
                                         />
                                     ))}
                                 </div>
@@ -719,7 +741,7 @@ class Game extends Component {
                                             image={landId}
                                             whiteRaven={this.state.whiteRaven}
                                             blackRaven={this.state.blackRaven}
-                                            flipOrSwapClick={this.handleFlipOrSwap}
+                                            landClick={this.handleLandClick}
                                         />
                                     ))}
                                 </div>
@@ -730,85 +752,107 @@ class Game extends Component {
 
                 <Row>
                     <Col size="md-12">
-                   
-                        <div className="row text-center" >
-                            <div className="col-md-2 text-yellow">
+                        <div className="userBoard text-center">
+                            <Row>
+                                <div className="col-md-2 text-yellow">
 
-                                <h3 className="text-yellow mb-2">Your Deck</h3>
-                                <div className="col-sm-6 text-yellow float-left">
+                                    <h3 className="text-yellow mb-2">Your Deck</h3>
+                                    <div className="col-sm-6 text-yellow float-left">
 
-                                    {this.state.myLokiDeck > 0 ? <DrawLoki deckClick={this.drawLoki} /> : null}
-                                    {this.state.myLokiDeck === 0 ?
-                                        <img
-                                            className="emptyLokiDeck shakeCard"
-                                            alt="Draw Loki"
-                                            src="https://res.cloudinary.com/mosjoandy/image/upload/v1530297890/OdinsRavensLandCards/card-15.png" />
-                                        : null}
-                                    <p className="mt-2">Loki &#40;{this.state.myLokiDeck}/9&#41;</p></div>
+                                        {this.state.myLokiDeck > 0 ? <DrawLoki deckClick={this.drawLoki} /> : null}
+                                        {this.state.myLokiDeck === 0 ?
+                                            <img
+                                                className="emptyLokiDeck shakeCard"
+                                                alt="Draw Loki"
+                                                src="https://res.cloudinary.com/mosjoandy/image/upload/v1530297890/OdinsRavensLandCards/card-15.png" />
+                                            : null}
+                                        <p className="mt-2">Loki &#40;{this.state.myLokiDeck}/8&#41;</p></div>
 
-                                <div className="col-sm-6 text-yellow float-right">
-                                    <DrawFlight deckClick={this.drawFlight} />
-                                    <p className="m-2">Flight</p>
-                                </div>
-                            </div>
-
-                            {this.state.showingHand ?
-                                <div className="col-sm-8 text-yellow yourHandBoard">
-                                    <h3 className="pb-2">Your Hand</h3>
-                                    {this.state.playerHand.map((landId, idx) => (
-                                        <FlightCard
-                                            key={idx}
-                                            image={landId}
-                                            cardClick={this.handleCardPlay}
-                                        />
-                                    ))}
-                                </div>
-
-                                : null}
-
-                            {this.state.showingPush ?
-                                <div className="col-sm-8 text-yellow">
-                                    <h4 className="mb-2 mt-4">Whom do you want to push?</h4>
-                                    <div>
-                                        <button type="button" className="button btn pt-4 pb-4 mr-3 ravenPush" onClick={this.oppPush}>Push Opponent Backwards</button>
-                                        <img alt="lokiPush" width="75px" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530300322/cards-2-09.png" />
-                                        <button type="button" className="button btn pt-4 pb-4 ml-3 ravenPush" onClick={this.selfPush}>Push My Raven Forwards</button>
+                                    <div className="col-sm-6 text-yellow float-right">
+                                        <DrawFlight deckClick={this.drawFlight} />
+                                        <p className="m-2">Flight</p>
                                     </div>
                                 </div>
-                                : null}
 
-                            {this.state.showingSwap ?
-                                <div className="col-sm-8 text-yellow">
-                                    <h4 className="mt-2 yourTurn">Please click the two Land Cards you want to <span className="swapCard rounded">swap</span></h4>
-                                    <h4 className="mb-2">(may NOT contain Ravens)</h4>
-                                    <img alt="lokiSwap" width="75px" className="mr-3" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531275974/card-16C.png" />
-                                    <img alt="lokiSwap" width="200px" className="lokiSwapGif rounded" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531276049/LokiSwapGIF.gif" />
-                                </div>
-                                : null}
+                                {this.state.showingHand ?
+                                    <div className="col-sm-8 text-yellow">
+                                        <h3 className="pb-2">Your Hand</h3>
+                                        {this.state.playerHand.map((landId, idx) => (
+                                            <FlightCard
+                                                key={idx}
+                                                image={landId}
+                                                cardClick={this.handleCardPlay}
+                                            />
+                                        ))}
+                                    </div>
 
-                            {this.state.showingFlip ?
-                                <div className="col-sm-8 text-yellow">
-                                    <h4 className="mt-2 yourTurn">Please click the Land Card you want to <span className="swapCard rounded">flip</span></h4>
-                                    <h4 className="mb-2">(may NOT contain Ravens)</h4>
-                                    <img alt="lokiFlip" width="75px" className="mr-3" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531275974/card-17C.png" />
-                                    <img alt="lokiFlip" width="200px" className="lokiFlipGif rounded" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531280104/LokiFlipGifB.gif" />
-                                </div>
-                                : null}
-                            <div className="col-md-2 text-yellow">
-                                <h3 className="text-yellow mb-2">Opponent's hand</h3>
+                                    : null}
 
-                                <div className="col-md-6 text-yellow float-left">
-                                    <img className="opponentCardDeck shakeCard" alt="rivalDeckCard" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531349867/opponent-hand.png" />
-                                    <p className="mt-2">Cards: {this.state.opponentHand}</p>
-                                </div>
+                                {this.state.showingPush ?
+                                    <div className="col-sm-8 text-yellow">
+                                        <h4 className="mb-2 mt-4">Whom do you want to push?</h4>
+                                        <div>
+                                            <button type="button" className="button btn pt-4 pb-4 mr-3 ravenPush" onClick={this.oppPush}>Push Opponent Backwards</button>
+                                            <img alt="lokiPush" width="75px" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530300322/cards-2-09.png" />
+                                            <button type="button" className="button btn pt-4 pb-4 ml-3 ravenPush" onClick={this.selfPush}>Push My Raven Forwards</button>
+                                        </div>
+                                    </div>
+                                    : null}
 
-                                <div className="col-md-6 text-yellow float-right">
-                                    <img className="opponentLokiDeck shakeCard" alt="rivalDeckLoki" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530297890/OdinsRavensLandCards/card-12.png" />
-                                    <p className="mt-2">Loki &#40;{this.state.oppLokiDeck}/9&#41;</p>
+                                {this.state.showingDoubleTrouble ?
+                                    <div className="col-sm-8 text-yellow">
+                                        <h4 className="mb-2 mt-4">What do you want to do?</h4>
+                                        <div>
+                                            <button type="button" className="button btn pt-4 pb-4 mr-3 ravenPush" onClick={this.doubleDraw}>Draw Two Cards</button>
+                                            <img alt="lokiDoubleTrouble" width="75px" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530300322/cards-2-08.png" />
+                                            <button type="button" className="button btn pt-4 pb-4 ml-3 ravenPush" onClick={this.addLand}>Add Two Lands</button>
+                                        </div>
+                                    </div>
+                                    : null}
+
+                                {this.state.showingLandAdd ?
+                                    <div className="col-sm-8 text-yellow">
+                                        <h4 className="mb-2 mt-4">Please click the land that you want to add two lands after</h4>
+                                        {/* <div>
+                                            <button type="button" className="button btn pt-4 pb-4 mr-3 ravenPush" onClick={this.doubleDraw}>Draw Two Cards</button>
+                                            <img alt="lokiDoubleTrouble" width="75px" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530300322/cards-2-08.png" />
+                                            <button type="button" className="button btn pt-4 pb-4 ml-3 ravenPush" onClick={this.addLand}>Add Two Lands</button>
+                                        </div> */}
+                                    </div>
+                                    : null}
+
+                                {this.state.showingSwap ?
+                                    <div className="col-sm-8 text-yellow">
+                                        <h4 className="mt-2 yourTurn">Please click the two Land Cards you want to <span className="swapCard rounded">swap</span></h4>
+                                        <h4 className="mb-2">(may NOT contain Ravens)</h4>
+                                        <img alt="lokiSwap" width="75px" className="mr-3" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531275974/card-16C.png" />
+                                        <img alt="lokiSwap" width="200px" className="lokiSwapGif rounded" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531276049/LokiSwapGIF.gif" />
+                                    </div>
+                                    : null}
+
+                                {this.state.showingFlip ?
+                                    <div className="col-sm-8 text-yellow">
+                                        <h4 className="mt-2 yourTurn">Please click the Land Card you want to <span className="swapCard rounded">flip</span></h4>
+                                        <h4 className="mb-2">(may NOT contain Ravens)</h4>
+                                        <img alt="lokiFlip" width="75px" className="mr-3" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531275974/card-17C.png" />
+                                        <img alt="lokiFlip" width="200px" className="lokiFlipGif rounded" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531280104/LokiFlipGifB.gif" />
+                                    </div>
+                                    : null}
+                                <div className="col-md-2 text-yellow">
+                                    <h3 className="text-yellow mb-2">Opponent's hand</h3>
+
+                                    <div className="col-md-6 text-yellow float-left">
+                                        <img className="opponentCardDeck shakeCard" alt="rivalDeckCard" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531349867/opponent-hand.png" />
+                                        <p className="mt-2">Cards: {this.state.opponentHand}</p>
+                                    </div>
+
+                                    <div className="col-md-6 text-yellow float-right">
+                                        <img className="opponentLokiDeck shakeCard" alt="rivalDeckLoki" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530297890/OdinsRavensLandCards/card-12.png" />
+                                        <p className="mt-2">Loki &#40;{this.state.oppLokiDeck}/8&#41;</p>
+                                    </div>
                                 </div>
-                            </div>
+                            </Row>
                         </div>
-         
                     </Col>
                 </Row>
 
