@@ -83,7 +83,7 @@ class Game extends Component {
                 whiteRaven: snap.val().whiteRaven,
                 blackRaven: snap.val().blackRaven
             })
-            if (snap.val().whiteRaven === this.state.completerow.length - 1 ) {//WHITE WINS
+            if (snap.val().whiteRaven === this.state.completerow.length - 1) {//WHITE WINS
                 this.setState({ gameRunning: false, gameWinner: 'white' })
             } else if (snap.val().blackRaven === 0) {//BLACK WINS
                 this.setState({ gameRunning: false, gameWinner: 'black' })
@@ -258,7 +258,7 @@ class Game extends Component {
                         for (let idx = this.state.whiteRaven + 1; idx < 33; idx++) {//LOOPING TO END OF MATCHING TERRAIN
                             if (idx === this.state.completerow.length) {//WHITE RAVEN REACHED THE END
                                 firebase.database().ref(`/games/Game${this.state.gameId}/world/`).update({//UPDATING RAVEN POSITION IN FIREBASE
-                                    whiteRaven: this.state.completerow.length-1
+                                    whiteRaven: this.state.completerow.length - 1
                                 })
                                 break;
                             } else if (snap.val()[idx] !== cardId) {//MATCHING TERRAIN ENDS
@@ -286,7 +286,7 @@ class Game extends Component {
                                 for (let idx = this.state.whiteRaven + 2; idx < 33; idx++) {//LOOPING TO END OF MATCHING TERRAIN
                                     if (idx === this.state.completerow.length) {//WHITE RAVEN REACHED THE END
                                         firebase.database().ref(`/games/Game${this.state.gameId}/world/`).update({//UPDATING RAVEN POSITION IN FIREBASE
-                                            whiteRaven: this.state.completerow-1
+                                            whiteRaven: this.state.completerow - 1
                                         })
                                         break;
                                     } else if (snap.val()[idx] !== snap.val()[idx - 1]) {//MATCHING TERRAIN ENDS
@@ -377,10 +377,10 @@ class Game extends Component {
             }
         } else if (cardId === 5 && this.state.gameRunning && this.state.myTurn && this.state.cardsToDraw === 0) {//SHOWING PUSH OPTION
             this.setState({ showingHand: false, showingPush: true })
-        } else if (cardId === 6 && this.state.gameRunning && this.state.myTurn && this.state.cardsToDraw === 0) {//SHOWING DOUBLETROUBLE OPTION
-            this.setState({ showingHand: false, showingDoubleTrouble: true })
-        } else if (cardId === 7 && this.state.gameRunning && this.state.myTurn && this.state.cardsToDraw === 0) {//SHOWING FLIP OPTIONS
-            this.setState({ showingHand: false, showingFlip: true })
+        } else if (cardId === 6 && this.state.gameRunning && this.state.myTurn && this.state.cardsToDraw === 0) {//ALLOWING DOUBLEDRAW
+            this.doubleDraw()
+        } else if (cardId === 7 && this.state.gameRunning && this.state.myTurn && this.state.cardsToDraw === 0) {//SHOWING FLIP/DESTROY OPTIONS
+            this.setState({ showingHand: false, showingFlipOrDestroy: true })
         } else if (cardId === 8 && this.state.gameRunning && this.state.myTurn && this.state.cardsToDraw === 0) {//SHOWING SWAP OPTIONS
             this.setState({ showingHand: false, showingSwap: true })
         }
@@ -529,8 +529,14 @@ class Game extends Component {
         this.setState({ showingDoubleTrouble: false, showingHand: true, instaDrawing: true, cardsToDraw: this.state.cardsToDraw + 2 })
     }
 
-    addLand = () => {
-        this.setState({ showingDoubleTrouble: false, showingLandAdd: true })
+    // addLand = () => {
+    //     this.setState({ showingDoubleTrouble: false, showingLandAdd: true })
+    // }
+    startingFlip = () => {
+        this.setState({
+            showingFlipOrDestroy: false,
+            showingFlip: true
+        })
     }
 
     handleLandClick = (landIdx) => {
@@ -799,7 +805,18 @@ class Game extends Component {
                                     </div>
                                     : null}
 
-                                {this.state.showingDoubleTrouble ?
+                                {this.state.showingFlipOrDestroy ?
+                                    <div className="col-sm-8 text-yellow">
+                                        <h4 className="mb-2 mt-4">What do you want to do?</h4>
+                                        <div>
+                                            <button type="button" className="button btn pt-4 pb-4 mr-3 ravenPush" onClick={this.startingFlip}>Flip a Land Column</button>
+                                            <img alt="lokiFlipDestroy" width="75px" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530300322/cards-2-07.png" />
+                                            <button type="button" className="button btn pt-4 pb-4 ml-3 ravenPush" onClick={this.selfPush}>Push My Raven Forwards</button>
+                                        </div>
+                                    </div>
+                                    : null}
+
+                                {/* {this.state.showingDoubleTrouble ?
                                     <div className="col-sm-8 text-yellow">
                                         <h4 className="mb-2 mt-4">What do you want to do?</h4>
                                         <div>
@@ -808,18 +825,18 @@ class Game extends Component {
                                             <button type="button" className="button btn pt-4 pb-4 ml-3 ravenPush" onClick={this.addLand}>Add Two Lands</button>
                                         </div>
                                     </div>
-                                    : null}
+                                    : null} */}
 
-                                {this.state.showingLandAdd ?
+                                {/* {this.state.showingLandAdd ?
                                     <div className="col-sm-8 text-yellow">
                                         <h4 className="mb-2 mt-4">Please click the land that you want to add two lands after</h4>
-                                        {/* <div>
+                                        <div>
                                             <button type="button" className="button btn pt-4 pb-4 mr-3 ravenPush" onClick={this.doubleDraw}>Draw Two Cards</button>
                                             <img alt="lokiDoubleTrouble" width="75px" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530300322/cards-2-08.png" />
                                             <button type="button" className="button btn pt-4 pb-4 ml-3 ravenPush" onClick={this.addLand}>Add Two Lands</button>
-                                        </div> */}
+                                        </div>
                                     </div>
-                                    : null}
+                                    : null} */}
 
                                 {this.state.showingSwap ?
                                     <div className="col-sm-8 text-yellow">
