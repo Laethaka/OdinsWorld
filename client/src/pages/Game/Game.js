@@ -501,7 +501,7 @@ class Game extends Component {
     }
 
     oppPush = () => {
-        if (this.state.isPlayer1 && this.state.blackRaven < 31) {
+        if (this.state.isPlayer1 && this.state.blackRaven < this.state.completerow.length-1) {
             firebase.database().ref(`games/Game${this.state.gameId}/world`).update({ blackRaven: this.state.blackRaven + 1 })
             let myHand = this.state.playerHand
             let cutIdx = myHand.indexOf(5)
@@ -539,24 +539,31 @@ class Game extends Component {
         })
     }
 
+    startingDestroy = () => {
+        this.setState({
+            showingFlipOrDestroy: false,
+            showingDestroy: true
+        })
+    }
+
     handleLandClick = (landIdx) => {
         if (landIdx > 15) {//SETTING INDEX VALUE FOR TOP ROW
-            landIdx = 31 - landIdx
+            landIdx = this.state.completerow.length - 1 - landIdx
         }
 
         if (this.state.showingFlip) {//FLIP IS ALLOWED
-            if (landIdx + this.state.whiteRaven !== 31 && landIdx + this.state.blackRaven !== 31 && landIdx !== this.state.whiteRaven && landIdx !== this.state.blackRaven) {//RAVENS ARE NOT ON THIS COLUMN
-                let landPair = [this.state.completerow[landIdx], this.state.completerow[31 - landIdx]]//GATHERING LANDTYPES
+            if (landIdx + this.state.whiteRaven !== this.state.completerow.length-1 && landIdx + this.state.blackRaven !== this.state.completerow.length-1 && landIdx !== this.state.whiteRaven && landIdx !== this.state.blackRaven) {//RAVENS ARE NOT ON THIS COLUMN
+                let landPair = [this.state.completerow[landIdx], this.state.completerow[this.state.completerow.length-1 - landIdx]]//GATHERING LANDTYPES
 
                 let newWorld = this.state.completerow;//COPYING WORLD ARRAY FOR MODIFICATION
                 //INPUTTING NEW LAND VALUES
                 newWorld[landIdx] = landPair[1];
-                newWorld[31 - landIdx] = landPair[0];
+                newWorld[this.state.completerow.length-1 - landIdx] = landPair[0];
 
                 firebase.database().ref(`games/Game${this.state.gameId}/world`).update({
                     completerow: newWorld,
-                    toprow: newWorld.slice(0, 16),
-                    bottomrow: newWorld.slice(16, 32).reverse(),
+                    toprow: newWorld.slice(0, newWorld.length/2),
+                    bottomrow: newWorld.slice(newWorld.length/2, newWorld.length).reverse(),
                 })
 
                 if (this.state.isPlayer1) {
@@ -573,7 +580,7 @@ class Game extends Component {
             }
             this.setState({ showingFlip: false, showingHand: true })//RESETTING DOM
         } else if (this.state.showingSwap) {//SWAP IS ALLOWED
-            if (landIdx + this.state.whiteRaven !== 31 && landIdx + this.state.blackRaven !== 31 && landIdx !== this.state.whiteRaven && landIdx !== this.state.blackRaven) {//RAVENS ARE NOT ON THIS COLUMN
+            if (landIdx + this.state.whiteRaven !== this.state.completerow.length - 1 && landIdx + this.state.blackRaven !== this.state.completerow.length - 1 && landIdx !== this.state.whiteRaven && landIdx !== this.state.blackRaven) {//RAVENS ARE NOT ON THIS COLUMN
                 if (this.state.swapCards.length === 0 || this.state.swapCards.length === 2) {//STARTING SWAP PAIR
                     this.setState({ swapCards: [landIdx] })
                 } else if (this.state.swapCards.length === 1 && landIdx === this.state.swapCards[0]) {//USER CHOOSING TO CANCEL ORIGINAL PICK
@@ -583,20 +590,20 @@ class Game extends Component {
                     tempArr.push(landIdx)
                     this.setState({ swapCards: tempArr, showingSwap: false, showingHand: true })//RESETTING DOM
                     //GATHERING ALL INVOLVED LANDTYPES AND INDICES
-                    let landPairWithIndex1 = [this.state.completerow[this.state.swapCards[0]], this.state.completerow[31 - this.state.swapCards[0]], this.state.swapCards[0]]
-                    let landPairWithIndex2 = [this.state.completerow[this.state.swapCards[1]], this.state.completerow[31 - this.state.swapCards[1]], this.state.swapCards[1]]
+                    let landPairWithIndex1 = [this.state.completerow[this.state.swapCards[0]], this.state.completerow[this.state.completerow.length - 1 - this.state.swapCards[0]], this.state.swapCards[0]]
+                    let landPairWithIndex2 = [this.state.completerow[this.state.swapCards[1]], this.state.completerow[this.state.completerow.length - 1 - this.state.swapCards[1]], this.state.swapCards[1]]
 
                     let newWorld = this.state.completerow;//COPYING WORLD ARRAY FOR MODIFICATION
                     //INPUTTING NEW LAND VALUES
                     newWorld[landPairWithIndex2[2]] = landPairWithIndex1[0];
-                    newWorld[31 - landPairWithIndex2[2]] = landPairWithIndex1[1];
+                    newWorld[this.state.completerow.length - 1 - landPairWithIndex2[2]] = landPairWithIndex1[1];
                     newWorld[landPairWithIndex1[2]] = landPairWithIndex2[0];
-                    newWorld[31 - landPairWithIndex1[2]] = landPairWithIndex2[1];
+                    newWorld[this.state.completerow.length - 1 - landPairWithIndex1[2]] = landPairWithIndex2[1];
 
                     firebase.database().ref(`games/Game${this.state.gameId}/world`).update({
                         completerow: newWorld,
-                        toprow: newWorld.slice(0, 16),
-                        bottomrow: newWorld.slice(16, 32).reverse(),
+                        toprow: newWorld.slice(0, newWorld.length/2),
+                        bottomrow: newWorld.slice(newWorld.length/2, newWorld.length).reverse(),
                     })
 
                     if (this.state.isPlayer1) {
@@ -612,8 +619,42 @@ class Game extends Component {
                     }
                 }
             }
-        } else if (this.state.showingLandAdd) {
+        } else if (this.state.showingDestroy) { //DESTROY IS ALLOWED
+            if (landIdx + this.state.whiteRaven !== this.state.completerow.length - 1 && landIdx + this.state.blackRaven !== this.state.completerow.length - 1  && landIdx !== this.state.whiteRaven && landIdx !== this.state.blackRaven) {//RAVENS ARE NOT ON THIS COLUMN
+                if (landIdx<this.state.whiteRaven && this.state.completerow.length - 1 - landIdx<this.state.whiteRaven) {//WHITE IS PAST BOTH COLUMN INDICES
+                    firebase.database().ref(`games/Game${this.state.gameId}/world`).update({ whiteRaven: this.state.whiteRaven-2 })
+                } else if (landIdx<this.state.whiteRaven && this.state.completerow.length - 1 - landIdx>this.state.whiteRaven) {//WHITE IS BETWEEN COLUMN INDICES
+                    firebase.database().ref(`games/Game${this.state.gameId}/world`).update({ whiteRaven: this.state.whiteRaven-1 })
+                }
 
+                if (landIdx<this.state.blackRaven && this.state.completerow.length - 1 - landIdx<this.state.blackRaven) {//BLACK IS PAST BOTH COLUMN INDICES
+                    firebase.database().ref(`games/Game${this.state.gameId}/world`).update({ blackRaven: this.state.blackRaven-2 })
+                } else if (landIdx<this.state.blackRaven && this.state.completerow.length - 1 - landIdx>this.state.blackRaven) {//BLACK IS BETWEEN COLUMN INDICES
+                    firebase.database().ref(`games/Game${this.state.gameId}/world`).update({ blackRaven: this.state.blackRaven-1 })
+                }
+
+                let wholeWorld = this.state.completerow
+                wholeWorld.splice(this.state.completerow.length - 1 -landIdx,1) //REMOVING BOTTOM LAND FROM ARRAY
+                wholeWorld.splice(landIdx,1) //REMOVING TOP LAND FROM ARRAY
+                firebase.database().ref(`games/Game${this.state.gameId}/world`).update({ 
+                    completerow: wholeWorld,
+                    toprow: wholeWorld.slice(0, wholeWorld.length/2),
+                    bottomrow: wholeWorld.slice(wholeWorld.length/2, wholeWorld.length).reverse()
+                })
+
+                if (this.state.isPlayer1) {
+                    let myHand = this.state.playerHand
+                    let cutIdx = myHand.indexOf(7)
+                    myHand.splice(cutIdx, 1)
+                    firebase.database().ref(`games/Game${this.state.gameId}/decks`).update({ player1Hand: myHand })
+                } else if (this.state.isPlayer2) {
+                    let myHand = this.state.playerHand
+                    let cutIdx = myHand.indexOf(7)
+                    myHand.splice(cutIdx, 1)
+                    firebase.database().ref(`games/Game${this.state.gameId}/decks`).update({ player2Hand: myHand })
+                }
+                this.setState({showingDestroy: false, showingHand: true})
+            }
         }
     }
 
@@ -742,7 +783,7 @@ class Game extends Component {
                                 <div className="img-vert">
                                     {this.state.bottomrow.map((landId, idx) => (
                                         <LandCard
-                                            position={31 - idx}
+                                            position={this.state.completerow.length - 1 - idx}
                                             key={idx}
                                             image={landId}
                                             whiteRaven={this.state.whiteRaven}
@@ -811,7 +852,7 @@ class Game extends Component {
                                         <div>
                                             <button type="button" className="button btn pt-4 pb-4 mr-3 ravenPush" onClick={this.startingFlip}>Flip a Land Column</button>
                                             <img alt="lokiFlipDestroy" width="75px" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530300322/cards-2-07.png" />
-                                            <button type="button" className="button btn pt-4 pb-4 ml-3 ravenPush" onClick={this.selfPush}>Push My Raven Forwards</button>
+                                            <button type="button" className="button btn pt-4 pb-4 ml-3 ravenPush" onClick={this.startingDestroy}>Destroy a Land Column</button>
                                         </div>
                                     </div>
                                     : null}
@@ -827,12 +868,23 @@ class Game extends Component {
 
                                 {this.state.showingFlip ?
                                     <div className="col-sm-8 text-yellow">
-                                        <h4 className="mt-2 yourTurn">Please click the Land Card you want to <span className="swapCard rounded">flip</span></h4>
+                                        <h4 className="mt-2 yourTurn">Please click the land column you want to <span className="swapCard rounded">flip</span></h4>
                                         <h4 className="mb-2">(may NOT contain Ravens)</h4>
                                         <img alt="lokiFlip" width="75px" className="mr-3" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531275974/card-17C.png" />
                                         <img alt="lokiFlip" width="200px" className="lokiFlipGif rounded" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531280104/LokiFlipGifB.gif" />
                                     </div>
                                     : null}
+
+                                {this.state.showingDestroy ?
+                                    <div className="col-sm-8 text-yellow">
+                                        <h4 className="mt-2 yourTurn">Please click the land column you want to <span className="swapCard rounded">destroy</span></h4>
+                                        <h4 className="mb-2">(may NOT contain Ravens)</h4>
+                                        <img alt="lokiFlip" width="75px" className="mr-3" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531275974/card-17C.png" />
+                                        {/* NICK PLEASE ADD DESTROY GIF HERE */}
+                                        {/* <img alt="lokiFlip" width="200px" className="lokiFlipGif rounded" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530300322/cards-2-07.png" /> */}
+                                    </div>
+                                    : null}
+
                                 <div className="col-md-2 text-yellow">
                                     <h3 className="text-yellow mb-2">Opponent's hand</h3>
 
