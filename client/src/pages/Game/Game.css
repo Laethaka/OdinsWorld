@@ -1,8 +1,8 @@
 .game-status-box {
     height: 4.1rem;
     padding: 0.3rem;
-    margin-left: 4rem !important;
-    margin-right: 4rem !important;
+    margin-left: 2rem !important;
+    margin-right: 2rem !important;
 }
 
 .game-status-box img {
@@ -14,7 +14,8 @@
 .game-status-margin {
     margin-top: 2rem !important;
     margin-bottom: 2rem !important;
-    padding-bottom: 1rem;
+    padding-bottom: 1.5rem;
+    
 }
 
 .game-status-box h3 {
@@ -76,8 +77,8 @@ i {
 .toggle {
     position: relative;
     display: block;
-    width: 80px;
-    height: 36px;
+    width: 5rem;
+    height: 10rem;
     border-radius: 50%;
     cursor: pointer;
     /* transform: translate3d(0, 0, 0); */
@@ -162,8 +163,8 @@ i {
 } */
 
 .emptyLokiDeck {
-    width: 80px;
-    height: 160px;
+    width: 5rem;
+    height: 10rem;
 }
 
 .ravenPush, .swapCard, .doubleTrouble{
@@ -178,8 +179,8 @@ i {
 }
 
 .opponentCardDeck, .opponentLokiDeck {
-    width: 80px;
-    height: 160px;
+    width: 5rem;
+    height: 10rem;;
 
 }
 
@@ -265,4 +266,67 @@ i {
     to {
         text-shadow: 0 0 15px rgba(3, 248, 23, 0.884)
         }
+}
+
+@media only screen and (max-width: 1600px) {
+
+    #h3Hands {
+        font-size: 1rem;
+    }
+}
+
+
+#gameBarText {
+    width: 100%;
+}
+
+
+/* Media Queries */
+@media only screen and (max-width: 1600px) {
+
+    #gameBarText {
+        font-size: 1rem;
+    }
+
+}
+
+@media only screen and (max-width: 1440px) {
+
+    #h3Hands{
+        font-size: 0.8125rem;
+    }
+
+    #gameBarText {
+        font-size: 1rem;
+    }
+
+    .opponentCardDeck, .opponentLokiDeck {
+        width: 4rem;
+        height: 8rem;
+    }
+
+    .ravenPush {
+        width: 10rem;
+        white-space: normal;
+        word-wrap: break-word;
+    }
+}
+
+@media only screen and (max-width: 1280px) {
+    .opponentCardDeck, .opponentLokiDeck {
+        width: 3rem;
+        height: 6rem;
+    }
+
+    #gameBarText {
+        font-size: 0.8125rem;
+    }
+
+    #h3Hands{
+        font-size: 0.625rem;
+    }
+    .landBoard {
+        height: 9rem;
+        margin-bottom: 1rem;
+    }
 }

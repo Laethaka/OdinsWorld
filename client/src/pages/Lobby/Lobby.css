@@ -47,6 +47,20 @@
     overflow-x: auto;
 }
 
+@media screen and (max-width: 1024px) {
+    .users-box {
+        width: 10rem;
+    }
+
+    .chats-box {
+        width: 24rem;
+    }
+
+    .games-box {
+        width: 20rem;
+    }
+}
+
 @media screen and (max-width: 415px) {
 
     .lobby-row{
@@ -59,9 +73,15 @@
         margin: 0 auto;
         /* clear: both; */
     }
-    .users-box {
+    .users-box, .chats-box, .games-box {
         height: 300px;
+        width: 100%;
     }
+
+    .chats-box {
+        height: 40rem;
+    }
+   
     a#joinButton {
         display: block;
         /* margin: 0 auto; */

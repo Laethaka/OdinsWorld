@@ -8,6 +8,7 @@
     transition: transform .1s ease;
     width: 5rem;
     height: 10rem;
+    text-align: center;
 }
 
 .drawLokiDeck:hover {
@@ -17,4 +18,18 @@
 
 .drawLokiDeck:active {
     transform: scale(1.3)
+}
+
+@media only screen and (max-width: 1440px) {
+    .drawLokiDeck {
+        width: 4rem;
+        height: 8rem;
+    }
+}
+
+@media only screen and (max-width: 1280px) {
+    .drawLokiDeck {
+        width: 3rem;
+        height: 6rem;
+    }
 }

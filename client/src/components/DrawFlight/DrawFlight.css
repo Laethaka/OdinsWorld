@@ -18,3 +18,17 @@
 .drawFlightDeck:active {
     transform: scale(1.3)
 }
+
+@media only screen and (max-width: 1440px) {
+    .drawFlightDeck {
+        width: 4rem;
+        height: 8rem;
+    }
+}
+
+@media only screen and (max-width: 1280px) {
+    .drawFlightDeck {
+        width: 3rem;
+        height: 6rem;
+    }
+}

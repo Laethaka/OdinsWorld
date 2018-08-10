@@ -26,3 +26,16 @@
 .glowLand {
     animation: glowing 4000ms infinite;
 }
+
+@media only screen and (max-width: 1440px) {
+    .landCardWorld {
+        width: 4rem;
+        
+    }
+}
+
+@media only screen and (max-width: 1280px) {
+    .landCardWorld {
+        width: 3rem;
+    }
+}

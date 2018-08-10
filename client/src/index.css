@@ -4,8 +4,8 @@ body {
   background-image: url("../../client/src/components/Images/table-backgrond-3.png");
   /* background-repeat: repeat-x; */
   background-position: center;
-  background-repeat: repeat-x;
   background-size: cover;
+  
   height: 100%;
  }
 
@@ -69,5 +69,3 @@ p {
   padding-left: 0px;
 
 } */
-
-

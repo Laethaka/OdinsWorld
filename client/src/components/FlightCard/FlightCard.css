@@ -21,3 +21,17 @@
     60% { box-shadow: 0 0 80px rgba(248, 162, 3, 0.75); }
     100% { box-shadow: 0 0 25px rgba(248, 162, 3, 0.75); }
 }
+
+@media only screen and (max-width: 1440px) {
+    .flightCardHand {
+        width: 4rem;
+        height: 8rem;
+    }
+}
+
+@media only screen and (max-width: 1280px) {
+    .flightCardHand {
+        width: 3rem;
+        height: 6rem;
+    }
+}

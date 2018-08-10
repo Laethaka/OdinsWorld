@@ -24,3 +24,16 @@
     padding-right: 15px;
 }
 
+#navBarLogo2 {
+    display: none;
+ }
+ 
+ @media only screen and (max-width: 1000px) {
+    #navBarLogo1{
+      display: none;
+    }
+
+    #navBarLogo2{
+      display: block;
+    }
+ }
