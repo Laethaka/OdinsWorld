@@ -862,7 +862,7 @@ class Game extends Component {
 
                                 {this.state.showingSwap ?
                                     <div className="col-sm-8 text-yellow">
-                                        <h4 className="mt-2 yourTurn" id="h3Hands">Please click the two Land Cards you want to <span className="swapCard rounded">swap</span></h4>
+                                        <h4 className="yourTurn" id="h3Hands">Please click the two Land Cards you want to <span className="swapCard rounded">swap</span></h4>
                                         <h4 className="mb-2" id="h3Hands">(may NOT contain Ravens)</h4>
                                         <img alt="lokiSwap" width="75px" className="mr-3" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531275974/card-16C.png" />
                                         <img alt="lokiSwap" width="200px" className="lokiSwapGif rounded" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531276049/LokiSwapGIF.gif" />
@@ -871,10 +871,8 @@ class Game extends Component {
 
                                 {this.state.showingFlip ?
                                     <div className="col-sm-8 text-yellow">
-
-                                        <h4 className="mt-2 yourTurn" id="h3Hands">Please click the Land Card you want to <span className="swapCard rounded">flip</span></h4>
+                                        <h4 className="yourTurn" id="h3Hands">Please click the Land Card you want to <span className="swapCard rounded">flip</span></h4>
                                         <h4 className="mb-2" id="h3Hands">(may NOT contain Ravens)</h4>
-
                                         <img alt="lokiFlip" width="75px" className="mr-3" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531275974/card-17C.png" />
                                         <img alt="lokiFlip" width="200px" className="lokiFlipGif rounded" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531280104/LokiFlipGifB.gif" />
                                     </div>
@@ -882,11 +880,10 @@ class Game extends Component {
 
                                 {this.state.showingDestroy ?
                                     <div className="col-sm-8 text-yellow">
-                                        <h4 className="mt-2 yourTurn">Please click the land column you want to <span className="swapCard rounded">destroy</span></h4>
+                                        <h4 className="yourTurn" id="h3Hands">Please click the land column you want to <span className="swapCard rounded">destroy</span></h4>
                                         <h4 className="mb-2">(may NOT contain Ravens)</h4>
                                         <img alt="lokiFlip" width="75px" className="mr-3" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531275974/card-17C.png" />
-                                        {/* NICK PLEASE ADD DESTROY GIF HERE */}
-                                        {/* <img alt="lokiFlip" width="200px" className="lokiFlipGif rounded" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530300322/cards-2-07.png" /> */}
+                                        <img alt="lokiDestroy" width="200px" className="lokiDestroyGif rounded" src="https://res.cloudinary.com/mosjoandy/image/upload/v1534136815/LokiDestroyGif.gif" />
                                     </div>
                                     : null}
 
