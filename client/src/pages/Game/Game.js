@@ -738,7 +738,6 @@ class Game extends Component {
                                     <h3 className="d-flex justify-content-center rounded yourTurn" id="gameBarText">Cards to draw: <span className="cardsToDrawNum">&nbsp;{this.state.cardsToDraw}</span></h3>
                                 </div>
                                 : null}
-
                             {this.state.gameWinner !== null ? <Modal playerNum={player} gameResult={this.state.gameWinner} /> : null}
                             {/* {this.state.gameWinner === 'white' && this.state.isPlayer2 ? <h3 className="d-flex justify-content-center">Defeat</h3> : null}
                             {this.state.gameWinner === 'black' && this.state.isPlayer1 ? <h3 className="d-flex justify-content-center">Defeat</h3> : null}
@@ -765,9 +764,7 @@ class Game extends Component {
                             <label for="cbx" className="toggle"><span><i className="fas fa-music"></i></span></label>
                         </div>
                     </Col>
-
                 </div>
-
                 <Row>
                     <Col size="md-12">
                         <Jumbotron>
@@ -800,13 +797,11 @@ class Game extends Component {
                         </Jumbotron>
                     </Col>
                 </Row>
-
                 <Row>
                     <Col size="md-12">
                         <div className="userBoard text-center">
                             <Row>
                                 <div className="col-md-2 text-yellow">
-
                                     <h3 className="text-yellow mb-2" id="h3Hands">Your Deck</h3>
                                     <div className="col-sm-6 text-yellow float-left">
 
@@ -820,14 +815,12 @@ class Game extends Component {
 
                                         <p className="mt-2" id="h3Hands">Loki &#40;{this.state.myLokiDeck}/8&#41;</p>
                                     </div>
-
                                     <div className="col-sm-6 text-yellow float-right">
                                         <DrawFlight deckClick={this.drawFlight} />
 
                                         <p className="mt-2" id="h3Hands">Flight</p>
                                     </div>
                                 </div>
-
                                 {this.state.showingHand ?
                                     <div className="col-sm-6 text-yellow">
                                         <h3 className="pb-2" id="h3Hands">Your Hand ({this.state.playerHand.length}/7)</h3>
@@ -839,9 +832,7 @@ class Game extends Component {
                                             />
                                         ))}
                                     </div>
-
                                     : null}
-
                                 {this.state.showingPush ?
                                     <div className="col-sm-6 text-yellow">
                                         <h4 className="mb-2" id="h3Hands">Whom do you want to push?</h4>
@@ -852,7 +843,6 @@ class Game extends Component {
                                         </div>
                                     </div>
                                     : null}
-
                                 {this.state.showingFlipOrDestroy ?
                                     <div className="col-sm-6 text-yellow">
                                         <h4 className="mb-2" id="h3Hands">What do you want to do?</h4>
@@ -863,37 +853,30 @@ class Game extends Component {
                                         </div>
                                     </div>
                                     : null}
-
                                 {this.state.showingSwap ?
-                                    <div className="col-sm-6 text-yellow">
-                                        <h4 className="mt-2 yourTurn" id="h3Hands">Please click the two Land Cards you want to <span className="swapCard rounded">swap</span></h4>
+                                    <div className="col-sm-8 text-yellow">
+                                        <h4 className="yourTurn" id="h3Hands">Please click the two Land Cards you want to <span className="swapCard rounded">swap</span></h4>
                                         <h4 className="mb-2" id="h3Hands">(may NOT contain Ravens)</h4>
                                         <img alt="lokiSwap" width="75px" className="mr-3" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531275974/card-16C.png" />
                                         <img alt="lokiSwap" width="200px" className="lokiSwapGif rounded" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531276049/LokiSwapGIF.gif" />
                                     </div>
                                     : null}
-
                                 {this.state.showingFlip ?
-                                    <div className="col-sm-6 text-yellow">
-
-                                        <h4 className="mt-2 yourTurn" id="h3Hands">Please click the Land Card you want to <span className="swapCard rounded">flip</span></h4>
+                                    <div className="col-sm-8 text-yellow">
+                                        <h4 className="yourTurn" id="h3Hands">Please click the Land Card you want to <span className="swapCard rounded">flip</span></h4>
                                         <h4 className="mb-2" id="h3Hands">(may NOT contain Ravens)</h4>
-
                                         <img alt="lokiFlip" width="75px" className="mr-3" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531275974/card-17C.png" />
                                         <img alt="lokiFlip" width="200px" className="lokiFlipGif rounded" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531280104/LokiFlipGifB.gif" />
                                     </div>
                                     : null}
-
                                 {this.state.showingDestroy ?
-                                    <div className="col-sm-6 text-yellow">
-                                        <h4 className="mt-2 yourTurn">Please click the land column you want to <span className="swapCard rounded">destroy</span></h4>
+                                    <div className="col-sm-8 text-yellow">
+                                        <h4 className="yourTurn" id="h3Hands">Please click the land column you want to <span className="swapCard rounded">destroy</span></h4>
                                         <h4 className="mb-2">(may NOT contain Ravens)</h4>
                                         <img alt="lokiFlip" width="75px" className="mr-3" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531275974/card-17C.png" />
-                                        {/* NICK PLEASE ADD DESTROY GIF HERE */}
-                                        {/* <img alt="lokiFlip" width="200px" className="lokiFlipGif rounded" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530300322/cards-2-07.png" /> */}
+                                        <img alt="lokiDestroy" width="200px" className="lokiDestroyGif rounded" src="https://res.cloudinary.com/mosjoandy/image/upload/v1534136815/LokiDestroyGif.gif" />
                                     </div>
                                     : null}
-
                                 <div className="col-md-2 text-yellow">
                                     <h3 className="text-yellow mb-2" id="h3Hands">Opponent's hand</h3>
 
@@ -917,8 +900,8 @@ class Game extends Component {
                 </Row>
 
             </Container>
-                );
-            };
-        };
-        
-        export default Game;
+        );
+    };
+};
+
+export default Game;

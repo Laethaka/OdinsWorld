@@ -150,7 +150,8 @@ i {
 
 .music-checkbox-button {
     position: absolute;
-    top: 20px;
+    top: 22px;
+    right: 10px;
 }
 
 
@@ -205,21 +206,12 @@ i {
     100% { transform: translate(1px, -2px) rotate(-1deg); }
 }
 
-.lokiSwapGif {
+.lokiSwapGif, .lokiFlipGif, .lokiDestroyGif {
     border: 2px rgba(248, 162, 3, 0.884) solid;
     transition: all 0.2s ease;
 }
 
-.lokiSwapGif:hover {
-    transform: scale(2)
-}
-
-.lokiFlipGif {
-    border: 2px rgba(248, 162, 3, 0.884) solid;
-    transition: all 0.2s ease;
-}
-
-.lokiFlipGif:hover {
+.lokiSwapGif:hover, .lokiFlipGif:hover, .lokiDestroyGif:hover {
     transform: scale(2)
 }
 
@@ -268,37 +260,24 @@ i {
         }
 }
 
-@media only screen and (max-width: 1600px) {
-
-    #h3Hands {
-        font-size: 1rem;
-    }
-}
-
-
 #gameBarText {
     width: 100%;
+    font-size: 1.4vw;
 }
 
-
-/* Media Queries */
-@media only screen and (max-width: 1600px) {
-
-    #gameBarText {
-        font-size: 1rem;
-    }
-
+#h3Hands {
+    font-size: 1vw;
 }
 
 @media only screen and (max-width: 1440px) {
 
-    #h3Hands{
-        font-size: 0.8125rem;
-    }
+    /* #h3Hands{
+        font-size: 1.25vw;
+    } */
 
-    #gameBarText {
-        font-size: 1rem;
-    }
+    /* #gameBarText {
+        font-size: 1.5rem;
+    } */
 
     .opponentCardDeck, .opponentLokiDeck {
         width: 4rem;
@@ -310,6 +289,11 @@ i {
         white-space: normal;
         word-wrap: break-word;
     }
+
+    .landBoard {
+        height: 12rem;
+        margin-bottom: 1rem;
+    }
 }
 
 @media only screen and (max-width: 1280px) {
@@ -317,14 +301,15 @@ i {
         width: 3rem;
         height: 6rem;
     }
-
+/* 
     #gameBarText {
-        font-size: 0.8125rem;
-    }
+        font-size: 1.5vw;
+    } */
 
-    #h3Hands{
-        font-size: 0.625rem;
-    }
+    /* #h3Hands{
+        font-size: 1.25vw;
+    } */
+
     .landBoard {
         height: 9rem;
         margin-bottom: 1rem;
