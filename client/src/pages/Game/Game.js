@@ -388,61 +388,8 @@ class Game extends Component {
     }
 
     drawFlight = () => {//USER REQUESTING TO DRAW FLIGHT
-        let newCard = Math.floor(Math.random() * 5)
-        if (this.state.cardsToDraw > 1) {//PLAYER CAN KEEP DRAWING
-
-            if (this.state.isPlayer1) {//ROUTING TO PLAYER 1 HAND
-                firebase.database().ref(`games/Game${this.state.gameId}/decks/player1Hand`).push(newCard)
-            } else {//ROUTING TO PLAYER 2 HAND
-                firebase.database().ref(`games/Game${this.state.gameId}/decks/player2Hand`).push(newCard)
-            }
-            this.setState({ cardsToDraw: this.state.cardsToDraw - 1 });
-        } else if (this.state.cardsToDraw === 1) {//PLAYER DONE DRAWING, SWITCHING GAME TURN
-            if (this.state.isPlayer1) {//ROUTING TO PLAYER 1 HAND
-                firebase.database().ref(`games/Game${this.state.gameId}/decks/player1Hand`).push(newCard)
-            } else {//ROUTING TO PLAYER 2 HAND
-                firebase.database().ref(`games/Game${this.state.gameId}/decks/player2Hand`).push(newCard)
-            }
-            this.setState({ cardsToDraw: 0 });
-            if (!this.state.instaDrawing) { //NORMAL DRAW OVER, SWITCHING TURN
-                if (this.state.isPlayer1 && !this.state.gameRunning) {//FLAGGING PLAYER 1 READY TO START
-                    firebase.database().ref(`games/Game${this.state.gameId}/playerOne/`).update({ ready: true })
-                } else if (this.state.isPlayer2 && !this.state.gameRunning) {//FLAGGING PLAYER 2 READY TO START
-                    firebase.database().ref(`games/Game${this.state.gameId}/playerTwo/`).update({ ready: true })
-                } else if (this.state.isPlayer1 && this.state.gameRunning) {//HANDING ACTIVE TURN TO PLAYER 2
-                    firebase.database().ref(`games/Game${this.state.gameId}/world/`).update({ playerTurn: '2' })
-                } else if (this.state.isPlayer2 && this.state.gameRunning) {//HANDING ACTIVE TURN TO PLAYER 2
-                    firebase.database().ref(`games/Game${this.state.gameId}/world/`).update({ playerTurn: '1' })
-                }
-            } else if (this.state.instaDrawing) {
-                this.setState({ instaDrawing: false })
-            }
-        }
-    };
-
-    drawLoki = () => {//USER REQUESTING TO DRAW LOKI
-        if (this.state.myLokiDeck > 0) {
-
-            let newCard;
-
-            if (this.state.cardsToDraw > 0) {
-                if (this.state.isPlayer1) {//ROUTING TO CHECK PLAYER 1 HAND
-                    firebase.database().ref(`games/Game${this.state.gameId}/decks/player1LokiDeck`).once('value', snap => {
-                        let myLoki = snap.val()
-                        myLoki = Object.values(myLoki)
-                        newCard = myLoki.splice([Math.floor(Math.random() * myLoki.length)], 1)[0]
-                        firebase.database().ref(`games/Game${this.state.gameId}/decks/`).update({ player1LokiDeck: myLoki })
-                    })
-                } else if (this.state.isPlayer2) {//ROUTING TO CHECK PLAYER 2 HAND
-                    firebase.database().ref(`games/Game${this.state.gameId}/decks/player2LokiDeck`).once('value', snap => {
-                        let myLoki = snap.val()
-                        myLoki = Object.values(myLoki)
-                        newCard = myLoki.splice([Math.floor(Math.random() * myLoki.length)], 1)[0]
-                        firebase.database().ref(`games/Game${this.state.gameId}/decks/`).update({ player2LokiDeck: myLoki })
-                    })
-                }
-            }
-
+        if (this.state.gameRunning || this.state.gameReady) {
+            let newCard = Math.floor(Math.random() * 5)
             if (this.state.cardsToDraw > 1) {//PLAYER CAN KEEP DRAWING
 
                 if (this.state.isPlayer1) {//ROUTING TO PLAYER 1 HAND
@@ -451,7 +398,7 @@ class Game extends Component {
                     firebase.database().ref(`games/Game${this.state.gameId}/decks/player2Hand`).push(newCard)
                 }
                 this.setState({ cardsToDraw: this.state.cardsToDraw - 1 });
-            } else if (this.state.cardsToDraw === 1) {//PLAYER DONE DRAWING
+            } else if (this.state.cardsToDraw === 1) {//PLAYER DONE DRAWING, SWITCHING GAME TURN
                 if (this.state.isPlayer1) {//ROUTING TO PLAYER 1 HAND
                     firebase.database().ref(`games/Game${this.state.gameId}/decks/player1Hand`).push(newCard)
                 } else {//ROUTING TO PLAYER 2 HAND
@@ -470,6 +417,63 @@ class Game extends Component {
                     }
                 } else if (this.state.instaDrawing) {
                     this.setState({ instaDrawing: false })
+                }
+            }
+        }
+    };
+
+    drawLoki = () => {//USER REQUESTING TO DRAW LOKI
+        if (this.state.gameRunning || this.state.gameReady) {
+            if (this.state.myLokiDeck > 0) {
+
+                let newCard;
+
+                if (this.state.cardsToDraw > 0) {
+                    if (this.state.isPlayer1) {//ROUTING TO CHECK PLAYER 1 HAND
+                        firebase.database().ref(`games/Game${this.state.gameId}/decks/player1LokiDeck`).once('value', snap => {
+                            let myLoki = snap.val()
+                            myLoki = Object.values(myLoki)
+                            newCard = myLoki.splice([Math.floor(Math.random() * myLoki.length)], 1)[0]
+                            firebase.database().ref(`games/Game${this.state.gameId}/decks/`).update({ player1LokiDeck: myLoki })
+                        })
+                    } else if (this.state.isPlayer2) {//ROUTING TO CHECK PLAYER 2 HAND
+                        firebase.database().ref(`games/Game${this.state.gameId}/decks/player2LokiDeck`).once('value', snap => {
+                            let myLoki = snap.val()
+                            myLoki = Object.values(myLoki)
+                            newCard = myLoki.splice([Math.floor(Math.random() * myLoki.length)], 1)[0]
+                            firebase.database().ref(`games/Game${this.state.gameId}/decks/`).update({ player2LokiDeck: myLoki })
+                        })
+                    }
+                }
+
+                if (this.state.cardsToDraw > 1) {//PLAYER CAN KEEP DRAWING
+
+                    if (this.state.isPlayer1) {//ROUTING TO PLAYER 1 HAND
+                        firebase.database().ref(`games/Game${this.state.gameId}/decks/player1Hand`).push(newCard)
+                    } else {//ROUTING TO PLAYER 2 HAND
+                        firebase.database().ref(`games/Game${this.state.gameId}/decks/player2Hand`).push(newCard)
+                    }
+                    this.setState({ cardsToDraw: this.state.cardsToDraw - 1 });
+                } else if (this.state.cardsToDraw === 1) {//PLAYER DONE DRAWING
+                    if (this.state.isPlayer1) {//ROUTING TO PLAYER 1 HAND
+                        firebase.database().ref(`games/Game${this.state.gameId}/decks/player1Hand`).push(newCard)
+                    } else {//ROUTING TO PLAYER 2 HAND
+                        firebase.database().ref(`games/Game${this.state.gameId}/decks/player2Hand`).push(newCard)
+                    }
+                    this.setState({ cardsToDraw: 0 });
+                    if (!this.state.instaDrawing) { //NORMAL DRAW OVER, SWITCHING TURN
+                        if (this.state.isPlayer1 && !this.state.gameRunning) {//FLAGGING PLAYER 1 READY TO START
+                            firebase.database().ref(`games/Game${this.state.gameId}/playerOne/`).update({ ready: true })
+                        } else if (this.state.isPlayer2 && !this.state.gameRunning) {//FLAGGING PLAYER 2 READY TO START
+                            firebase.database().ref(`games/Game${this.state.gameId}/playerTwo/`).update({ ready: true })
+                        } else if (this.state.isPlayer1 && this.state.gameRunning) {//HANDING ACTIVE TURN TO PLAYER 2
+                            firebase.database().ref(`games/Game${this.state.gameId}/world/`).update({ playerTurn: '2' })
+                        } else if (this.state.isPlayer2 && this.state.gameRunning) {//HANDING ACTIVE TURN TO PLAYER 2
+                            firebase.database().ref(`games/Game${this.state.gameId}/world/`).update({ playerTurn: '1' })
+                        }
+                    } else if (this.state.instaDrawing) {
+                        this.setState({ instaDrawing: false })
+                    }
                 }
             }
         }
@@ -501,7 +505,7 @@ class Game extends Component {
     }
 
     oppPush = () => {
-        if (this.state.isPlayer1 && this.state.blackRaven < this.state.completerow.length-1) {
+        if (this.state.isPlayer1 && this.state.blackRaven < this.state.completerow.length - 1) {
             firebase.database().ref(`games/Game${this.state.gameId}/world`).update({ blackRaven: this.state.blackRaven + 1 })
             let myHand = this.state.playerHand
             let cutIdx = myHand.indexOf(5)
@@ -552,18 +556,18 @@ class Game extends Component {
         }
 
         if (this.state.showingFlip) {//FLIP IS ALLOWED
-            if (landIdx + this.state.whiteRaven !== this.state.completerow.length-1 && landIdx + this.state.blackRaven !== this.state.completerow.length-1 && landIdx !== this.state.whiteRaven && landIdx !== this.state.blackRaven) {//RAVENS ARE NOT ON THIS COLUMN
-                let landPair = [this.state.completerow[landIdx], this.state.completerow[this.state.completerow.length-1 - landIdx]]//GATHERING LANDTYPES
+            if (landIdx + this.state.whiteRaven !== this.state.completerow.length - 1 && landIdx + this.state.blackRaven !== this.state.completerow.length - 1 && landIdx !== this.state.whiteRaven && landIdx !== this.state.blackRaven) {//RAVENS ARE NOT ON THIS COLUMN
+                let landPair = [this.state.completerow[landIdx], this.state.completerow[this.state.completerow.length - 1 - landIdx]]//GATHERING LANDTYPES
 
                 let newWorld = this.state.completerow;//COPYING WORLD ARRAY FOR MODIFICATION
                 //INPUTTING NEW LAND VALUES
                 newWorld[landIdx] = landPair[1];
-                newWorld[this.state.completerow.length-1 - landIdx] = landPair[0];
+                newWorld[this.state.completerow.length - 1 - landIdx] = landPair[0];
 
                 firebase.database().ref(`games/Game${this.state.gameId}/world`).update({
                     completerow: newWorld,
-                    toprow: newWorld.slice(0, newWorld.length/2),
-                    bottomrow: newWorld.slice(newWorld.length/2, newWorld.length).reverse(),
+                    toprow: newWorld.slice(0, newWorld.length / 2),
+                    bottomrow: newWorld.slice(newWorld.length / 2, newWorld.length).reverse(),
                 })
 
                 if (this.state.isPlayer1) {
@@ -602,8 +606,8 @@ class Game extends Component {
 
                     firebase.database().ref(`games/Game${this.state.gameId}/world`).update({
                         completerow: newWorld,
-                        toprow: newWorld.slice(0, newWorld.length/2),
-                        bottomrow: newWorld.slice(newWorld.length/2, newWorld.length).reverse(),
+                        toprow: newWorld.slice(0, newWorld.length / 2),
+                        bottomrow: newWorld.slice(newWorld.length / 2, newWorld.length).reverse(),
                     })
 
                     if (this.state.isPlayer1) {
@@ -620,26 +624,26 @@ class Game extends Component {
                 }
             }
         } else if (this.state.showingDestroy) { //DESTROY IS ALLOWED
-            if (landIdx + this.state.whiteRaven !== this.state.completerow.length - 1 && landIdx + this.state.blackRaven !== this.state.completerow.length - 1  && landIdx !== this.state.whiteRaven && landIdx !== this.state.blackRaven) {//RAVENS ARE NOT ON THIS COLUMN
-                if (landIdx<this.state.whiteRaven && this.state.completerow.length - 1 - landIdx<this.state.whiteRaven) {//WHITE IS PAST BOTH COLUMN INDICES
-                    firebase.database().ref(`games/Game${this.state.gameId}/world`).update({ whiteRaven: this.state.whiteRaven-2 })
-                } else if (landIdx<this.state.whiteRaven && this.state.completerow.length - 1 - landIdx>this.state.whiteRaven) {//WHITE IS BETWEEN COLUMN INDICES
-                    firebase.database().ref(`games/Game${this.state.gameId}/world`).update({ whiteRaven: this.state.whiteRaven-1 })
+            if (landIdx + this.state.whiteRaven !== this.state.completerow.length - 1 && landIdx + this.state.blackRaven !== this.state.completerow.length - 1 && landIdx !== this.state.whiteRaven && landIdx !== this.state.blackRaven) {//RAVENS ARE NOT ON THIS COLUMN
+                if (landIdx < this.state.whiteRaven && this.state.completerow.length - 1 - landIdx < this.state.whiteRaven) {//WHITE IS PAST BOTH COLUMN INDICES
+                    firebase.database().ref(`games/Game${this.state.gameId}/world`).update({ whiteRaven: this.state.whiteRaven - 2 })
+                } else if (landIdx < this.state.whiteRaven && this.state.completerow.length - 1 - landIdx > this.state.whiteRaven) {//WHITE IS BETWEEN COLUMN INDICES
+                    firebase.database().ref(`games/Game${this.state.gameId}/world`).update({ whiteRaven: this.state.whiteRaven - 1 })
                 }
 
-                if (landIdx<this.state.blackRaven && this.state.completerow.length - 1 - landIdx<this.state.blackRaven) {//BLACK IS PAST BOTH COLUMN INDICES
-                    firebase.database().ref(`games/Game${this.state.gameId}/world`).update({ blackRaven: this.state.blackRaven-2 })
-                } else if (landIdx<this.state.blackRaven && this.state.completerow.length - 1 - landIdx>this.state.blackRaven) {//BLACK IS BETWEEN COLUMN INDICES
-                    firebase.database().ref(`games/Game${this.state.gameId}/world`).update({ blackRaven: this.state.blackRaven-1 })
+                if (landIdx < this.state.blackRaven && this.state.completerow.length - 1 - landIdx < this.state.blackRaven) {//BLACK IS PAST BOTH COLUMN INDICES
+                    firebase.database().ref(`games/Game${this.state.gameId}/world`).update({ blackRaven: this.state.blackRaven - 2 })
+                } else if (landIdx < this.state.blackRaven && this.state.completerow.length - 1 - landIdx > this.state.blackRaven) {//BLACK IS BETWEEN COLUMN INDICES
+                    firebase.database().ref(`games/Game${this.state.gameId}/world`).update({ blackRaven: this.state.blackRaven - 1 })
                 }
 
                 let wholeWorld = this.state.completerow
-                wholeWorld.splice(this.state.completerow.length - 1 -landIdx,1) //REMOVING BOTTOM LAND FROM ARRAY
-                wholeWorld.splice(landIdx,1) //REMOVING TOP LAND FROM ARRAY
-                firebase.database().ref(`games/Game${this.state.gameId}/world`).update({ 
+                wholeWorld.splice(this.state.completerow.length - 1 - landIdx, 1) //REMOVING BOTTOM LAND FROM ARRAY
+                wholeWorld.splice(landIdx, 1) //REMOVING TOP LAND FROM ARRAY
+                firebase.database().ref(`games/Game${this.state.gameId}/world`).update({
                     completerow: wholeWorld,
-                    toprow: wholeWorld.slice(0, wholeWorld.length/2),
-                    bottomrow: wholeWorld.slice(wholeWorld.length/2, wholeWorld.length).reverse()
+                    toprow: wholeWorld.slice(0, wholeWorld.length / 2),
+                    bottomrow: wholeWorld.slice(wholeWorld.length / 2, wholeWorld.length).reverse()
                 })
 
                 if (this.state.isPlayer1) {
@@ -653,7 +657,7 @@ class Game extends Component {
                     myHand.splice(cutIdx, 1)
                     firebase.database().ref(`games/Game${this.state.gameId}/decks`).update({ player2Hand: myHand })
                 }
-                this.setState({showingDestroy: false, showingHand: true})
+                this.setState({ showingDestroy: false, showingHand: true })
             }
         }
     }
@@ -805,7 +809,7 @@ class Game extends Component {
 
                                     <h3 className="text-yellow mb-2" id="h3Hands">Your Deck</h3>
                                     <div className="col-sm-6 text-yellow float-left">
-                                        
+
                                         {this.state.myLokiDeck > 0 ? <DrawLoki deckClick={this.drawLoki} /> : null}
                                         {this.state.myLokiDeck === 0 ?
                                             <img
@@ -813,20 +817,20 @@ class Game extends Component {
                                                 alt="Draw Loki"
                                                 src="https://res.cloudinary.com/mosjoandy/image/upload/v1530297890/OdinsRavensLandCards/card-15.png" />
                                             : null}
-                                      
+
                                         <p className="mt-2" id="h3Hands">Loki &#40;{this.state.myLokiDeck}/8&#41;</p>
                                     </div>
 
                                     <div className="col-sm-6 text-yellow float-right">
                                         <DrawFlight deckClick={this.drawFlight} />
-                                        
+
                                         <p className="mt-2" id="h3Hands">Flight</p>
                                     </div>
                                 </div>
 
                                 {this.state.showingHand ?
-                                    <div className="col-sm-8 text-yellow">
-                                        <h3 className="pb-2" id="h3Hands">Your Hand</h3>
+                                    <div className="col-sm-6 text-yellow">
+                                        <h3 className="pb-2" id="h3Hands">Your Hand ({this.state.playerHand.length}/7)</h3>
                                         {this.state.playerHand.map((landId, idx) => (
                                             <FlightCard
                                                 key={idx}
@@ -839,7 +843,7 @@ class Game extends Component {
                                     : null}
 
                                 {this.state.showingPush ?
-                                    <div className="col-sm-8 text-yellow">
+                                    <div className="col-sm-6 text-yellow">
                                         <h4 className="mb-2" id="h3Hands">Whom do you want to push?</h4>
                                         <div>
                                             <button type="button" className="button btn pt-4 pb-4 mr-3 ravenPush" onClick={this.oppPush}>Push Opponent Backwards</button>
@@ -850,7 +854,7 @@ class Game extends Component {
                                     : null}
 
                                 {this.state.showingFlipOrDestroy ?
-                                    <div className="col-sm-8 text-yellow">
+                                    <div className="col-sm-6 text-yellow">
                                         <h4 className="mb-2" id="h3Hands">What do you want to do?</h4>
                                         <div>
                                             <button type="button" className="button btn pt-4 pb-4 mr-3 ravenPush" onClick={this.startingFlip}>Flip a Land Column</button>
@@ -861,7 +865,7 @@ class Game extends Component {
                                     : null}
 
                                 {this.state.showingSwap ?
-                                    <div className="col-sm-8 text-yellow">
+                                    <div className="col-sm-6 text-yellow">
                                         <h4 className="mt-2 yourTurn" id="h3Hands">Please click the two Land Cards you want to <span className="swapCard rounded">swap</span></h4>
                                         <h4 className="mb-2" id="h3Hands">(may NOT contain Ravens)</h4>
                                         <img alt="lokiSwap" width="75px" className="mr-3" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531275974/card-16C.png" />
@@ -870,7 +874,7 @@ class Game extends Component {
                                     : null}
 
                                 {this.state.showingFlip ?
-                                    <div className="col-sm-8 text-yellow">
+                                    <div className="col-sm-6 text-yellow">
 
                                         <h4 className="mt-2 yourTurn" id="h3Hands">Please click the Land Card you want to <span className="swapCard rounded">flip</span></h4>
                                         <h4 className="mb-2" id="h3Hands">(may NOT contain Ravens)</h4>
@@ -881,7 +885,7 @@ class Game extends Component {
                                     : null}
 
                                 {this.state.showingDestroy ?
-                                    <div className="col-sm-8 text-yellow">
+                                    <div className="col-sm-6 text-yellow">
                                         <h4 className="mt-2 yourTurn">Please click the land column you want to <span className="swapCard rounded">destroy</span></h4>
                                         <h4 className="mb-2">(may NOT contain Ravens)</h4>
                                         <img alt="lokiFlip" width="75px" className="mr-3" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531275974/card-17C.png" />
@@ -903,14 +907,18 @@ class Game extends Component {
                                         <p className="mt-2" id="h3Hands">Loki &#40;{this.state.oppLokiDeck}/8&#41;</p>
                                     </div>
                                 </div>
+
+                                <div className="col-md-2 text-yellow">
+                                
+                                </div>
                             </Row>
                         </div>
                     </Col>
                 </Row>
 
             </Container>
-        );
-    };
-};
-
-export default Game;
+                );
+            };
+        };
+        
+        export default Game;
