@@ -858,9 +858,9 @@ class Game extends Component {
                                     <div className="col-sm-6 text-yellow">
                                         <h4 className="mb-2" id="h3Hands">Whom do you want to push?</h4>
                                         <div>
-                                            <button type="button" className="button btn pt-4 pb-4 mr-3 ravenPush" onClick={this.oppPush}>Push Opponent Backwards</button>
-                                            <img alt="lokiPush" width="75px" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530300322/cards-2-09.png" />
-                                            <button type="button" className="button btn pt-4 pb-4 ml-3 ravenPush" onClick={this.selfPush}>Push My Raven Forwards</button>
+                                            <button type="button" className="button btn pt-4 pb-4 mr-1 ravenPush" onClick={this.oppPush}>Push Opponent Backwards</button>
+                                            {/* <img alt="lokiPush" width="75px" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530300322/cards-2-09.png" /> */}
+                                            <button type="button" className="button btn pt-4 pb-4 ml-1 ravenPush" onClick={this.selfPush}>Push My Raven Forwards</button>
                                         </div>
                                     </div>
                                     : null}
@@ -868,9 +868,9 @@ class Game extends Component {
                                     <div className="col-sm-6 text-yellow">
                                         <h4 className="mb-2" id="h3Hands">What do you want to do?</h4>
                                         <div>
-                                            <button type="button" className="button btn pt-4 pb-4 mr-3 ravenPush" onClick={this.startingFlip}>Flip a Land Column</button>
-                                            <img alt="lokiFlipDestroy" width="75px" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530300322/cards-2-07.png" />
-                                            <button type="button" className="button btn pt-4 pb-4 ml-3 ravenPush" onClick={this.startingDestroy}>Destroy a Land Column</button>
+                                            <button type="button" className="button btn pt-4 pb-4 mr-1 ravenPush" onClick={this.startingFlip}>Flip a Land Column</button>
+                                            {/* <img alt="lokiFlipDestroy" width="75px" src="https://res.cloudinary.com/mosjoandy/image/upload/v1530300322/cards-2-07.png" /> */}
+                                            <button type="button" className="button btn pt-4 pb-4 ml-1 ravenPush" onClick={this.startingDestroy}>Destroy a Land Column</button>
                                         </div>
                                     </div>
                                     : null}
@@ -893,7 +893,7 @@ class Game extends Component {
                                 {this.state.showingDestroy ?
                                     <div className="col-sm-6 text-yellow">
                                         <h4 className="yourTurn" id="h3Hands">Please click the land column you want to <span className="swapCard rounded">destroy</span></h4>
-                                        <h4 className="mb-2">(may NOT contain Ravens)</h4>
+                                        <h4 className="mb-2" id="h3Hands">(may NOT contain Ravens)</h4>
                                         <img alt="lokiFlip" width="75px" className="mr-3" src="https://res.cloudinary.com/mosjoandy/image/upload/v1531275974/card-17C.png" />
                                         <img alt="lokiDestroy" width="200px" className="lokiDestroyGif rounded" src="https://res.cloudinary.com/mosjoandy/image/upload/v1534136815/LokiDestroyGif.gif" />
                                     </div>
