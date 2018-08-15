@@ -763,11 +763,13 @@ class Game extends Component {
                         </div>
                     </Col>
                     <Col size="md-3">
-                        <div className="game-status-box d-flex justify-content-right text-center">
+                    {this.state.showingPush || this.state.showingFlipOrDestroy || this.state.showingSwap || this.state.showingFlip || this.state.showingDestroy ? 
+                        <div></div>
+                        : <div className="game-status-box d-flex justify-content-right text-center">
                             {this.state.isPlayer1 && this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
                             {this.state.isPlayer2 && this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
                             {this.state.gameWinner !== null ? <a type="btn" className="btn button pr-4 pl-4 returnLobbyButton button-back-lobb" href="/lobby/">Back to Lobby</a> : null}
-                        </div>
+                        </div> }
                     </Col>
                     <Col size="md-1">
                         <audio
@@ -851,6 +853,7 @@ class Game extends Component {
                                         ))}
                                     </div>
                                     : null}
+
                                 {this.state.showingPush ?
                                     <div className="col-sm-6 text-yellow">
                                         <h4 className="mb-2" id="h3Hands">Whom do you want to push?</h4>
