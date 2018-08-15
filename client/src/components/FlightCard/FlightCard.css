@@ -35,3 +35,11 @@
         height: 6rem;
     }
 }
+
+@media only screen and (max-width: 1024px) {
+    .flightCardHand {
+        width: 2.5rem;
+        height: 5rem;
+    }
+}
+
