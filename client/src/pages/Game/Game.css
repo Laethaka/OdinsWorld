@@ -159,9 +159,19 @@ i {
     box-shadow: none;
 }
 
-/* .returnLobbyButton {
-    box-shadow: 0px 0px 70px 4px rgba(248, 162, 3, 0.75);
-} */
+.returnLobbyButton {
+    height: 40px;
+    width: 170px;
+    font-size: 16px;
+    position: absolute;
+    top: 20px;
+    left: 15px;
+}
+
+
+.ravenPush {
+    font-size: 16px;
+}
 
 .emptyLokiDeck {
     width: 5rem;
