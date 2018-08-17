@@ -45,7 +45,7 @@ class Modal extends Component {
             )
         }
     }
-    
+
     handleClose = () => {
         this.setState({ open: false });
 
@@ -55,7 +55,7 @@ class Modal extends Component {
         console.log('check', this.props)
         return (
             <div >
-                <Dialog 
+                <Dialog
                     open={this.state.open}
                     TransitionComponent={Transition}
                     keepMounted
@@ -65,17 +65,17 @@ class Modal extends Component {
                     classes={{
                         paper: "info-background"
                     }}
-                    >
+                >
                     <DialogTitle id="alert-dialog-slide-title">
                         {"  "}
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-slide-description">
-                        {this.props.playerNum === this.props.gameResult ? <h1 className="modal-content">{this.state.winner}</h1> : <h1 className="modal-content">{this.state.loser}</h1>}
+                            {this.props.playerNum === this.props.gameResult ? <h1 className="modal-content">{this.state.winner}</h1> : <h1 className="modal-content">{this.state.loser}</h1>}
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <a type="btn" className="btn button pr-4 pl-4 returnLobbyButton button-back-lobb mx-auto" href={"/Lobby"}>Back to Lobby</a>
+                        <a type="btn" className="btn button pr-4 pl-4 button-back-lobb mx-auto" id="vdbutton" href={"/Lobby"}>Back to Lobby</a>
                     </DialogActions>
                     {this.soundRender()}
                 </Dialog>
