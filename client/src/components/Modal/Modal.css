@@ -8,6 +8,10 @@
     border: none;
 }
 
+#vdbutton {
+    margin: 0 auto;    
+}
+
 @keyframes rowing {
     0% { box-shadow: 0 0 10px rgba(248, 162, 3, 0.884); }
     40% { box-shadow: 0 0 40px rgba(248, 162, 3, 0.884); }
