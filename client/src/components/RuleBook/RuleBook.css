@@ -156,18 +156,52 @@ td > p {
 	font-weight: lighter;
 }
 
-.page-1 img {
+#page-2 img {
 	margin-top: 1.1rem;
 	width: 4.1rem;
 }
 
-#img-loop-1 {
-	width: 9rem;
-}
-
-#img-loop-2 {
+#page-4 .img-1 {
 	width: 23rem;
 }
+
+#page-4 .img-2 {
+	width: 12rem;
+	margin-top: 1.1rem;
+}
+
+#page-5 img {
+	width: 19rem;
+	margin-top: 1.5rem;
+}
+
+#page-6 img {
+	width: 19rem;
+	margin-top: 1.5rem;
+}
+
+#page-6 p {
+	margin-top: 4.5rem;
+}
+
+#page-8 p {
+	margin-top: 4.5rem;	
+}
+
+#page-9 img {
+	border-radius: 0.4rem;
+}
+
+#page-10 img {
+	width: 21rem;
+	border-radius: 0.4rem;
+}
+
+#page-11 img {
+	width: 18rem;
+	border-radius: 0.4rem;
+}
+
 
 .table-width {
 	width: 100%;
@@ -189,6 +223,14 @@ td > p {
 	font-family: 'Averia Serif Libre', cursive;
 }
 
+/* .loki-card-text tr {
+	width: 12rem;
+} */
+
+.loki-card-text td {
+	width: 12rem;
+}
+
 .enter-draw-phase {
 	width: 400px;
 }
@@ -197,6 +239,4 @@ td > p {
 	width: 230px;
 }
 
-.page6, .page7 {
-	width: 20em;
-}
+
