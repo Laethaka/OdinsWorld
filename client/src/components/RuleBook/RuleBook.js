@@ -10,6 +10,7 @@ const RuleBook = () => {
 			<div id="loading" className="loading">Loading pages...</div>
 			<div id="mybook" style={{ "display": "none" }}>
 				<div className="b-load">
+				{/* Page One */}
 					<div className="text-center">
 						<h2>Welcome to Odin's World</h2>
 						<p><span className="firstcharacter">E</span>very morning Odin sends his ravens, <span className="bold-text">Huginn</span> & <span className="bold-text">Munian</span>, across the world to bring back news of life on Earth. Naturally, after many millennia, they've become competitive...</p>
@@ -30,6 +31,7 @@ const RuleBook = () => {
 						</div>
 					</div>
 
+				{/* Page Two */}
 					<div className="text-center">
 						<h2>Game Cards</h2>
 						<p>Land Cards have 5 types: Mountain, River, Plain, Forest & Desert. Flight Cards are played
@@ -52,6 +54,7 @@ const RuleBook = () => {
 
 					</div>
 
+				{/* Page Three */}
 					<div className="page-3 text-center">
 						<h2>Goal</h2>
 						<p>Let the racing begin!</p>
@@ -61,6 +64,7 @@ const RuleBook = () => {
 						<img alt="loop1" id="img-loop-1" src={require('../../components/Images/loop-1.png')} />
 					</div>
 
+				{/* Page Four */}
 					<div className="text-center">
 						<h2>Flying</h2>
 						<p>Clicking on the appropriate <span className="bold-text">Flight Card</span> will move the Raven as many Lands that match in a row.
@@ -70,6 +74,8 @@ const RuleBook = () => {
 						<img alt="rb-loop2" id="img-loop-1" src={require('../../components/Images/ex-2.png')} />
 					</div>
 					<div className="page-4 text-center">
+				
+				{/* Page Five */}
 						<h2>Trickery</h2>
 
 						<p>Players may draw <span className="bold-text">Loki Cards</span> during Draw Phase. Loki Cards cannot be used on a land with a raven on it. When used, they are removed from the game.</p>
@@ -94,7 +100,7 @@ const RuleBook = () => {
 
 					</div>
 
-
+				{/* Page Six */}
 					<div className="page-5 text-center">
 						<h2>Play Begins!</h2>
 						<p>When both players have connected to the game, each player will draw 5
@@ -104,6 +110,7 @@ const RuleBook = () => {
 					will begin.</p>
 					</div>
 
+				{/* Page Seven */}
 					<div className="page-6 text-center">
 						<h2>Play Phase</h2>
 
@@ -114,6 +121,7 @@ const RuleBook = () => {
 					can click the "Enter Draw Phase" button</p>
 					</div>
 
+				{/* Page Eight */}
 					<div className="page-7 text-center">
 						<h2>Draw Phase</h2>
 						<p>Once in the "Draw Phase", the player may draw 3 new cards from either their Flight or Loki Decks.</p>
@@ -122,12 +130,15 @@ const RuleBook = () => {
 
 					</div>
 
+				{/* Page Nine */}
 					<div className="page-7 text-center">
 						<h2>Ending The Game</h2>
 						<p>Any raven that traverses the entire world and completes the loop will
 					be declared the winner.</p>
 						<img alt="completetrack" className="win-phase" src={require('../../components/Images/loop-3.png')} />
 					</div>
+
+				{/* Page Ten */}
 					<div>
 						<h2>Orginal Credits:</h2>
 						<ul className="margin-left">
@@ -138,19 +149,27 @@ const RuleBook = () => {
 							<li><p>2015 Thorsten Gimmler & Osprey Publishing Ltd.</p></li>
 						</ul>
 					</div>
+
+				{/* Page Eleven */}
 					<div>
 						<h2>Digital Credits: </h2>
 						<ul className="margin-left">
 							<li><p>Jesse Lofland</p></li>
 							<li><p>Maria Ortero</p></li>
 							<li><p>Nicholas Chan</p></li>
-							<p>Special Thanks:</p>
+							<p><b>Special Thanks: </b></p>
 							<li><p>Jerauld Manansala</p></li>
 							<li><p>Mel Hsieh</p></li>
 							<li><p>Berkeley Coding Bootcamp</p></li>
 							<li><p>2018</p></li>
 						</ul>
 					</div>
+
+				{/* Page Twelve */}
+					<div>
+					{/* Add in something nice and a go to lobby button */}
+					</div>
+
 				</div>
 			</div>
 		</div>
