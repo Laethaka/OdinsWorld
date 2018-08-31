@@ -23,8 +23,8 @@ const RuleBook = () => {
 										<td><img alt="coin-image2" src={require('../../components/Images/coin-2.png')} /></td>
 									</tr>
 									<tr className="text-center">
-										<td><p className="bold-text">Raven Huginn</p><p>Player 1</p></td>
-										<td><p className="bold-text">Raven Muninn</p><p>Player 2</p></td>
+										<td><p className="bold-text">Raven Huginn</p><p>White Raven</p></td>
+										<td><p className="bold-text">Raven Muninn</p><p>Dark Raven</p></td>
 									</tr>
 								</tbody>
 							</table>
