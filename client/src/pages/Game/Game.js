@@ -5,7 +5,7 @@ import "./Game.css";
 
 // Firebase
 import firebase from '../../firebase'
-
+ 
 // Card components
 import LandCard from "../../components/LandCard";
 import landcard from "../../components/LandCard/landcard.json";
@@ -25,6 +25,8 @@ class Game extends Component {
         toprow: [],
         bottomrow: [],
         cardsToDraw: 0,
+        playerOneName: "",
+        playerTwoName: "",
         gameReady: false,
         gameRunning: false,
         playerHand: [],
@@ -75,6 +77,12 @@ class Game extends Component {
         });
 
         //LISTENING FOR WORLD CHANGES AND UPDATING STATE
+        database.ref(`/games/Game${props.gameId}/playerOne/`).on('value', snap => {
+            this.setState({ playerOneName: snap.val().name })
+        });
+        database.ref(`/games/Game${props.gameId}/playerTwo/`).on('value', snap => {
+            this.setState({ playerTwoName: snap.val().name })
+        });
         database.ref(`/games/Game${props.gameId}/world`).on('value', snap => {
             this.setState({
                 completerow: snap.val().completerow,
@@ -191,7 +199,13 @@ class Game extends Component {
             ready: false,
         })
         //LOCAL PLAYER VARS SETUP
-        this.setState({ isPlayer1: true, cardsToDraw: 5, gameReady: true })
+        this.setState({ isPlayer1: true, cardsToDraw: 5, gameReady: true });
+
+        // firebase.database().ref(`/games/Game${this.state.gameId}/playerOne`).once('value', snap => {
+        //     console.log(snap.val().name)
+        //     this.setState({ playerOneName: (snap.val().name) })
+        // });
+
         //DISCONNECT LISTENING
         const presenceRef = firebase.database().ref(`games/Game${this.state.gameId}/playerOne/`);
         presenceRef.onDisconnect().set({
@@ -211,12 +225,19 @@ class Game extends Component {
         //LOCAL PLAYER VARS SETUP
         this.setState({ isPlayer2: true, cardsToDraw: 5 })
 
+        // firebase.database().ref(`/games/Game${this.state.gameId}/playerTwo`).once('value', snap => {
+        //     console.log(snap.val().name)
+        //     this.setState({ playerTwoName: (snap.val().name) })
+        //     console.log(this.state.playerOneName)
+        // });
+
         //DISCONNECT LISTENING
         var presenceRef = firebase.database().ref(`games/Game${this.state.gameId}/playerTwo/`);
         presenceRef.onDisconnect().set({
             active: false,
             name: 'Open slot',
         });
+
     };
 
     gamePrepare = (gameId) => {
@@ -388,14 +409,14 @@ class Game extends Component {
                     })
                 }
             } else if (cardId === 5) {//SHOWING PUSH OPTION
-                this.setState({ showingHand: false, showingPush: true})
+                this.setState({ showingHand: false, showingPush: true })
             } else if (cardId === 6) {//ALLOWING DOUBLEDRAW
                 this.doubleDraw();
                 firebase.database().ref(`/games/Game${this.state.gameId}/world/`).update({ lastCardPlayed: 6 })
             } else if (cardId === 7) {//SHOWING FLIP/DESTROY OPTIONS
-                this.setState({ showingHand: false, showingFlipOrDestroy: true})
+                this.setState({ showingHand: false, showingFlipOrDestroy: true })
             } else if (cardId === 8) {//SHOWING SWAP OPTIONS
-                this.setState({ showingHand: false, showingSwap: true})
+                this.setState({ showingHand: false, showingSwap: true })
             }
         }
     }
@@ -708,21 +729,19 @@ class Game extends Component {
                 <div className="row info-background game-status-margin">
                     <Col size="md-4">
                         <div className="game-status-box text-center">
-                            {this.state.isPlayer1 ?
-                                <div>
-                                    <img className="coin-size" alt="ravenCoin" src={require('../../components/Images/coin-1.png')} />
-                                    <h3 className="d-flex justify-content-center" id="gameBarText">Player One</h3>
-                                    <hr className="gameHr" />
-                                    {/* <img src={require('../../components/Images/line-2.png')} /> */}
-                                    <h3 className="d-flex justify-content-center" id="gameBarText">Light Raven</h3>
-                                </div> : null}
-                            {this.state.isPlayer2 ?
-                                <div>
-                                    <img className="coin-size" alt="ravenCoin" src={require('../../components/Images/coin-2.png')} />
-                                    <h3 className="d-flex justify-content-center" id="gameBarText">Player Two</h3>
-                                    <hr className="gameHr" />
-                                    <h3 className="d-flex justify-content-center" id="gameBarText">Dark Raven</h3>
-                                </div> : null}
+
+                            <div>
+                                <img className="coin-size" alt="ravenCoin" src={require('../../components/Images/coin-1.png')}/>
+                                <h3 className="d-flex justify-content-left" id="gameBarText">White Raven : {this.state.playerOneName}</h3>
+                                {/* <img src={require('../../components/Images/line-2.png')} /> */}
+                                {/* <h3 className="d-flex justify-content-center" id="gameBarText"></h3> */}
+                            </div>
+                            <hr className="justify-content-left gameHr" />
+                            <div>
+                                <img className="coin-size" alt="ravenCoin" src={require('../../components/Images/coin-2.png')} />
+                                <h3 className="d-flex justify-content-left" id="gameBarText">Dark Raven : {this.state.playerTwoName}</h3>
+                                {/* <h3 className="d-flex justify-content-center" id="gameBarText"></h3> */}
+                            </div>
                         </div>
                     </Col>
 
@@ -763,13 +782,13 @@ class Game extends Component {
                         </div>
                     </Col>
                     <Col size="md-3">
-                    {this.state.showingPush || this.state.showingFlipOrDestroy || this.state.showingSwap || this.state.showingFlip || this.state.showingDestroy ? 
-                        <div></div>
-                        : <div className="game-status-box d-flex justify-content-right text-center">
-                            {this.state.isPlayer1 && this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
-                            {this.state.isPlayer2 && this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
-                            {this.state.gameWinner !== null ? <a type="btn" className="btn button pr-4 pl-4 returnLobbyButton button-back-lobb" href="/lobby/">Back to Lobby</a> : null}
-                        </div> }
+                        {this.state.showingPush || this.state.showingFlipOrDestroy || this.state.showingSwap || this.state.showingFlip || this.state.showingDestroy ?
+                            <div></div>
+                            : <div className="game-status-box d-flex justify-content-right text-center">
+                                {this.state.isPlayer1 && this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
+                                {this.state.isPlayer2 && this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
+                                {this.state.gameWinner !== null ? <a type="btn" className="btn button pr-4 pl-4 returnLobbyButton button-back-lobb" href="/lobby/">Back to Lobby</a> : null}
+                            </div>}
                     </Col>
                     <Col size="md-1">
                         <audio
@@ -915,7 +934,7 @@ class Game extends Component {
                                 <div className="col-md-2 text-yellow">
                                     <h3 className="text-yellow mb-2" id="h3Hands">Last card played</h3>
 
-                                    {this.state.lastCardPlayed || this.state.lastCardPlayed===0 ?
+                                    {this.state.lastCardPlayed || this.state.lastCardPlayed === 0 ?
                                         <FlightCard
                                             image={this.state.lastCardPlayed}
                                         />

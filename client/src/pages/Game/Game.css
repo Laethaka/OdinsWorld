@@ -7,8 +7,8 @@
 
 .game-status-box img {
     position: absolute;
-    left: 0.09rem;
-    top: 0.09rem;
+    left: 1rem;
+    /* top: 0.09rem; */
 }
 
 .game-status-margin {
@@ -26,9 +26,10 @@
 }
 
 .coin-size {
-    height: 7rem;
+    height: 2rem;
     border-radius: 50%;
     transition: all .8s ease-in-out;
+    display: block;
 }
 
 .coin-size:hover {
