@@ -285,6 +285,10 @@ i {
     height: 180px;
 }
 
+.lastCardPlayed {
+    pointer-events: none;
+}
+
 @media only screen and (max-width: 1440px) {
 
     /* #h3Hands{

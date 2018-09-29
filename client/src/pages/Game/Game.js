@@ -5,7 +5,7 @@ import "./Game.css";
 
 // Firebase
 import firebase from '../../firebase'
- 
+
 // Card components
 import LandCard from "../../components/LandCard";
 import landcard from "../../components/LandCard/landcard.json";
@@ -15,6 +15,9 @@ import DrawFlight from "../../components/DrawFlight";
 import DrawLoki from "../../components/DrawLoki";
 import EndTurnButton from "../../components/EndTurnButton";
 import Modal from "../../components/Modal";
+
+// Animation
+import Fade from "react-reveal/Fade";
 
 class Game extends Component {
     state = {
@@ -730,18 +733,18 @@ class Game extends Component {
                     <Col size="md-4">
                         <div className="game-status-box text-center">
 
-                            <div>
-                                <img className="coin-size" alt="ravenCoin" src={require('../../components/Images/coin-1.png')}/>
+                            <Fade>
+                                <img className="coin-size" alt="ravenCoin" src={require('../../components/Images/coin-1.png')} />
                                 <h3 className="d-flex justify-content-left" id="gameBarText">White Raven : {this.state.playerOneName}</h3>
                                 {/* <img src={require('../../components/Images/line-2.png')} /> */}
                                 {/* <h3 className="d-flex justify-content-center" id="gameBarText"></h3> */}
-                            </div>
+                            </Fade>
                             <hr className="justify-content-left gameHr" />
-                            <div>
+                            <Fade>
                                 <img className="coin-size" alt="ravenCoin" src={require('../../components/Images/coin-2.png')} />
                                 <h3 className="d-flex justify-content-left" id="gameBarText">Dark Raven : {this.state.playerTwoName}</h3>
                                 {/* <h3 className="d-flex justify-content-center" id="gameBarText"></h3> */}
-                            </div>
+                            </Fade>
                         </div>
                     </Col>
 
@@ -749,32 +752,39 @@ class Game extends Component {
                         <div className="game-status-box d-flex justify-content-center text-center">
 
                             {this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ?
-                                <div id="youPlay">
-                                    <h3 className="d-flex justify-content-center rounded yourTurn" id="gameBarText">Your turn: Play Cards</h3>
-                                    <hr className="gameHr" />
-                                    <h3 className="d-flex justify-content-center rounded yourTurn" id="gameBarText">Click Flight Cards from your hand to move</h3>
-                                </div> : null}
+                                <Fade>
+                                    <div id="youPlay">
+                                        <h3 className="d-flex justify-content-center rounded yourTurn" id="gameBarText">Your turn: Play Cards</h3>
+                                        <hr className="gameHr" />
+                                        <h3 className="d-flex justify-content-center rounded yourTurn" id="gameBarText">Click Flight Cards from your hand to move</h3>
+                                    </div>
+                                </Fade> : null}
 
                             {this.state.myTurn && this.state.cardsToDraw > 0 && this.state.gameWinner === null ?
-                                <div id="youPlay">
-                                    <h3 className="d-flex justify-content-center rounded yourTurn" id="gameBarText">Your turn: Draw Cards </h3>
+                                <Fade>
+                                    <div id="youPlay">
+                                        <h3 className="d-flex justify-content-center rounded yourTurn" id="gameBarText">Your turn: Draw Cards </h3>
 
-                                    <hr className="gameHr" />
-                                    <h3 className="d-flex justify-content-center rounded yourTurn" id="gameBarText">Cards to draw: <span className="cardsToDrawNum">&nbsp;{this.state.cardsToDraw}</span></h3>
-                                </div> : null}
+                                        <hr className="gameHr" />
+                                        <h3 className="d-flex justify-content-center rounded yourTurn" id="gameBarText">Cards to draw: <span className="cardsToDrawNum">&nbsp;{this.state.cardsToDraw}</span></h3>
+                                    </div>
+                                </Fade> : null}
 
                             {!this.state.myTurn && this.state.gameWinner === null && this.state.gameRunning ?
-                                <div>
-                                    <h3 className="d-flex justify-content-center waitTurn" id="gameBarText">Waiting: Opponent's Turn</h3>
-                                    <hr className="gameHr" />
-                                </div> : null}
+                                <Fade>
+                                    <div>
+                                        <h3 className="d-flex justify-content-center waitTurn" id="gameBarText">Waiting: Opponent's Turn</h3>
+                                        <hr className="gameHr" />
+                                    </div>
+                                </Fade> : null}
                             {!this.state.gameRunning && !this.state.gameWinner ?
-                                <div id="youPlay">
-                                    <h3 className="d-flex justify-content-center" id="gameBarText">World Generated</h3>
-                                    <hr className="gameHr" />
-                                    <h3 className="d-flex justify-content-center rounded yourTurn" id="gameBarText">Cards to draw: <span className="cardsToDrawNum">&nbsp;{this.state.cardsToDraw}</span></h3>
-                                </div>
-                                : null}
+                                <Fade duration={3000}>
+                                    <div id="youPlay">
+                                        <h3 className="d-flex justify-content-center" id="gameBarText">World Generated</h3>
+                                        <hr className="gameHr" />
+                                        <h3 className="d-flex justify-content-center rounded yourTurn" id="gameBarText">Cards to draw: <span className="cardsToDrawNum">&nbsp;{this.state.cardsToDraw}</span></h3>
+                                    </div>
+                                </Fade> : null}
                             {this.state.gameWinner !== null ? <Modal playerNum={player} gameResult={this.state.gameWinner} /> : null}
                             {/* {this.state.gameWinner === 'white' && this.state.isPlayer2 ? <h3 className="d-flex justify-content-center">Defeat</h3> : null}
                             {this.state.gameWinner === 'black' && this.state.isPlayer1 ? <h3 className="d-flex justify-content-center">Defeat</h3> : null}
@@ -784,11 +794,13 @@ class Game extends Component {
                     <Col size="md-3">
                         {this.state.showingPush || this.state.showingFlipOrDestroy || this.state.showingSwap || this.state.showingFlip || this.state.showingDestroy ?
                             <div></div>
-                            : <div className="game-status-box d-flex justify-content-right text-center">
+                            :
+                            <div className="game-status-box d-flex justify-content-right text-center">
                                 {this.state.isPlayer1 && this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
                                 {this.state.isPlayer2 && this.state.myTurn && this.state.cardsToDraw === 0 && this.state.gameWinner === null ? <h3 className="d-flex justify-content-center"><EndTurnButton buttonClick={this.endTurnClick} /></h3> : null}
                                 {this.state.gameWinner !== null ? <a type="btn" className="btn button pr-4 pl-4 returnLobbyButton button-back-lobb" href="/lobby/">Back to Lobby</a> : null}
-                            </div>}
+                            </div>
+                        }
                     </Col>
                     <Col size="md-1">
                         <audio
@@ -931,7 +943,7 @@ class Game extends Component {
                                     </div>
                                 </div>
 
-                                <div className="col-md-2 text-yellow">
+                                <div className="col-md-2 text-yellow lastCardPlayed">
                                     <h3 className="text-yellow mb-2" id="h3Hands">Last card played</h3>
 
                                     {this.state.lastCardPlayed || this.state.lastCardPlayed === 0 ?
