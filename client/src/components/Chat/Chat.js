@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import "./Chat.css";
-import firebase from "../../firebase.js"
-import $ from 'jquery'
+import firebase from "../../firebase.js";
+import $ from 'jquery';
+import Fade from "react-reveal/Fade";
 
 class Chat extends Component {
 
@@ -26,7 +27,7 @@ class Chat extends Component {
             this.setState({
                 messages: [message].concat(this.state.messages)
             });
-            $(".chat-scroll").animate( { scrollTop: $(".chat-scroll").height()+999999999999999999 }, "slow");
+            $(".chat-scroll").animate({ scrollTop: $(".chat-scroll").height() + 999999999999999999 }, "slow");
         });
 
     };
@@ -34,23 +35,23 @@ class Chat extends Component {
     addMessage(event) {
         event.preventDefault(); // <- prevent form submit from reloading the page
         /* Send the message to Firebase */
-        firebase.database().ref("messages").push( firebase.auth().currentUser.displayName + " – " + this.input.value );
+        firebase.database().ref("messages").push(firebase.auth().currentUser.displayName + " – " + this.input.value);
         this.input.value = ""; // <- clear the input
         console.log(this.state.messages);
     };
 
     render() {
         return (
-                <div>
-                    <div className="row no-margins">
-                        <div className="col-lg-12 chat-container">
-                            {this.state.messages.map( message => <p key={message.id}>{message.text}</p> )}
-                        </div>
+            <div>
+                <div className="row no-margins">
+                    <div className="col-lg-12 chat-container text-msg">
+                        {this.state.messages.map(message => <Fade bottom key={message.id}>{message.text}</Fade>)}
                     </div>
+                </div>
 
-                    <img className="h1-img-top" alt="breakline" src={require('../../components/Images/h1.png')} />
-                   
-                   <div>
+                <img className="h1-img-top" alt="breakline" src={require('../../components/Images/h1.png')} />
+
+                <div>
                     <form className="form-padding" onSubmit={this.addMessage.bind(this)}>
                         <div className="row no-margins">
                             <div className="col-10">
@@ -64,14 +65,14 @@ class Chat extends Component {
                                     maxLength="100"
                                 />
                             </div>
-            
+
                             <div className="col-2 d-flex justify-content-end">
                                 <input className="btn button button-join" type="submit" />
                             </div>
                         </div>
                     </form>
-                    </div>
                 </div>
+            </div>
 
         );
     };

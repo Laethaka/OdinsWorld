@@ -45,3 +45,7 @@ input {
 ::-webkit-scrollbar-thumb {
     background: #FF000000;
 }
+
+.text-msg {
+    font-family: 'Averia Serif Libre', cursive;
+}
